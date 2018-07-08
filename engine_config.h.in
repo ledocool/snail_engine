@@ -1,0 +1,2 @@
+// the configured options and settings for Tutorial
+#define SNAIL_ENGINE_RELEASE_VERSION @snail_engine_release_version@

@@ -30,3 +30,17 @@
 *.exe
 *.out
 *.app
+
+#Unesessary project files
+build
+
+#netbeans
+nbproject
+compile_commands.json
+
+#cmake cache
+CMakeFiles
+CMakeCache.txt
+cmake_install.cmake
+engine_config.h
+Makefile
