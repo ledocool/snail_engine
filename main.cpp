@@ -1,6 +1,10 @@
-#include "engine_config.h"
+#include <iostream>
+#include "engine/Engine.h"
 
-int main (int argc, char *argv[])
+int main(int argc, char *argv[])
 {
-  return 0;
+    //std::cout << "Hello world!" << std::endl;
+    Engine e = Engine();
+    e.simpleFunction();
+    return 0;
 }

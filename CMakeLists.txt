@@ -19,6 +19,8 @@ configure_file (
 
 # add the binary tree to the search path for include files
 include_directories("${PROJECT_BINARY_DIR}")
+add_subdirectory("engine")
 
 # add executable
 add_executable(snail_engine main.cpp)
+target_link_libraries(snail_engine snail_core)
