@@ -14,12 +14,16 @@
 #ifndef ENGINE_H
 #define ENGINE_H
 
-class Engine {
+#include "includes.h"
+#include "SDL.h"
+
+class Engine 
+{
 public:
     Engine();
     Engine(const Engine& orig);
     virtual ~Engine();
-    
+
     void simpleFunction();
 private:
 
