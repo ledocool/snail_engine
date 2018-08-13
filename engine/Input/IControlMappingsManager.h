@@ -41,16 +41,16 @@ public:
      * Loads config from specified file
      * @param file - file to be read
      */
-    virtual void Load(std::string file)=0;
+    virtual void Load(std::string file) =0;
     
     /**
      * Saves config to specified file
      * @param file
      */
-    virtual void Save(std::string file)=0;
-    
-    //todo: should return event;
-    virtual void GetEventByKeystroke(IKeystroke key)=0;
+    virtual void Save(std::string file) =0;
+    virtual IKeystroke GetKeystroke(unsigned int index) =0;
+    virtual IEvent GetEvent(IKeystroke stroke) =0;
+    virtual IEvent GetEvent(unsigned int index) =0;
 };
 
 #endif /* ICONTROLMAPPINGSMANAGER_H */

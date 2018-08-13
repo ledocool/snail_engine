@@ -26,7 +26,10 @@ public:
 
     void simpleFunction();
 private:
-
+    int loop();
+    void init();
+    void initSDL();
+    void destroy();
 };
 
 #endif /* ENGINE_H */

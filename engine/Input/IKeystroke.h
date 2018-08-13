@@ -26,8 +26,8 @@
 
 class IKeystroke
 {
-    
-    virtual void IsActive()=0;
+    virtual void IsActive() =0;
+    virtual void Is
 };
 
 #endif /* IKEYSTROKE_H */

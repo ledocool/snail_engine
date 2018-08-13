@@ -24,13 +24,20 @@
 #ifndef INPUTMANAGER_H
 #define INPUTMANAGER_H
 
-class InputManager 
+class IInputManager 
 {
+public:
     /**
      * update states of pressed buttons and collect them all into neat key events;
      * also send events into event pipeline;
      */
-    void Update();
+    virtual void Update() =0;
+    
+    virtual bool IsUp(IKey key) =0;
+    virtual bool IsDown(IKey key) =0;
+    virtual bool IsPressed(IKey key) = 0;
+    
+private:
 };
 
 #endif /* IINPUTMANAGER_H */

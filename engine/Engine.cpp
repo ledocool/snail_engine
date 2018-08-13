@@ -37,7 +37,6 @@ Engine::Engine()
 
     SDL_DestroyWindow(window);
     SDL_Quit();
-    
 }
 
 Engine::Engine(const Engine& orig)
@@ -53,3 +52,25 @@ void Engine::simpleFunction()
     std::cout << "Hello world!" << std::endl;
 }
 
+/* Wrapper method for all engine initialization */
+void Engine::init()
+{
+    initSDL();
+}
+
+/* Wrapper method for all engine destruction */
+void Engine::destroy()
+{
+
+}
+
+void Engine::initSDL()
+{
+
+}
+
+/* Base loop */
+int Engine::loop()
+{
+
+}
