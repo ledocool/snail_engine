@@ -25,10 +25,12 @@
 #define INCLUDES_H
 
 //SDL
-//#include "SDL.h"
+#include "SDL.h"
 
 //general
 #include <string>
+#include <map>
+#include <vector>
 
 #endif /* INCLUDES_H */
 

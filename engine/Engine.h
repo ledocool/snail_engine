@@ -1,14 +1,17 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/* 
- * File:   Engine.h
- * Author: LedoCool
+ * Copyright 2018 LedoCool.
  *
- * Created on July 10, 2018, 9:25 PM
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 #ifndef ENGINE_H
@@ -21,15 +24,18 @@ class Engine
 {
 public:
     Engine();
-    Engine(const Engine& orig);
     virtual ~Engine();
 
-    void simpleFunction();
 private:
-    int loop();
-    void init();
-    void initSDL();
-    void destroy();
+    int Loop();
+    
+    void Init();
+    void InitSDL();
+    
+    void Destroy();
+    void DestroySDL();
+    
+    SDL_Window *_window;
 };
 
 #endif /* ENGINE_H */

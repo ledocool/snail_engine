@@ -4,11 +4,16 @@ set(CMAKE_CXX_STANDARD 11)
 
 set(ENGINE_SOURCES 
     Engine.cpp
+    Input/KeyStroke.cpp
+    Input/InputManager.cpp
+
 )
 set(ENGINE_HEADERS
     Engine.h
-    filetypes.h
     includes.h
+    Input/KeyStroke.h
+    Input/InputManager.h
+    Input/KeyEnums.h
 )
 
 #todo: linux config

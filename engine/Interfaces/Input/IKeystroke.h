@@ -15,16 +15,19 @@
  */
 
 /* 
- * File:   filetypes.h
+ * File:   IKeystroke.h
  * Author: LedoCool
  *
- * Created on July 15, 2018, 6:41 PM
+ * Created on July 15, 2018, 6:36 PM
  */
 
-#ifndef FILETYPES_H
-#define FILETYPES_H
+#ifndef IKEYSTROKE_H
+#define IKEYSTROKE_H
 
+class IKeystroke
+{
+    virtual void IsActive() =0;
+};
 
-
-#endif /* FILETYPES_H */
+#endif /* IKEYSTROKE_H */
 
