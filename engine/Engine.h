@@ -35,7 +35,7 @@ private:
     void Destroy();
     void DestroySDL();
     
-    SDL_Window *_window;
+    std::shared_ptr<SDL_Window> _window;
 };
 
 #endif /* ENGINE_H */

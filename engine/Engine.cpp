@@ -46,16 +46,19 @@ void Engine::Destroy()
 void Engine::InitSDL()
 {
     SDL_Init(SDL_INIT_VIDEO);
-    _window = SDL_CreateWindow("snail_engine",
+    
+    auto win = SDL_CreateWindow("snail_engine",
                                 SDL_WINDOWPOS_UNDEFINED,
                                 SDL_WINDOWPOS_UNDEFINED,
                                 640,
                                 480,
                                 0);
     
+    _window.reset(win, SDL_DestroyWindow);
     
     //Todo: create context in graphics manager;
-    SDL_Renderer *renderer = SDL_CreateRenderer(_window, -1, SDL_RENDERER_SOFTWARE);
+    SDL_Renderer *renderer = SDL_CreateRenderer(_window.get(), -1, SDL_RENDERER_SOFTWARE);
+    SDL_DestroyRenderer()
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
     SDL_RenderClear(renderer);
     SDL_RenderPresent(renderer);
@@ -78,7 +81,6 @@ int Engine::Loop()
 
 void Engine::DestroySDL()
 {
-    SDL_DestroyWindow(_window);
     SDL_Quit();
 }
 

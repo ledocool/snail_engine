@@ -36,3 +36,9 @@ KeyStroke::~KeyStroke()
 {
 }
 
+bool KeyStroke::IsActive()
+{
+    bool active = true;
+    return false;
+}
+

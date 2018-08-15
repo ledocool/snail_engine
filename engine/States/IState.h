@@ -15,38 +15,34 @@
  */
 
 /* 
- * File:   InpuManager.h
+ * File:   State.h
  * Author: LedoCool
  *
- * Created on August 14, 2018, 10:57 PM
+ * Created on August 14, 2018, 10:11 PM
  */
 
-#ifndef INPUMANAGER_H
-#define INPUMANAGER_H
+#ifndef ISTATE_H
+#define ISTATE_H
 
-#include "KeyEnums.h"
 #include "includes.h"
 
-class KeyStroke;
-
-class InputManager 
+class IState
 {
 public:
-    friend KeyStroke;
-    
-    InputManager();
-    virtual ~InputManager();
-    
-    bool Update(); //Don't forget to update this; 
-    KeyState::en KeyState(Key::en key);
-    
-private:
-    std::map <Key::en, KeyState::en> _keyStates;
-//    int _m_MouseX, _m_MouseY;
-//    std::vector < short > _mouseStates;
-//    std::map < int, short > _videoStates;
-    
+    IState();
+    virtual ~IState();
+    friend class StateManager;
+
+protected:
+    virtual void render () = 0; //Render object
+    virtual void processLogic (Uint32 elapsed) = 0;
+    virtual void enter () = 0; //Enter a state;
+    virtual void pause () = 0; //Pause a state;
+    virtual void resume () = 0;
+    virtual void exit () = 0;
+
+    IState *getState () { return this; }
 };
 
-#endif /* INPUMANAGER_H */
+#endif /* ISTATE_H */
 

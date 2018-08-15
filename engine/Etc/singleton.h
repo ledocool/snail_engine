@@ -15,18 +15,32 @@
  */
 
 /* 
- * File:   State.h
+ * File:   singleton.h
  * Author: LedoCool
  *
- * Created on August 14, 2018, 10:11 PM
+ * Created on August 15, 2018, 10:30 PM
  */
 
-#ifndef STATE_H
-#define STATE_H
+#ifndef SINGLETON_H
+#define SINGLETON_H
 
-#include "includes.h"
+template <template T> class Singleton
+{
+public:
+    Singleton();
+    virtual ~Singleton();
 
+    static T* get()
+    {
+        static T theSingleInstance;
+        return &theSingleInstance;
+    }
 
+private:
 
-#endif /* STATE_H */
+    Singleton(Singleton const&);
+    Singleton& operator=(Singleton const&);
+};
+
+#endif /* SINGLETON_H */
 
