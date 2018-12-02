@@ -24,12 +24,9 @@
 #ifndef SINGLETON_H
 #define SINGLETON_H
 
-template <template T> class Singleton
+template <typename T> class Singleton
 {
 public:
-    Singleton();
-    virtual ~Singleton();
-
     static T* get()
     {
         static T theSingleInstance;
@@ -37,6 +34,8 @@ public:
     }
 
 private:
+    Singleton();
+    virtual ~Singleton();
 
     Singleton(Singleton const&);
     Singleton& operator=(Singleton const&);

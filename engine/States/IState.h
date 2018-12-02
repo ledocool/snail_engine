@@ -34,14 +34,17 @@ public:
     friend class StateManager;
 
 protected:
-    virtual void render () = 0; //Render object
-    virtual void processLogic (Uint32 elapsed) = 0;
-    virtual void enter () = 0; //Enter a state;
-    virtual void pause () = 0; //Pause a state;
-    virtual void resume () = 0;
-    virtual void exit () = 0;
+    virtual void render() = 0; //Render object
+    virtual void processLogic(Uint32 elapsed) = 0;
+    virtual void enter() = 0; //Enter a state;
+    virtual void pause() = 0; //Pause a state;
+    virtual void resume() = 0;
+    virtual void exit() = 0;
 
-    IState *getState () { return this; }
+    IState *getState()
+    {
+        return this;
+    }
 };
 
 #endif /* ISTATE_H */

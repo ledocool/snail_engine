@@ -26,20 +26,21 @@
 
 #include "engine/includes.h"
 
-class Window 
+class Window
 {
 public:
     Window(const char *title, const unsigned int x, const unsigned int y, const unsigned int height, const unsigned int width);
     virtual ~Window();
-    
+
     SetContextActive();
-    
+
     virtual void Update(float dt);
     virtual void Render(float dt);
-    virtual void ProcessEvents(float dt);
 private:
 
-   
+    void SetupOpenGlContext();
+    void ResizeWindow();
+    
     std::shared_ptr<SDL_Window> _window;
     SDL_GLContext _context;
 };

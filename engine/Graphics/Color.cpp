@@ -15,36 +15,24 @@
  */
 
 /* 
- * File:   InpuManager.h
+ * File:   Color.cpp
  * Author: LedoCool
- *
- * Created on August 14, 2018, 10:57 PM
+ * 
+ * Created on November 29, 2018, 3:13 PM
  */
 
-#ifndef INPUMANAGER_H
-#define INPUMANAGER_H
+#include "Color.h"
 
-#include "KeyEnums.h"
-#include "includes.h"
 
-class InputManager
+Color::Color(float r, float g, float b, float a)
+{   
+    _r = inBounds(r) ? r : 1.f;
+    _g = inBounds(g) ? g : 1.f;
+    _b = inBounds(b) ? b : 1.f;
+    _a = inBounds(a) ? a : 1.f;
+}
+
+bool Color::inBounds(float val)
 {
-public:
-
-    InputManager();
-    virtual ~InputManager();
-
-    bool Update(); //Don't forget to update this; 
-    KeyState::en KeyState(Key::en key);
-    //    bool KeyStrokeActive(KeyStroke combo);
-
-private:
-    std::map <Key::en, KeyState::en> _keyStates;
-    //    int _m_MouseX, _m_MouseY;
-    //    std::vector < short > _mouseStates;
-    //    std::map < int, short > _videoStates;
-
-};
-
-#endif /* INPUMANAGER_H */
-
+    return val >= 0.f && val <= 1.f;
+}

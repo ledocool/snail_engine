@@ -24,13 +24,15 @@
 #ifndef INCLUDES_H
 #define INCLUDES_H
 
-//SDL
-#include "SDL.h"
-
 //OpenGL
-#include <GL/gl.h>
+#include <glad/glad.h>
+//#include <GL/gl.h>
 #include <GL/glu.h>
+#include <GL/glext.h>
 //#include <GL/glaux.h>
+
+//SDL
+#include <SDL.h>
 
 //general
 #include <string>

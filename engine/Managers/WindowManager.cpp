@@ -29,14 +29,33 @@ WindowManager::WindowManager()
 
 WindowManager::~WindowManager()
 {
+    DestroyAllWindows();
 }
 
-int WindowManager::CreateWindow(const char* title, const unsigned int x, const unsigned int y, const unsigned int height, const unsigned int width)
+int WindowManager::Create(const char* title, const unsigned int x, const unsigned int y, const unsigned int height, const unsigned int width)
 {
     _windows.push_back(std::shared_ptr<Window>(new Window(title, x, y, height, width)));
 }
 
-int WindowManager::DestroyAllWindows()
+void WindowManager::DestroyAllWindows()
 {
-
+    for (auto window : _windows) {
+        window.reset();
+    }
 }
+
+void WindowManager::Render(Uint32 dt)
+{
+    for (auto window : _windows) {
+        window->Update(dt);
+    }
+}
+
+void WindowManager::Update(Uint32 dt)
+{
+    for (auto window : _windows) {
+        window->Render(dt);
+    }
+}
+
+

@@ -27,14 +27,14 @@
 #include "engine/includes.h"
 #include "engine/States/IState.h"
 
-class StateManager 
+class StateManager
 {
 public:
     StateManager();
     bool render();
     bool process(Uint32 ms);
-    void changeState( IState *st );
-    void pushState( IState* st );
+    void changeState(IState *st);
+    void pushState(IState* st);
     void popState();
     virtual ~StateManager();
 private:

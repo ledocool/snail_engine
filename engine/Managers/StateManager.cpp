@@ -29,8 +29,7 @@ StateManager::StateManager()
 
 bool StateManager::render()
 {
-    if(stateStack.empty())
-    {
+    if (stateStack.empty()) {
         return false;
     }
     stateStack.top()->render();
@@ -39,8 +38,7 @@ bool StateManager::render()
 
 bool StateManager::process(Uint32 ms)
 {
-    if(stateStack.empty())
-    {
+    if (stateStack.empty()) {
         return false;
     }
     stateStack.top()->processLogic(ms);
@@ -50,8 +48,7 @@ bool StateManager::process(Uint32 ms)
 void StateManager::changeState(IState *st)
 {
     class IState *delState;
-    if( !stateStack.empty() )
-    {
+    if (!stateStack.empty()) {
         stateStack.top()->exit();
         delState = stateStack.top();
         stateStack.pop();
@@ -64,7 +61,7 @@ void StateManager::changeState(IState *st)
 
 void StateManager::pushState(IState *st)
 {
-    if( !stateStack.empty() )
+    if (!stateStack.empty())
         stateStack.top()->pause();
 
     stateStack.push(st);
@@ -74,15 +71,14 @@ void StateManager::pushState(IState *st)
 void StateManager::popState()
 {
     IState *st;
-    if( !stateStack.empty() )
-    {
+    if (!stateStack.empty()) {
         stateStack.top()->exit();
         st = stateStack.top();
         stateStack.pop();
         delete st;
     }
 
-    if( !stateStack.empty() )
+    if (!stateStack.empty())
         stateStack.top()->resume();
 }
 

@@ -21,7 +21,7 @@
 #include "SDL.h"
 #include "Managers/WindowManager.h"
 
-class Engine 
+class Engine
 {
 public:
     Engine();
@@ -29,14 +29,14 @@ public:
 
 private:
     int Loop();
-    
+
     void Init();
     void InitSDL();
-    void CreateWindows();    
-    
+    void CreateWindows();
+
     void Destroy();
     void DestroySDL();
-    
+
     WindowManager _wm;
 };
 

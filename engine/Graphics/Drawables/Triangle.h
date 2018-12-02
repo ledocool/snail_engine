@@ -15,36 +15,35 @@
  */
 
 /* 
- * File:   InpuManager.h
+ * File:   Triangle.h
  * Author: LedoCool
  *
- * Created on August 14, 2018, 10:57 PM
+ * Created on November 29, 2018, 3:13 PM
  */
 
-#ifndef INPUMANAGER_H
-#define INPUMANAGER_H
+#ifndef RECTANGLE_H
+#define RECTANGLE_H
 
-#include "KeyEnums.h"
-#include "includes.h"
+#include "Graphics/Color.h"
+#include "IDrawable.h"
 
-class InputManager
+class Triangle : IDrawable
 {
 public:
-
-    InputManager();
-    virtual ~InputManager();
-
-    bool Update(); //Don't forget to update this; 
-    KeyState::en KeyState(Key::en key);
-    //    bool KeyStrokeActive(KeyStroke combo);
-
+    Triangle(float shape[9], float coordinates[2],  Color color);
+    Triangle(const Triangle & orig);
+    
+    void Draw() override;
+    virtual ~Triangle();
+    
 private:
-    std::map <Key::en, KeyState::en> _keyStates;
-    //    int _m_MouseX, _m_MouseY;
-    //    std::vector < short > _mouseStates;
-    //    std::map < int, short > _videoStates;
-
+    Color _color = Color(0, 0, 0, 0);
+    float _shape[9];
+    float _coordinates[2];
+    unsigned int _glVBO_Id, _glVAO_Id;
+    
+    unsigned int _shaderProgram;
 };
 
-#endif /* INPUMANAGER_H */
+#endif /* RECTANGLE_H */
 

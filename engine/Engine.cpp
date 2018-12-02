@@ -18,14 +18,13 @@
 #include <iostream>
 
 #include "Input/InputManager.h"
-#include "Input/KeyStroke.h"
 #include "Managers/WindowManager.h"
 
 Engine::Engine()
-{
+{   
     Init();
     Loop();
-}    
+}
 
 Engine::~Engine()
 {
@@ -36,7 +35,7 @@ Engine::~Engine()
 void Engine::Init()
 {
     InitSDL();
-    _wm.CreateWindow("Base window", -1, -1, 640, 480);
+    _wm.Create("Base window", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 640, 480);
 }
 
 /* Wrapper method for all engine destruction */
@@ -47,8 +46,7 @@ void Engine::Destroy()
 
 void Engine::InitSDL()
 {
-    if(!SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO))
-    {
+    if (SDL_Init(0)) {
         std::cout << "SDL_Init Error: " << SDL_GetError() << std::endl;
         return;
     }
@@ -63,13 +61,14 @@ void Engine::CreateWindows()
 int Engine::Loop()
 {
     InputManager man;
-    
+
     bool shouldWork = true;
-    while (shouldWork)
-    {
+    while (shouldWork) {
         shouldWork = !man.Update();
+        _wm.Update(0);
+        _wm.Render(0);
     }
-    
+
     return 0;
 }
 

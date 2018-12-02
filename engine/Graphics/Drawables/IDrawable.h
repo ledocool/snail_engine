@@ -15,36 +15,26 @@
  */
 
 /* 
- * File:   InpuManager.h
+ * File:   IDrawable.h
  * Author: LedoCool
  *
- * Created on August 14, 2018, 10:57 PM
+ * Created on November 29, 2018, 3:16 PM
  */
 
-#ifndef INPUMANAGER_H
-#define INPUMANAGER_H
+#ifndef IDRAWABLE_H
+#define IDRAWABLE_H
 
-#include "KeyEnums.h"
 #include "includes.h"
+#include "Graphics/Color.h"
 
-class InputManager
+class IDrawable
 {
 public:
 
-    InputManager();
-    virtual ~InputManager();
-
-    bool Update(); //Don't forget to update this; 
-    KeyState::en KeyState(Key::en key);
-    //    bool KeyStrokeActive(KeyStroke combo);
-
-private:
-    std::map <Key::en, KeyState::en> _keyStates;
-    //    int _m_MouseX, _m_MouseY;
-    //    std::vector < short > _mouseStates;
-    //    std::map < int, short > _videoStates;
-
+    virtual ~IDrawable(){};
+    virtual void Draw()=0;
+    
 };
 
-#endif /* INPUMANAGER_H */
+#endif /* IDRAWABLE_H */
 

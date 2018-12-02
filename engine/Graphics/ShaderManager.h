@@ -15,36 +15,31 @@
  */
 
 /* 
- * File:   InpuManager.h
+ * File:   ShaderManager.h
  * Author: LedoCool
  *
- * Created on August 14, 2018, 10:57 PM
+ * Created on December 2, 2018, 4:51 PM
  */
 
-#ifndef INPUMANAGER_H
-#define INPUMANAGER_H
+#ifndef SHADERMANAGER_H
+#define SHADERMANAGER_H
 
-#include "KeyEnums.h"
 #include "includes.h"
+#include "../Etc/Singleton.h"
 
-class InputManager
+class ShaderManager
 {
 public:
-
-    InputManager();
-    virtual ~InputManager();
-
-    bool Update(); //Don't forget to update this; 
-    KeyState::en KeyState(Key::en key);
-    //    bool KeyStrokeActive(KeyStroke combo);
-
+    ShaderManager();
+    
+    unsigned int CompileVertexShader();
+    unsigned int CompileFragmentShader();
+    
+    void KillShader(unsigned int shader);
+    
 private:
-    std::map <Key::en, KeyState::en> _keyStates;
-    //    int _m_MouseX, _m_MouseY;
-    //    std::vector < short > _mouseStates;
-    //    std::map < int, short > _videoStates;
-
+    
 };
 
-#endif /* INPUMANAGER_H */
+#endif /* SHADERMANAGER_H */
 

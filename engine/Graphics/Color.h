@@ -15,36 +15,26 @@
  */
 
 /* 
- * File:   InpuManager.h
+ * File:   Color.h
  * Author: LedoCool
  *
- * Created on August 14, 2018, 10:57 PM
+ * Created on November 29, 2018, 3:13 PM
  */
 
-#ifndef INPUMANAGER_H
-#define INPUMANAGER_H
+#ifndef COLOR_H
+#define COLOR_H
 
-#include "KeyEnums.h"
-#include "includes.h"
-
-class InputManager
+class Color
 {
 public:
-
-    InputManager();
-    virtual ~InputManager();
-
-    bool Update(); //Don't forget to update this; 
-    KeyState::en KeyState(Key::en key);
-    //    bool KeyStrokeActive(KeyStroke combo);
-
+    Color(float r, float g, float b, float a);
+    
 private:
-    std::map <Key::en, KeyState::en> _keyStates;
-    //    int _m_MouseX, _m_MouseY;
-    //    std::vector < short > _mouseStates;
-    //    std::map < int, short > _videoStates;
-
+    
+    bool inBounds(float val);
+    
+    float _r, _g, _b, _a;
 };
 
-#endif /* INPUMANAGER_H */
+#endif /* COLOR_H */
 

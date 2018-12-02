@@ -27,19 +27,19 @@
 #include "engine/includes.h"
 #include "engine/Graphics/Window.h"
 
-class WindowManager 
+class WindowManager
 {
 public:
     WindowManager();
-    virtual ~WindowManager();
-    int CreateWindow(const char *title, const unsigned int x, const unsigned int y, const unsigned int height, const unsigned int width);
+    ~WindowManager();
+    int Create(const char *title, const unsigned int x, const unsigned int y, const unsigned int height, const unsigned int width);
+    void Update(Uint32 dt);
+    void Render(Uint32 dt);
     
-private:
+private:  
     
-    int DestroyAllWindows();
-   
+    void DestroyAllWindows();
     std::vector<std::shared_ptr<Window>> _windows;
-    
 };
 
 #endif /* WINDOWMANAGER_H */

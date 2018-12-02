@@ -15,36 +15,28 @@
  */
 
 /* 
- * File:   InpuManager.h
+ * File:   TestState.h
  * Author: LedoCool
  *
- * Created on August 14, 2018, 10:57 PM
+ * Created on November 29, 2018, 3:07 PM
  */
 
-#ifndef INPUMANAGER_H
-#define INPUMANAGER_H
+#ifndef TESTSTATE_H
+#define TESTSTATE_H
 
-#include "KeyEnums.h"
 #include "includes.h"
+#include "IState.h"
 
-class InputManager
+class TestState : public IState
 {
 public:
-
-    InputManager();
-    virtual ~InputManager();
-
-    bool Update(); //Don't forget to update this; 
-    KeyState::en KeyState(Key::en key);
-    //    bool KeyStrokeActive(KeyStroke combo);
+    TestState();
+    TestState(const TestState& orig);
+    virtual ~TestState();
 
 private:
-    std::map <Key::en, KeyState::en> _keyStates;
-    //    int _m_MouseX, _m_MouseY;
-    //    std::vector < short > _mouseStates;
-    //    std::map < int, short > _videoStates;
 
 };
 
-#endif /* INPUMANAGER_H */
+#endif /* TESTSTATE_H */
 

@@ -15,36 +15,23 @@
  */
 
 /* 
- * File:   InpuManager.h
+ * File:   GLCacheManager.cpp
  * Author: LedoCool
- *
- * Created on August 14, 2018, 10:57 PM
+ * 
+ * Created on December 2, 2018, 5:32 PM
  */
 
-#ifndef INPUMANAGER_H
-#define INPUMANAGER_H
+#include "GLCacheManager.h"
 
-#include "KeyEnums.h"
-#include "includes.h"
-
-class InputManager
+GLCacheManager::GLCacheManager()
 {
-public:
+}
 
-    InputManager();
-    virtual ~InputManager();
+GLCacheManager::GLCacheManager(const GLCacheManager& orig)
+{
+}
 
-    bool Update(); //Don't forget to update this; 
-    KeyState::en KeyState(Key::en key);
-    //    bool KeyStrokeActive(KeyStroke combo);
-
-private:
-    std::map <Key::en, KeyState::en> _keyStates;
-    //    int _m_MouseX, _m_MouseY;
-    //    std::vector < short > _mouseStates;
-    //    std::map < int, short > _videoStates;
-
-};
-
-#endif /* INPUMANAGER_H */
+GLCacheManager::~GLCacheManager()
+{
+}
 

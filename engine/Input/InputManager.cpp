@@ -22,7 +22,6 @@
  */
 
 #include "InputManager.h"
-#include "KeyStroke.h"
 
 InputManager::InputManager()
 {
@@ -31,108 +30,98 @@ InputManager::InputManager()
 InputManager::~InputManager()
 {
 }
-KeyState::en InputManager::KeyState(Key::en key) 
+
+KeyState::en InputManager::KeyState(Key::en key)
 {
     return _keyStates[key];
 }
 
-bool InputManager::KeyStrokeActive(KeyStroke combo)
-{
-    bool active = true;
-    for(auto key : combo._keys)
-    {
-        if(KeyState(key.first) != key.second)
-        {
-            active = false;
-            break;
-        }
-    }
-    return active;
-}
+//bool InputManager::KeyStrokeActive(KeyStroke combo)
+//{
+//    bool active = true;
+//    for(auto key : combo._keys)
+//    {
+//        if(KeyState(key.first) != key.second)
+//        {
+//            active = false;
+//            break;
+//        }
+//    }
+//    return active;
+//}
 
-bool InputManager::Update() 
+bool InputManager::Update()
 {
     SDL_Event event;
     std::vector <Key::en> keys;
 
-    while ( SDL_PollEvent( &event ) )
-    {
-        switch( event.type )
-        {
-            case SDL_QUIT:
-                return true;
-                break;
-            case SDL_KEYDOWN:
-                _keyStates[(Key::en)event.key.keysym.sym] = KeyState::DOWN;
-                keys.push_back((Key::en)event.key.keysym.sym);
-                break;
-            case SDL_KEYUP:
+    while (SDL_PollEvent(&event)) {
+        switch (event.type) {
+        case SDL_QUIT:
+            return true;
+            break;
+        case SDL_KEYDOWN:
+            _keyStates[(Key::en)event.key.keysym.sym] = KeyState::DOWN;
+            keys.push_back((Key::en)event.key.keysym.sym);
+            break;
+        case SDL_KEYUP:
 
-                _keyStates[(Key::en)event.key.keysym.sym] = KeyState::UP;
-                keys.push_back((Key::en)event.key.keysym.sym);
-                break;
-//            case SDL_MOUSEMOTION:
-//                _m_MouseX = event.motion.x;
-//                _m_MouseY = event.motion.y; //Temp. Then we will check window coords
-//                break;
-//            case SDL_MOUSEBUTTONUP:
-//                _mouseStates[event.button.button] = KEY_IS_UP;
-//                clicks.push_back((mouseClick)event.button.which);
-//                break;
-//            case SDL_MOUSEBUTTONDOWN:
-//                _mouseStates[event.button.button] = KEY_IS_DOWN;
-//                clicks.push_back((mouseClick)event.button.which);
-//                break;
+            _keyStates[(Key::en)event.key.keysym.sym] = KeyState::UP;
+            keys.push_back((Key::en)event.key.keysym.sym);
+            break;
+            //            case SDL_MOUSEMOTION:
+            //                _m_MouseX = event.motion.x;
+            //                _m_MouseY = event.motion.y; //Temp. Then we will check window coords
+            //                break;
+            //            case SDL_MOUSEBUTTONUP:
+            //                _mouseStates[event.button.button] = KEY_IS_UP;
+            //                clicks.push_back((mouseClick)event.button.which);
+            //                break;
+            //            case SDL_MOUSEBUTTONDOWN:
+            //                _mouseStates[event.button.button] = KEY_IS_DOWN;
+            //                clicks.push_back((mouseClick)event.button.which);
+            //                break;
 
 
-//TODO: leave for future update;                
-//            case SDL_WINDOWEVENT:
-//                if(event.window.event == SDL_WINDOWEVENT_RESIZED)
-//                    graphic->resizeViewport();
-//                break;
+            //TODO: leave for future update;                
+            //            case SDL_WINDOWEVENT:
+            //                if(event.window.event == SDL_WINDOWEVENT_RESIZED)
+            //                    graphic->resizeViewport();
+            //                break;
 
-            default:
-                break;
+        default:
+            break;
         }
     }
 
     //check to see if any keys haven't been released but were press
     //ie being held
 
-    for( std::map<Key::en, KeyState::en>::iterator itr = _keyStates.begin(); itr != _keyStates.end(); itr++ )
-    {
+    for (std::map<Key::en, KeyState::en>::iterator itr = _keyStates.begin(); itr != _keyStates.end(); itr++) {
         //put no status flag
-        if(itr->second == KeyState::UP)
-        {
+        if (itr->second == KeyState::UP) {
             bool keyFound = false;
-            for(unsigned int i=0; i < keys.size(); i++)
-            {
-                if(keys[i] == itr->first)
-                {
+            for (unsigned int i = 0; i < keys.size(); i++) {
+                if (keys[i] == itr->first) {
                     keyFound = true;
                     break;
                 }
             }
 
-            if( !keyFound )
-            {
+            if (!keyFound) {
                 itr->second = KeyState::UNDEFINED;
             }
         }
-        else if( itr->second == KeyState::DOWN)
-        {
+        else if (itr->second == KeyState::DOWN) {
             bool keyFound = false;
-            for(unsigned int i = 0; i < keys.size(); i++)
-            {
-                if(keys[i] == itr->first)
-                {
+            for (unsigned int i = 0; i < keys.size(); i++) {
+                if (keys[i] == itr->first) {
                     keyFound = true;
                     break;
                 }
             }
 
-            if( !keyFound )
-            {
+            if (!keyFound) {
                 itr->second = KeyState::HELD;
             }
         }
