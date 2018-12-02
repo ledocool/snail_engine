@@ -39,6 +39,7 @@ public:
     
     bool Update(); //Don't forget to update this; 
     KeyState::en KeyState(Key::en key);
+    bool KeyStrokeActive(KeyStroke combo);
     
 private:
     std::map <Key::en, KeyState::en> _keyStates;

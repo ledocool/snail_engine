@@ -15,31 +15,28 @@
  */
 
 /* 
- * File:   StateManager.h
+ * File:   WindowManager.cpp
  * Author: LedoCool
- *
- * Created on August 15, 2018, 10:34 PM
+ * 
+ * Created on August 19, 2018, 6:40 PM
  */
 
-#ifndef STATEMANAGER_H
-#define STATEMANAGER_H
+#include "WindowManager.h"
 
-#include "engine/includes.h"
-#include "engine/States/IState.h"
-
-class StateManager 
+WindowManager::WindowManager()
 {
-public:
-    StateManager();
-    bool render();
-    bool process(Uint32 ms);
-    void changeState( IState *st );
-    void pushState( IState* st );
-    void popState();
-    virtual ~StateManager();
-private:
-    std::stack <IState *> stateStack; //currentState;
-};
+}
 
-#endif /* STATEMANAGER_H */
+WindowManager::~WindowManager()
+{
+}
 
+int WindowManager::CreateWindow(const char* title, const unsigned int x, const unsigned int y, const unsigned int height, const unsigned int width)
+{
+    _windows.push_back(std::shared_ptr<Window>(new Window(title, x, y, height, width)));
+}
+
+int WindowManager::DestroyAllWindows()
+{
+
+}

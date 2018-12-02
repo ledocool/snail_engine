@@ -28,4 +28,4 @@ add_subdirectory("engine")
 
 # add executable
 add_executable(snail_engine main.cpp)
-target_link_libraries(snail_engine snail_core ${SDL2_LIBRARIES})
+target_link_libraries(snail_engine snail_core)

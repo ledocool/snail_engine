@@ -15,30 +15,34 @@
  */
 
 /* 
- * File:   KeyStroke.h
+ * File:   Window.h
  * Author: LedoCool
  *
- * Created on August 14, 2018, 10:32 PM
+ * Created on August 19, 2018, 6:48 PM
  */
 
-#ifndef KEYSTROKE_H
-#define KEYSTROKE_H
+#ifndef WINDOW_H
+#define WINDOW_H
 
-#include "KeyEnums.h"
-#include "InputManager.h"
-#include "includes.h"
+#include "engine/includes.h"
 
-class KeyStroke
-{   
+class Window 
+{
 public:
-    KeyStroke();
-    KeyStroke(const KeyStroke &orig);
-    virtual ~KeyStroke();
-    virtual bool IsActive();
+    Window(const char *title, const unsigned int x, const unsigned int y, const unsigned int height, const unsigned int width);
+    virtual ~Window();
     
+    SetContextActive();
+    
+    virtual void Update(float dt);
+    virtual void Render(float dt);
+    virtual void ProcessEvents(float dt);
 private:
-    std::map<Key::en, KeyState::en> _keys;
+
+   
+    std::shared_ptr<SDL_Window> _window;
+    SDL_GLContext _context;
 };
 
-#endif /* KEYSTROKE_H */
+#endif /* WINDOW_H */
 

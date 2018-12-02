@@ -15,30 +15,32 @@
  */
 
 /* 
- * File:   KeyStroke.cpp
+ * File:   WindowManager.h
  * Author: LedoCool
- * 
- * Created on August 14, 2018, 10:32 PM
+ *
+ * Created on August 19, 2018, 6:40 PM
  */
 
-#include "KeyStroke.h"
+#ifndef WINDOWMANAGER_H
+#define WINDOWMANAGER_H
 
-KeyStroke::KeyStroke()
-{
-}
+#include "engine/includes.h"
+#include "engine/Graphics/Window.h"
 
-KeyStroke::KeyStroke(const KeyStroke &orig)
+class WindowManager 
 {
-    _keys = orig._keys;
-}
+public:
+    WindowManager();
+    virtual ~WindowManager();
+    int CreateWindow(const char *title, const unsigned int x, const unsigned int y, const unsigned int height, const unsigned int width);
+    
+private:
+    
+    int DestroyAllWindows();
+   
+    std::vector<std::shared_ptr<Window>> _windows;
+    
+};
 
-KeyStroke::~KeyStroke()
-{
-}
-
-bool KeyStroke::IsActive()
-{
-    bool active = true;
-    return false;
-}
+#endif /* WINDOWMANAGER_H */
 

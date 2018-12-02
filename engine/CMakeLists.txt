@@ -6,6 +6,12 @@ set(ENGINE_SOURCES
     Engine.cpp
     Input/KeyStroke.cpp
     Input/InputManager.cpp
+    
+    Managers/StateManager.cpp
+    Managers/WindowManager.cpp
+
+    Graphics/RenderHelper.cpp
+    Graphics/Window.cpp
 
 )
 set(ENGINE_HEADERS
@@ -14,6 +20,14 @@ set(ENGINE_HEADERS
     Input/KeyStroke.h
     Input/InputManager.h
     Input/KeyEnums.h
+
+    Managers/StateManager.h
+    Managers/WindowManager.h
+
+    States/IState.h
+
+    Graphics/RenderHelper.h
+    Graphics/Window.h
 )
 
 #todo: linux config
@@ -21,8 +35,6 @@ set(SDL2_DIR "D:/projects/libraries/sdl2")
 find_package(SDL2 REQUIRED)
 
 file(COPY ${SDL2_BINARIES} DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
-message(${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
-message(${SDL2_BINARIES})
 
 add_library(snail_core ${ENGINE_HEADERS} ${ENGINE_SOURCES})
 target_link_libraries(snail_core ${SDL2_LIBRARIES})

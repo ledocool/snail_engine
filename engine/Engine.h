@@ -19,6 +19,7 @@
 
 #include "includes.h"
 #include "SDL.h"
+#include "Managers/WindowManager.h"
 
 class Engine 
 {
@@ -31,11 +32,12 @@ private:
     
     void Init();
     void InitSDL();
+    void CreateWindows();    
     
     void Destroy();
     void DestroySDL();
     
-    std::shared_ptr<SDL_Window> _window;
+    WindowManager _wm;
 };
 
 #endif /* ENGINE_H */

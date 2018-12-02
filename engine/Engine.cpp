@@ -19,6 +19,7 @@
 
 #include "Input/InputManager.h"
 #include "Input/KeyStroke.h"
+#include "Managers/WindowManager.h"
 
 Engine::Engine()
 {
@@ -35,6 +36,7 @@ Engine::~Engine()
 void Engine::Init()
 {
     InitSDL();
+    _wm.CreateWindow("Base window", -1, -1, 640, 480);
 }
 
 /* Wrapper method for all engine destruction */
@@ -45,24 +47,16 @@ void Engine::Destroy()
 
 void Engine::InitSDL()
 {
-    SDL_Init(SDL_INIT_VIDEO);
-    
-    auto win = SDL_CreateWindow("snail_engine",
-                                SDL_WINDOWPOS_UNDEFINED,
-                                SDL_WINDOWPOS_UNDEFINED,
-                                640,
-                                480,
-                                0);
-    
-    _window.reset(win, SDL_DestroyWindow);
-    
-    //Todo: create context in graphics manager;
-    SDL_Renderer *renderer = SDL_CreateRenderer(_window.get(), -1, SDL_RENDERER_SOFTWARE);
-    SDL_DestroyRenderer()
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
-    SDL_RenderClear(renderer);
-    SDL_RenderPresent(renderer);
-    //Todo: this above should be in graphics manager;
+    if(!SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO))
+    {
+        std::cout << "SDL_Init Error: " << SDL_GetError() << std::endl;
+        return;
+    }
+}
+
+void Engine::CreateWindows()
+{
+
 }
 
 /* Base loop */

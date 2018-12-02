@@ -26,9 +26,11 @@
 
 #include "SDL.h"
 
-namespace Key {
+namespace Key 
+{
 
-    enum en {
+    enum en 
+    {
         KEY_UNKNOWN = SDLK_UNKNOWN,
         //KEY_FIRST		= SDLK_FIRST,
         KEY_BACKSPACE = SDLK_BACKSPACE,
@@ -185,7 +187,8 @@ namespace Key {
 namespace MouseAction
 {
     
-    enum en {
+    enum en 
+    {
         MOUSE_LEFT = SDL_BUTTON_LEFT,
         MOUSE_RIGHT = SDL_BUTTON_RIGHT,
         MOUSE_MIDDLE = SDL_BUTTON_MIDDLE
@@ -194,7 +197,8 @@ namespace MouseAction
 
 namespace KeyState
 {
-    enum en{
+    enum en
+    {
         UP = 0,
         DOWN = 1,
         HELD = 2,

@@ -22,6 +22,7 @@
  */
 
 #include "InputManager.h"
+#include "KeyStroke.h"
 
 InputManager::InputManager()
 {
@@ -33,6 +34,20 @@ InputManager::~InputManager()
 KeyState::en InputManager::KeyState(Key::en key) 
 {
     return _keyStates[key];
+}
+
+bool InputManager::KeyStrokeActive(KeyStroke combo)
+{
+    bool active = true;
+    for(auto key : combo._keys)
+    {
+        if(KeyState(key.first) != key.second)
+        {
+            active = false;
+            break;
+        }
+    }
+    return active;
 }
 
 bool InputManager::Update() 
