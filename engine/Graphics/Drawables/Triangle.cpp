@@ -51,7 +51,7 @@ Triangle::Triangle(float shape[9], float coordinates[2], Color color)
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
     
 
-    auto shaderManager = Singleton<ShaderManager>::get(); //Singleton<ShaderManager>::get();
+    auto shaderManager = Singleton<ShaderManager>::get();
 
     unsigned int vertexShader = shaderManager->CompileVertexShader(), 
             fragmentShader = shaderManager->CompileFragmentShader();

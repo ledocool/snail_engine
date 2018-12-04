@@ -7,6 +7,8 @@ set(CMAKE_CXX_STANDARD 11)
 # Setting version number
 set (snail_engine_release_version 0)
 
+#set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake_configs")
+
 set(CMAKE_BINARY_DIR ${PROJECT_SOURCE_DIR}/build)
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)

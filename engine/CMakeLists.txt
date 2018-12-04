@@ -16,7 +16,8 @@ set(ENGINE_SOURCES
     Graphics/ShaderManager.cpp
 
     Graphics/Drawables/Triangle.cpp
-
+    
+    Ecs/Entity.cpp
 
 )
 
@@ -41,16 +42,21 @@ set(ENGINE_HEADERS
 
     Graphics/Drawables/Triangle.h
     Graphics/Drawables/IDrawable.h
+
+    Ecs/ISystem.h
+    Ecs/Component.h
+    Ecs/Entity.h
 )
 
 #todo: linux config
+
 set(GLAD_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/Glad")
-message(${GLAD_INCLUDE_DIR})
 set(SDL2_DIR "D:/projects/libraries/sdl2")
+set(GLM_DIR "D:/projects/libraries/glm-0.9.9.3")
+
 find_package(SDL2 REQUIRED)
 find_package(OpenGL REQUIRED)
-#find_package(GLUT REQUIRED)
-#find_package(GLEW REQUIRED)
+find_package(GLM REQUIRED)
 
 file(COPY ${SDL2_BINARIES} DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 add_library(snail_core ${ENGINE_HEADERS} ${ENGINE_SOURCES})
