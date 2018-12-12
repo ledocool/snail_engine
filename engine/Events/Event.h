@@ -15,22 +15,22 @@
  */
 
 /* 
- * File:   IDrawable.h
+ * File:   Event.h
  * Author: LedoCool
  *
- * Created on November 29, 2018, 3:16 PM
+ * Created on December 11, 2018, 8:05 PM
  */
 
-#ifndef IDRAWABLE_H
-#define IDRAWABLE_H
+#ifndef EVENT_H
+#define EVENT_H
 
-#include "engine/includes.h"
+#include "EventTypes.h"
 
-class IDrawable
+class Event
 {
-public:
-    virtual void Draw(glm::mat4 projection)=0;
+public: 
+    virtual EventTypes::en GetEventType() { return EventTypes::UNDEFINED; }
 };
 
-#endif /* IDRAWABLE_H */
+#endif /* EVENT_H */
 

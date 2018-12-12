@@ -15,39 +15,34 @@
  */
 
 /* 
- * File:   InpuManager.h
+ * File:   InputEventConfig.h
  * Author: LedoCool
  *
- * Created on August 14, 2018, 10:57 PM
+ * Created on December 11, 2018, 8:45 PM
  */
 
-#ifndef INPUMANAGER_H
-#define INPUMANAGER_H
+#ifndef INPUTEVENTCONFIG_H
+#define INPUTEVENTCONFIG_H
 
-#include "KeyEnums.h"
 #include "engine/includes.h"
-#include "engine/Etc/Singleton.h"
+#include "PlayerActions.h"
+#include "KeyEnums.h"
+#include "InputManager.h"
+#include "engine/Events/EventPipeline.h"
 
-class InputManager
+class InputEventConfig
 {
 public:
-    friend class Singleton<InputManager>;    
-    virtual ~InputManager();
+    InputEventConfig();
+    virtual ~InputEventConfig();
     
-    bool Update(); //Don't forget to update this; 
-    KeyState::en KeyState(Key::en key);
-    
-protected:
-    InputManager();
+    void GatherInputEvents(InputManager * inputManager, EventPipeline * eventPipeline);
     
 private:
-    std::map <Key::en, KeyState::en> _keyStates;
-    std::map <short, short> _windowEvents;
-//    int _m_MouseX, _m_MouseY;
-//    std::vector < short > _mouseStates;
-//    std::map < int, short > _videoStates;
+    std::vector<std::vector<std::pair<Key::en, KeyState::en>>> _keyCombinations;
+    std::vector< PlayerActions::en > _keyEvents; 
 
 };
 
-#endif /* INPUMANAGER_H */
+#endif /* INPUTEVENTCONFIG_H */
 

@@ -15,36 +15,23 @@
  */
 
 /* 
- * File:   Entity.cpp
+ * File:   SpawnAsteroidSystem.cpp
  * Author: LedoCool
  * 
- * Created on December 4, 2018, 8:32 PM
+ * Created on December 5, 2018, 4:47 PM
  */
 
-#include "Entity.h"
+#include "SpawnAsteroidSystem.h"
 
-void Entity::addComponent(std::shared_ptr<Component> component)
+SpawnAsteroidSystem::SpawnAsteroidSystem()
 {
-    removeComponent(component);
-    _components[component->GetComponentId()] = component;
 }
 
-void Entity::removeComponent(std::shared_ptr<Component> component)
+SpawnAsteroidSystem::SpawnAsteroidSystem(const SpawnAsteroidSystem& orig)
 {
-    auto componentIterator = _components.find(component->GetComponentId());    
-    if(componentIterator != _components.end())
-    {
-        _components.erase(componentIterator);
-    }
 }
 
-void Entity::Update(Uint32 dt, System & system)
+SpawnAsteroidSystem::~SpawnAsteroidSystem()
 {
-    for(auto component : _components)
-    {
-        system.Execute(dt, component.second);
-    }
 }
-
-
 

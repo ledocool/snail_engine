@@ -15,31 +15,25 @@
  */
 
 /* 
- * File:   ShaderManager.h
+ * File:   InputEvent.cpp
  * Author: LedoCool
- *
- * Created on December 2, 2018, 4:51 PM
+ * 
+ * Created on December 12, 2018, 8:56 PM
  */
 
-#ifndef SHADERMANAGER_H
-#define SHADERMANAGER_H
+#include "InputEvent.h"
 
-#include "includes.h"
-#include "../Etc/Singleton.h"
-
-class ShaderManager
+InputEvent::InputEvent(PlayerActions::en event)
 {
-public:
-    ShaderManager();
-    
-    unsigned int CompileVertexShader();
-    unsigned int CompileFragmentShader();
-    
-    void KillShader(unsigned int shader);
-    
-private:
-    
-};
+    _event = event;
+}
 
-#endif /* SHADERMANAGER_H */
+PlayerActions::en InputEvent::GetEvent()
+{
+    return _event;
+}
+
+InputEvent::~InputEvent()
+{
+}
 

@@ -15,39 +15,38 @@
  */
 
 /* 
- * File:   InpuManager.h
+ * File:   Map.h
  * Author: LedoCool
  *
- * Created on August 14, 2018, 10:57 PM
+ * Created on December 4, 2018, 10:18 PM
  */
 
-#ifndef INPUMANAGER_H
-#define INPUMANAGER_H
+#ifndef MAP_H
+#define MAP_H
 
-#include "KeyEnums.h"
-#include "engine/includes.h"
-#include "engine/Etc/Singleton.h"
+#include "engine/Ecs/Entity.h"
+#include "engine/Graphics/Drawables/IDrawable.h"
+#include "Camera.h"
+#include "engine/Input/Inputmanager.h"
 
-class InputManager
+class Map
 {
 public:
-    friend class Singleton<InputManager>;    
-    virtual ~InputManager();
+    Map();
+    virtual ~Map();
+    void AddEntity(std::shared_ptr<Entity> entity);
+    void RemoveEntity();
+    void SetScreenSize(unsigned int width, unsigned int height);
     
-    bool Update(); //Don't forget to update this; 
-    KeyState::en KeyState(Key::en key);
-    
-protected:
-    InputManager();
+    void Render();   
+    void Update(Uint32 dt);
     
 private:
-    std::map <Key::en, KeyState::en> _keyStates;
-    std::map <short, short> _windowEvents;
-//    int _m_MouseX, _m_MouseY;
-//    std::vector < short > _mouseStates;
-//    std::map < int, short > _videoStates;
-
+    Camera _camera;
+    std::vector< std::shared_ptr<Entity> > _entities;
+    
+    InputManager * _inputManager;
 };
 
-#endif /* INPUMANAGER_H */
+#endif /* MAP_H */
 

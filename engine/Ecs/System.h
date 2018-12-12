@@ -15,39 +15,31 @@
  */
 
 /* 
- * File:   InpuManager.h
+ * File:   System.h
  * Author: LedoCool
  *
- * Created on August 14, 2018, 10:57 PM
+ * Created on December 4, 2018, 10:25 PM
  */
 
-#ifndef INPUMANAGER_H
-#define INPUMANAGER_H
+#ifndef SYSTEM_H
+#define SYSTEM_H
 
-#include "KeyEnums.h"
 #include "engine/includes.h"
-#include "engine/Etc/Singleton.h"
+#include "Component.h"
 
-class InputManager
+class System
 {
 public:
-    friend class Singleton<InputManager>;    
-    virtual ~InputManager();
-    
-    bool Update(); //Don't forget to update this; 
-    KeyState::en KeyState(Key::en key);
-    
-protected:
-    InputManager();
+    System();
+    virtual ~System();
+    void Execute(Uint32 dt, std::shared_ptr<Component> & component);
     
 private:
-    std::map <Key::en, KeyState::en> _keyStates;
-    std::map <short, short> _windowEvents;
-//    int _m_MouseX, _m_MouseY;
-//    std::vector < short > _mouseStates;
-//    std::map < int, short > _videoStates;
+    
+    virtual bool AcceptsComponent(std::shared_ptr<Component> & component) =0;
+    virtual void UpdateComponent(Uint32 dt, std::shared_ptr<Component> & component) =0;
 
 };
 
-#endif /* INPUMANAGER_H */
+#endif /* SYSTEM_H */
 

@@ -15,22 +15,28 @@
  */
 
 /* 
- * File:   IDrawable.h
+ * File:   PlayerActions.h
  * Author: LedoCool
  *
- * Created on November 29, 2018, 3:16 PM
+ * Created on December 11, 2018, 8:58 PM
  */
 
-#ifndef IDRAWABLE_H
-#define IDRAWABLE_H
+#ifndef PLAYERACTIONS_H
+#define PLAYERACTIONS_H
 
-#include "engine/includes.h"
-
-class IDrawable
+namespace PlayerActions
 {
-public:
-    virtual void Draw(glm::mat4 projection)=0;
-};
+    enum en
+    {
+        GO_FORWARD,
+        GO_BACKWARD,
+        TURN_LEFT,
+        TURN_RIGHT,
+        SHOOT,
+        QUIT
+    };
+}
 
-#endif /* IDRAWABLE_H */
+
+#endif /* PLAYERACTIONS_H */
 

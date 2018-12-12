@@ -15,22 +15,25 @@
  */
 
 /* 
- * File:   IDrawable.h
+ * File:   ComponentTypes.h
  * Author: LedoCool
  *
- * Created on November 29, 2018, 3:16 PM
+ * Created on December 5, 2018, 2:59 PM
  */
 
-#ifndef IDRAWABLE_H
-#define IDRAWABLE_H
+#ifndef COMPONENTTYPES_H
+#define COMPONENTTYPES_H
 
-#include "engine/includes.h"
-
-class IDrawable
+namespace ComponentTypes
 {
-public:
-    virtual void Draw(glm::mat4 projection)=0;
-};
 
-#endif /* IDRAWABLE_H */
+    enum en
+    {
+        UNDEFINED =0,
+        POSITION,
+        
+    };
+}
+
+#endif /* COMPONENTTYPES_H */
 

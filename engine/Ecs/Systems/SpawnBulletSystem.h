@@ -15,22 +15,24 @@
  */
 
 /* 
- * File:   IDrawable.h
+ * File:   SpawnBulletSystem.h
  * Author: LedoCool
  *
- * Created on November 29, 2018, 3:16 PM
+ * Created on December 5, 2018, 4:47 PM
  */
 
-#ifndef IDRAWABLE_H
-#define IDRAWABLE_H
+#ifndef SPAWNBULLETSYSTEM_H
+#define SPAWNBULLETSYSTEM_H
 
-#include "engine/includes.h"
-
-class IDrawable
+class SpawnBulletSystem
 {
 public:
-    virtual void Draw(glm::mat4 projection)=0;
+    SpawnBulletSystem();
+    SpawnBulletSystem(const SpawnBulletSystem& orig);
+    virtual ~SpawnBulletSystem();
+private:
+
 };
 
-#endif /* IDRAWABLE_H */
+#endif /* SPAWNBULLETSYSTEM_H */
 

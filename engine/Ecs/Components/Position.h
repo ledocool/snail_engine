@@ -15,39 +15,37 @@
  */
 
 /* 
- * File:   InpuManager.h
+ * File:   Position.h
  * Author: LedoCool
  *
- * Created on August 14, 2018, 10:57 PM
+ * Created on December 5, 2018, 2:54 PM
  */
 
-#ifndef INPUMANAGER_H
-#define INPUMANAGER_H
+#ifndef POSITION_H
+#define POSITION_H
 
-#include "KeyEnums.h"
-#include "engine/includes.h"
-#include "engine/Etc/Singleton.h"
+#include "engine/Ecs/Component.h"
+#include "ComponentTypes.h"
 
-class InputManager
+class Position : public Component
 {
 public:
-    friend class Singleton<InputManager>;    
-    virtual ~InputManager();
+    Position();
+    Position(float x, float y);
+    virtual ~Position();
     
-    bool Update(); //Don't forget to update this; 
-    KeyState::en KeyState(Key::en key);
+    float x();
+    void x(float x);
     
-protected:
-    InputManager();
+    float y();
+    void y(float y);
+    
+    virtual unsigned int GetComponentType();
     
 private:
-    std::map <Key::en, KeyState::en> _keyStates;
-    std::map <short, short> _windowEvents;
-//    int _m_MouseX, _m_MouseY;
-//    std::vector < short > _mouseStates;
-//    std::map < int, short > _videoStates;
-
+    float _x, _y, _angle;
+    
 };
 
-#endif /* INPUMANAGER_H */
+#endif /* POSITION_H */
 

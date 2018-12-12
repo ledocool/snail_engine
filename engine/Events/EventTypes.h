@@ -15,23 +15,22 @@
  */
 
 /* 
- * File:   GLCacheManager.cpp
+ * File:   EventTypes.h
  * Author: LedoCool
- * 
- * Created on December 2, 2018, 5:32 PM
+ *
+ * Created on December 11, 2018, 8:05 PM
  */
 
-#include "GLCacheManager.h"
+#ifndef EVENTTYPES_H
+#define EVENTTYPES_H
 
-GLCacheManager::GLCacheManager()
+namespace EventTypes
 {
+    enum en{
+        UNDEFINED =0,
+        INPUT
+    };
 }
 
-GLCacheManager::GLCacheManager(const GLCacheManager& orig)
-{
-}
-
-GLCacheManager::~GLCacheManager()
-{
-}
+#endif /* EVENTTYPES_H */
 

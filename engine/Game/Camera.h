@@ -15,39 +15,41 @@
  */
 
 /* 
- * File:   InpuManager.h
+ * File:   Camera.h
  * Author: LedoCool
  *
- * Created on August 14, 2018, 10:57 PM
+ * Created on December 5, 2018, 4:40 PM
  */
 
-#ifndef INPUMANAGER_H
-#define INPUMANAGER_H
+#ifndef CAMERA_H
+#define CAMERA_H
 
-#include "KeyEnums.h"
 #include "engine/includes.h"
-#include "engine/Etc/Singleton.h"
 
-class InputManager
+class Camera
 {
 public:
-    friend class Singleton<InputManager>;    
-    virtual ~InputManager();
+    Camera();
+    ~Camera();
     
-    bool Update(); //Don't forget to update this; 
-    KeyState::en KeyState(Key::en key);
+    void SetScreenProportions(unsigned int width, unsigned int height, bool generateMatrix = true);
+    void LookAt(float x, float y, bool generateMatrix = true);
+
+    void GetCoordinates(float & x, float & y);
+    void GetScreenProportions(unsigned int & width, unsigned int & height);
     
-protected:
-    InputManager();
+    float x();
+    float y();
+    
+    glm::mat4 GetProjectionMatrix();
     
 private:
-    std::map <Key::en, KeyState::en> _keyStates;
-    std::map <short, short> _windowEvents;
-//    int _m_MouseX, _m_MouseY;
-//    std::vector < short > _mouseStates;
-//    std::map < int, short > _videoStates;
-
+    void GenerateProjectionMatrix();
+    
+    float _x, _y;
+    unsigned int _height, _width;
+    glm::mat4 _projectionMatrix;    
 };
 
-#endif /* INPUMANAGER_H */
+#endif /* CAMERA_H */
 

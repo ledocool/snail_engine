@@ -15,39 +15,35 @@
  */
 
 /* 
- * File:   InpuManager.h
+ * File:   Spaceship.h
  * Author: LedoCool
  *
- * Created on August 14, 2018, 10:57 PM
+ * Created on December 5, 2018, 2:50 PM
  */
 
-#ifndef INPUMANAGER_H
-#define INPUMANAGER_H
+#ifndef SPACESHIP_H
+#define SPACESHIP_H
 
-#include "KeyEnums.h"
 #include "engine/includes.h"
-#include "engine/Etc/Singleton.h"
+#include "engine/Ecs/Entity.h"
+#include "engine/Graphics/Drawables/IDrawable.h"
+#include "engine/Graphics/ShaderProgram.h"
 
-class InputManager
+class Spaceship : public Entity, public IDrawable
 {
 public:
-    friend class Singleton<InputManager>;    
-    virtual ~InputManager();
+    Spaceship(float shape[9], float coordinates[2]);
+    Spaceship(const Spaceship& orig);
+    virtual ~Spaceship();
     
-    bool Update(); //Don't forget to update this; 
-    KeyState::en KeyState(Key::en key);
-    
-protected:
-    InputManager();
+    void Draw(glm::mat4 projectionMatrix) override;
     
 private:
-    std::map <Key::en, KeyState::en> _keyStates;
-    std::map <short, short> _windowEvents;
-//    int _m_MouseX, _m_MouseY;
-//    std::vector < short > _mouseStates;
-//    std::map < int, short > _videoStates;
-
+    float _shape[9];
+    unsigned int _glVBO_Id, _glVAO_Id;
+    
+    std::shared_ptr<ShaderProgram> _shaderProgram;
 };
 
-#endif /* INPUMANAGER_H */
+#endif /* SPACESHIP_H */
 

@@ -25,6 +25,7 @@
 #define WINDOW_H
 
 #include "engine/includes.h"
+#include "engine/Game/Map.h"
 
 class Window
 {
@@ -40,7 +41,9 @@ private:
 
     void SetupOpenGlContext();
     void ResizeWindow();
+    void SetupMap();
     
+    std::shared_ptr<Map> _map;    
     std::shared_ptr<SDL_Window> _window;
     SDL_GLContext _context;
 };

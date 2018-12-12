@@ -15,39 +15,32 @@
  */
 
 /* 
- * File:   InpuManager.h
+ * File:   InputEvent.h
  * Author: LedoCool
  *
- * Created on August 14, 2018, 10:57 PM
+ * Created on December 12, 2018, 8:56 PM
  */
 
-#ifndef INPUMANAGER_H
-#define INPUMANAGER_H
+#ifndef INPUTEVENT_H
+#define INPUTEVENT_H
 
-#include "KeyEnums.h"
 #include "engine/includes.h"
-#include "engine/Etc/Singleton.h"
+#include "Event.h"
+#include "EventTypes.h"
+#include "engine/Input/PlayerActions.h"
 
-class InputManager
+class InputEvent : public Event
 {
 public:
-    friend class Singleton<InputManager>;    
-    virtual ~InputManager();
+    InputEvent(PlayerActions::en event);
+    virtual ~InputEvent();
     
-    bool Update(); //Don't forget to update this; 
-    KeyState::en KeyState(Key::en key);
-    
-protected:
-    InputManager();
+    virtual EventTypes::en GetEventType() override { return EventTypes::INPUT; }
+    PlayerActions::en GetEvent();
     
 private:
-    std::map <Key::en, KeyState::en> _keyStates;
-    std::map <short, short> _windowEvents;
-//    int _m_MouseX, _m_MouseY;
-//    std::vector < short > _mouseStates;
-//    std::map < int, short > _videoStates;
-
+    PlayerActions::en _event;
 };
 
-#endif /* INPUMANAGER_H */
+#endif /* INPUTEVENT_H */
 

@@ -5,6 +5,7 @@ set(CMAKE_CXX_STANDARD 11)
 set(ENGINE_SOURCES 
     Engine.cpp
     Input/InputManager.cpp
+    Input/InputEventConfig.cpp
   
     Glad/glad/glad.c
 
@@ -13,12 +14,20 @@ set(ENGINE_SOURCES
 
     Graphics/Window.cpp
     Graphics/Color.cpp
-    Graphics/ShaderManager.cpp
+    Graphics/Shader.cpp
+    Graphics/ShaderProgram.cpp
 
-    Graphics/Drawables/Triangle.cpp
+    Graphics/Drawables/Spaceship.cpp
     
     Ecs/Entity.cpp
+    Ecs/System.cpp
+    Ecs/Components/Position.cpp
 
+    Game/Map.cpp
+    Game/Camera.cpp
+
+    Events/EventPipeline.cpp
+    Events/InputEvent.cpp
 )
 
 set(ENGINE_HEADERS
@@ -28,6 +37,8 @@ set(ENGINE_HEADERS
 
     Input/InputManager.h
     Input/KeyEnums.h
+    Input/InputEventConfig.h
+    Input/PlayerActions.h
 
     Managers/StateManager.h
     Managers/WindowManager.h
@@ -38,14 +49,27 @@ set(ENGINE_HEADERS
 
     Graphics/Window.h
     Graphics/Color.h
-    Graphics/ShaderManager.h
+    Graphics/Shader.h
+    Graphics/ShaderProgram.h
 
-    Graphics/Drawables/Triangle.h
     Graphics/Drawables/IDrawable.h
+    Graphics/Drawables/Spaceship.h
 
-    Ecs/ISystem.h
+    Ecs/System.h
     Ecs/Component.h
     Ecs/Entity.h
+    Ecs/Components/ComponentTypes.h
+    Ecs/Components/IncludeComponents.h
+    Ecs/Components/Position.h
+
+    Game/Map.h
+    Game/Camera.h
+
+    Events/EventPipeline.h
+    Events/Event.h
+    Events/EventTypes.h
+    Events/InputEvent.h
+
 )
 
 #todo: linux config
@@ -64,9 +88,11 @@ target_link_libraries(snail_core
                         ${SDL2_LIBRARIES}
                         ${OPENGL_gl_LIBRARY}
 )
+
 target_include_directories( 
                             snail_core
                             PUBLIC ${GLAD_INCLUDE_DIR}
                             PUBLIC ${SDL2_INCLUDE_DIRS}
                             PUBLIC ${GLAD_DIRECTORIES}
+                            PUBLIC ${GLM_INCLUDE_DIRS}
 )

@@ -15,39 +15,40 @@
  */
 
 /* 
- * File:   InpuManager.h
+ * File:   EventPipeline.h
  * Author: LedoCool
  *
- * Created on August 14, 2018, 10:57 PM
+ * Created on December 11, 2018, 8:04 PM
  */
 
-#ifndef INPUMANAGER_H
-#define INPUMANAGER_H
+#ifndef EVENTPIPELINE_H
+#define EVENTPIPELINE_H
 
-#include "KeyEnums.h"
 #include "engine/includes.h"
+#include "Event.h"
+#include "EventTypes.h"
 #include "engine/Etc/Singleton.h"
 
-class InputManager
+class EventPipeline
 {
 public:
-    friend class Singleton<InputManager>;    
-    virtual ~InputManager();
+    friend class Singleton<EventPipeline>;
     
-    bool Update(); //Don't forget to update this; 
-    KeyState::en KeyState(Key::en key);
+    virtual ~EventPipeline();
+    
+    void RegisterEvent(Event * e);
+    void PropagateEvents();
+    void PushEventBatch();
+    void PopEventBatch();
+    std::vector<std::weak_ptr<Event>> GetEvents();
+    std::vector<std::weak_ptr<Event>> GetEvents(EventTypes::en type);
     
 protected:
-    InputManager();
+    EventPipeline();
     
 private:
-    std::map <Key::en, KeyState::en> _keyStates;
-    std::map <short, short> _windowEvents;
-//    int _m_MouseX, _m_MouseY;
-//    std::vector < short > _mouseStates;
-//    std::map < int, short > _videoStates;
-
+    std::deque<std::vector<std::shared_ptr<Event>>> _events;
 };
 
-#endif /* INPUMANAGER_H */
+#endif /* EVENTPIPELINE_H */
 

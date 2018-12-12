@@ -15,35 +15,17 @@
  */
 
 /* 
- * File:   Triangle.h
+ * File:   includeComponents.h
  * Author: LedoCool
  *
- * Created on November 29, 2018, 3:13 PM
+ * Created on December 5, 2018, 2:55 PM
  */
 
-#ifndef RECTANGLE_H
-#define RECTANGLE_H
+#ifndef INCLUDECOMPONENTS_H
+#define INCLUDECOMPONENTS_H
 
-#include "Graphics/Color.h"
-#include "IDrawable.h"
+#include "ComponentTypes.h"
+#include "Position.h"
 
-class Triangle : IDrawable
-{
-public:
-    Triangle(float shape[9], float coordinates[2],  Color color);
-    Triangle(const Triangle & orig);
-    
-    void Draw() override;
-    virtual ~Triangle();
-    
-private:
-    Color _color = Color(0, 0, 0, 0);
-    float _shape[9];
-    float _coordinates[2];
-    unsigned int _glVBO_Id, _glVAO_Id;
-    
-    unsigned int _shaderProgram;
-};
-
-#endif /* RECTANGLE_H */
+#endif /* INCLUDECOMPONENTS_H */
 

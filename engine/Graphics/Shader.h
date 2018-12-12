@@ -15,36 +15,39 @@
  */
 
 /* 
- * File:   Entity.cpp
+ * File:   Shader.h
  * Author: LedoCool
- * 
- * Created on December 4, 2018, 8:32 PM
+ *
+ * Created on December 6, 2018, 7:58 PM
  */
 
-#include "Entity.h"
+#ifndef SHADER_H
+#define SHADER_H
 
-void Entity::addComponent(std::shared_ptr<Component> component)
-{
-    removeComponent(component);
-    _components[component->GetComponentId()] = component;
-}
+#include "engine/includes.h"
 
-void Entity::removeComponent(std::shared_ptr<Component> component)
+namespace ShaderType 
 {
-    auto componentIterator = _components.find(component->GetComponentId());    
-    if(componentIterator != _components.end())
+    enum en
     {
-        _components.erase(componentIterator);
-    }
-}
+        FRAGMENT,
+        VERTEX
+    };
+};
 
-void Entity::Update(Uint32 dt, System & system)
+class Shader
 {
-    for(auto component : _components)
-    {
-        system.Execute(dt, component.second);
-    }
-}
+public:
+    Shader(std::string shaderFilePath, ShaderType::en type);
+    ~Shader();  
+    
+    unsigned int GetType() { return _shaderType; }
+    unsigned int GetId() { return _shaderId; } 
+    
+private:
+    unsigned int _shaderId;
+    unsigned int _shaderType;
+};
 
-
+#endif /* SHADER_H */
 

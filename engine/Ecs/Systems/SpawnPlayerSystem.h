@@ -15,22 +15,24 @@
  */
 
 /* 
- * File:   IDrawable.h
+ * File:   SpawnPlayerSystem.h
  * Author: LedoCool
  *
- * Created on November 29, 2018, 3:16 PM
+ * Created on December 5, 2018, 4:46 PM
  */
 
-#ifndef IDRAWABLE_H
-#define IDRAWABLE_H
+#ifndef SPAWNPLAYERSYSTEM_H
+#define SPAWNPLAYERSYSTEM_H
 
-#include "engine/includes.h"
-
-class IDrawable
+class SpawnPlayerSystem
 {
 public:
-    virtual void Draw(glm::mat4 projection)=0;
+    SpawnPlayerSystem();
+    SpawnPlayerSystem(const SpawnPlayerSystem& orig);
+    virtual ~SpawnPlayerSystem();
+private:
+
 };
 
-#endif /* IDRAWABLE_H */
+#endif /* SPAWNPLAYERSYSTEM_H */
 

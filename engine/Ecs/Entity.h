@@ -24,27 +24,26 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
-#include "includes.h"
-#include "ISystem.h"
+#include "engine/includes.h"
+#include "System.h"
 #include "Component.h"
 
-class ISystem;
+class System;
 
 class Entity
 {
 public:
-    Entity();
-    virtual ~Entity();
+    virtual ~Entity() {};
+    void Update(Uint32 dt, System & system);
     
-    int addComponent(std::shared_ptr<Component> component);
-    int removeComponent(std::shared_ptr<Component> component);
+protected:
+    void addComponent(std::shared_ptr<Component> component);
+    void removeComponent(std::shared_ptr<Component> component);
+    std::map< unsigned int, std::shared_ptr<Component> > _components;
     
-    void Update(Uint32 dt, ISystem system);
+    Entity() {};
     
 private:
-    Entity(const Entity& orig) {};
-    
-    std::map<int, std::shared_ptr<Component> > _components;
     
 };
 

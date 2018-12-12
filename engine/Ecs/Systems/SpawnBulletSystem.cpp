@@ -15,24 +15,23 @@
  */
 
 /* 
- * File:   GLCacheManager.h
+ * File:   SpawnBulletSystem.cpp
  * Author: LedoCool
- *
- * Created on December 2, 2018, 5:32 PM
+ * 
+ * Created on December 5, 2018, 4:47 PM
  */
 
-#ifndef GLCACHEMANAGER_H
-#define GLCACHEMANAGER_H
+#include "SpawnBulletSystem.h"
 
-class GLCacheManager
+SpawnBulletSystem::SpawnBulletSystem()
 {
-public:
-    GLCacheManager();
-    GLCacheManager(const GLCacheManager& orig);
-    virtual ~GLCacheManager();
-private:
+}
 
-};
+SpawnBulletSystem::SpawnBulletSystem(const SpawnBulletSystem& orig)
+{
+}
 
-#endif /* GLCACHEMANAGER_H */
+SpawnBulletSystem::~SpawnBulletSystem()
+{
+}
 

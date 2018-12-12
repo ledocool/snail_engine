@@ -15,22 +15,24 @@
  */
 
 /* 
- * File:   IDrawable.h
+ * File:   SpawnAsteroidSystem.h
  * Author: LedoCool
  *
- * Created on November 29, 2018, 3:16 PM
+ * Created on December 5, 2018, 4:47 PM
  */
 
-#ifndef IDRAWABLE_H
-#define IDRAWABLE_H
+#ifndef SPAWNASTEROIDSYSTEM_H
+#define SPAWNASTEROIDSYSTEM_H
 
-#include "engine/includes.h"
-
-class IDrawable
+class SpawnAsteroidSystem
 {
 public:
-    virtual void Draw(glm::mat4 projection)=0;
+    SpawnAsteroidSystem();
+    SpawnAsteroidSystem(const SpawnAsteroidSystem& orig);
+    virtual ~SpawnAsteroidSystem();
+private:
+
 };
 
-#endif /* IDRAWABLE_H */
+#endif /* SPAWNASTEROIDSYSTEM_H */
 

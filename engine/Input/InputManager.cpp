@@ -31,24 +31,11 @@ InputManager::~InputManager()
 {
 }
 
+
 KeyState::en InputManager::KeyState(Key::en key)
 {
     return _keyStates[key];
 }
-
-//bool InputManager::KeyStrokeActive(KeyStroke combo)
-//{
-//    bool active = true;
-//    for(auto key : combo._keys)
-//    {
-//        if(KeyState(key.first) != key.second)
-//        {
-//            active = false;
-//            break;
-//        }
-//    }
-//    return active;
-//}
 
 bool InputManager::Update()
 {
@@ -65,29 +52,28 @@ bool InputManager::Update()
             keys.push_back((Key::en)event.key.keysym.sym);
             break;
         case SDL_KEYUP:
-
             _keyStates[(Key::en)event.key.keysym.sym] = KeyState::UP;
             keys.push_back((Key::en)event.key.keysym.sym);
             break;
-            //            case SDL_MOUSEMOTION:
-            //                _m_MouseX = event.motion.x;
-            //                _m_MouseY = event.motion.y; //Temp. Then we will check window coords
-            //                break;
-            //            case SDL_MOUSEBUTTONUP:
-            //                _mouseStates[event.button.button] = KEY_IS_UP;
-            //                clicks.push_back((mouseClick)event.button.which);
-            //                break;
-            //            case SDL_MOUSEBUTTONDOWN:
-            //                _mouseStates[event.button.button] = KEY_IS_DOWN;
-            //                clicks.push_back((mouseClick)event.button.which);
-            //                break;
+//        case SDL_MOUSEMOTION:
+//            _m_MouseX = event.motion.x;
+//            _m_MouseY = event.motion.y; //Temp. Then we will check window coords
+//            break;
+//        case SDL_MOUSEBUTTONUP:
+//            _mouseStates[event.button.button] = KEY_IS_UP;
+//            clicks.push_back((mouseClick)event.button.which);
+//            break;
+//        case SDL_MOUSEBUTTONDOWN:
+//            _mouseStates[event.button.button] = KEY_IS_DOWN;
+//            clicks.push_back((mouseClick)event.button.which);
+//            break;
 
-
-            //TODO: leave for future update;                
-            //            case SDL_WINDOWEVENT:
-            //                if(event.window.event == SDL_WINDOWEVENT_RESIZED)
-            //                    graphic->resizeViewport();
-            //                break;
+             
+//        case SDL_WINDOWEVENT:
+//            _windowStates[(short)event.window.event] = 
+//            if(event.window.event == SDL_WINDOWEVENT_RESIZED)
+//                graphic->resizeViewport();
+//            break;
 
         default:
             break;

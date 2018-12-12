@@ -15,36 +15,28 @@
  */
 
 /* 
- * File:   Entity.cpp
+ * File:   System.cpp
  * Author: LedoCool
  * 
- * Created on December 4, 2018, 8:32 PM
+ * Created on December 4, 2018, 10:25 PM
  */
 
-#include "Entity.h"
+#include "System.h"
 
-void Entity::addComponent(std::shared_ptr<Component> component)
+System::System()
 {
-    removeComponent(component);
-    _components[component->GetComponentId()] = component;
 }
 
-void Entity::removeComponent(std::shared_ptr<Component> component)
+System::~System()
 {
-    auto componentIterator = _components.find(component->GetComponentId());    
-    if(componentIterator != _components.end())
+}
+
+void System::Execute(Uint32 dt, std::shared_ptr<Component> & component)
+{
+    if(AcceptsComponent(component))
     {
-        _components.erase(componentIterator);
+        UpdateComponent(dt, component);
     }
 }
-
-void Entity::Update(Uint32 dt, System & system)
-{
-    for(auto component : _components)
-    {
-        system.Execute(dt, component.second);
-    }
-}
-
 
 

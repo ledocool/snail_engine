@@ -15,29 +15,30 @@
  */
 
 /* 
- * File:   ISystem.h
+ * File:   ShaderProgram.h
  * Author: LedoCool
  *
- * Created on December 4, 2018, 7:53 PM
+ * Created on December 7, 2018, 2:33 PM
  */
 
-#ifndef ISYSTEM_H
-#define ISYSTEM_H
+#ifndef SHADERPROGRAM_H
+#define SHADERPROGRAM_H
 
-#include "includes.h"
-#include "Component.h"
+#include "engine/includes.h"
+#include "Shader.h"
 
-class ISystem
+class ShaderProgram
 {
 public:
-    ISystem();
-    virtual ~ISystem();
+    ShaderProgram(std::string vertexShader, std::string fragmentShader);
+    ~ShaderProgram();
     
-    virtual void Execute(Uint32 dt, Component component){};
+    void Use();
+    void PassData(glm::mat4 data, std::string parameterName);
+    
 private:
-
-    ISystem(const ISystem& orig);
+    unsigned int _programId;
 };
 
-#endif /* ISYSTEM_H */
+#endif /* SHADERPROGRAM_H */
 

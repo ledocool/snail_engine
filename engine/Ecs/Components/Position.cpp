@@ -15,36 +15,52 @@
  */
 
 /* 
- * File:   Entity.cpp
+ * File:   Position.cpp
  * Author: LedoCool
  * 
- * Created on December 4, 2018, 8:32 PM
+ * Created on December 5, 2018, 2:54 PM
  */
 
-#include "Entity.h"
+#include "Position.h"
 
-void Entity::addComponent(std::shared_ptr<Component> component)
+Position::Position()
 {
-    removeComponent(component);
-    _components[component->GetComponentId()] = component;
+    _x = 0;
+    _y = 0;
 }
 
-void Entity::removeComponent(std::shared_ptr<Component> component)
+Position::Position(float x, float y)
 {
-    auto componentIterator = _components.find(component->GetComponentId());    
-    if(componentIterator != _components.end())
-    {
-        _components.erase(componentIterator);
-    }
+    _x = x;
+    _y = y;
 }
 
-void Entity::Update(Uint32 dt, System & system)
+Position::~Position()
 {
-    for(auto component : _components)
-    {
-        system.Execute(dt, component.second);
-    }
 }
 
+float Position::x()
+{
+    return _x;
+}
 
+void Position::x(float x)
+{
+    _x = x;
+}
+
+float Position::y()
+{
+    return _y;
+}
+
+void Position::y(float y)
+{
+    _y = y;
+}
+
+unsigned int Position::GetComponentType()
+{
+    return ComponentTypes::POSITION;
+}
 

@@ -15,36 +15,23 @@
  */
 
 /* 
- * File:   Entity.cpp
+ * File:   SpawnPlayerSystem.cpp
  * Author: LedoCool
  * 
- * Created on December 4, 2018, 8:32 PM
+ * Created on December 5, 2018, 4:46 PM
  */
 
-#include "Entity.h"
+#include "SpawnPlayerSystem.h"
 
-void Entity::addComponent(std::shared_ptr<Component> component)
+SpawnPlayerSystem::SpawnPlayerSystem()
 {
-    removeComponent(component);
-    _components[component->GetComponentId()] = component;
 }
 
-void Entity::removeComponent(std::shared_ptr<Component> component)
+SpawnPlayerSystem::SpawnPlayerSystem(const SpawnPlayerSystem& orig)
 {
-    auto componentIterator = _components.find(component->GetComponentId());    
-    if(componentIterator != _components.end())
-    {
-        _components.erase(componentIterator);
-    }
 }
 
-void Entity::Update(Uint32 dt, System & system)
+SpawnPlayerSystem::~SpawnPlayerSystem()
 {
-    for(auto component : _components)
-    {
-        system.Execute(dt, component.second);
-    }
 }
-
-
 

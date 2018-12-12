@@ -19,6 +19,8 @@
 
 #include "Input/InputManager.h"
 #include "Managers/WindowManager.h"
+#include "Events/EventPipeline.h"
+#include "Input/InputEventConfig.h"
 
 Engine::Engine()
 {   
@@ -35,7 +37,7 @@ Engine::~Engine()
 void Engine::Init()
 {
     InitSDL();
-    _wm.Create("Base window", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 640, 480);
+    CreateWindows();
 }
 
 /* Wrapper method for all engine destruction */
@@ -50,21 +52,25 @@ void Engine::InitSDL()
         std::cout << "SDL_Init Error: " << SDL_GetError() << std::endl;
         return;
     }
+    //SDL_GL_LoadLibrary(NULL);
 }
 
 void Engine::CreateWindows()
 {
-
+    _wm.Create("Base window", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 640, 480);
 }
 
 /* Base loop */
 int Engine::Loop()
 {
-    InputManager man;
+    auto inputManager = Singleton<InputManager>::get();
+    auto eventPipeline = Singleton<EventPipeline>::get();
+    auto inputEventconfig = Singleton<InputEventConfig>::get();
 
     bool shouldWork = true;
     while (shouldWork) {
-        shouldWork = !man.Update();
+        shouldWork = !inputManager->Update();
+        inputEventconfig->GatherInputEvents(inputManager, eventPipeline);
         _wm.Update(0);
         _wm.Render(0);
     }

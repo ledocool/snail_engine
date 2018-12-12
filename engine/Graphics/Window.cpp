@@ -22,7 +22,7 @@
  */
 
 #include "Window.h"
-#include "Graphics/Drawables/Triangle.h"
+#include "Game/Map.h"
 
 Window::Window(const char *title, const unsigned int x, const unsigned int y, const unsigned int height, const unsigned int width)
 {
@@ -40,11 +40,22 @@ Window::Window(const char *title, const unsigned int x, const unsigned int y, co
     SetContextActive();
     //const unsigned char * version = glGetString(GL_VERSION);
     SetupOpenGlContext();
+
+    SetupMap();    
 }
 
 Window::~Window()
 {
 }
+
+void Window::SetupMap()
+{
+    _map = std::shared_ptr<Map>(new Map());
+    int w,h;
+    SDL_GetWindowSize(_window.get(), &w, &h);   
+    _map->SetScreenSize(w,h);
+}
+
 
 int Window::SetContextActive()
 {
@@ -53,31 +64,23 @@ int Window::SetContextActive()
 
 void Window::Render(float dt)
 {
+    SetContextActive();
     glClear(GL_COLOR_BUFFER_BIT);
-    
-    float coords[2] = {0.f, 0.f},
-          vertices[9] = {
-                -0.5f, -0.5f, 0.0f,
-                0.5f, -0.5f, 0.0f,
-                0.0f,  0.5f, 0.0f
-            };
-    
-    Color color(0.7, 0.3, 0.3, 1.0);
-    
-    Triangle tr(vertices, coords, color);
-    tr.Draw();
+    _map->Render();
     
     SDL_GL_SwapWindow(_window.get());
 }
 
 void Window::Update(float dt)
 {
-
+    _map->Update(dt);
 }
 
 void Window::ResizeWindow()
 {
-
+    int w,h;
+    SDL_GetWindowSize(_window.get(), &w, &h);   
+    glViewport( 0, 0, ( GLsizei )w, ( GLsizei )h );
 }
 
 void Window::SetupOpenGlContext()
@@ -92,7 +95,7 @@ void Window::SetupOpenGlContext()
     // Also request a depth buffer
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
-
+    
     gladLoadGLLoader(SDL_GL_GetProcAddress);
     
     glDisable(GL_DEPTH_TEST);
