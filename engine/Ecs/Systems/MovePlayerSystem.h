@@ -15,23 +15,27 @@
  */
 
 /* 
- * File:   SpawnBulletSystem.cpp
+ * File:   MovePlayerSystem.h
  * Author: LedoCool
- * 
- * Created on December 5, 2018, 4:47 PM
+ *
+ * Created on December 15, 2018, 3:54 PM
  */
 
-#include "SpawnBulletSystem.h"
+#ifndef MOVEPLAYERSYSTEM_H
+#define MOVEPLAYERSYSTEM_H
 
-SpawnBulletSystem::SpawnBulletSystem()
-{
-}
+#include "engine/includes.h"
+#include "engine/Ecs/System.h"
 
-SpawnBulletSystem::SpawnBulletSystem(const SpawnBulletSystem& orig)
+class MovePlayerSystem : public System
 {
-}
+public:
+    MovePlayerSystem();
+    MovePlayerSystem(const MovePlayerSystem& orig);
+    virtual ~MovePlayerSystem();
 
-SpawnBulletSystem::~SpawnBulletSystem()
-{
-}
+    void Execute(Uint32 dt, std::shared_ptr<GameState> & gameState) override;
+};
+
+#endif /* MOVEPLAYERSYSTEM_H */
 

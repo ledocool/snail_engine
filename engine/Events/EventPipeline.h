@@ -40,8 +40,21 @@ public:
     void PropagateEvents();
     void PushEventBatch();
     void PopEventBatch();
-    std::vector<std::weak_ptr<Event>> GetEvents();
-    std::vector<std::weak_ptr<Event>> GetEvents(EventTypes::en type);
+    std::vector<std::weak_ptr<Event>> GetAllEvents();
+    template <class T> std::vector< std::weak_ptr<T> > GetEvents()
+    {
+        std::vector<std::weak_ptr<T>> handout;
+        for(std::shared_ptr<Event> event : _events.front())
+        {
+            std::shared_ptr<T> casted = std::dynamic_pointer_cast<T>(event);
+            if(casted)
+            {
+                handout.push_back( std::weak_ptr<T>(casted) );
+            }
+        }
+
+        return handout;
+    }
     
 protected:
     EventPipeline();

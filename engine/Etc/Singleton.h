@@ -36,7 +36,6 @@ public:
 private:
     Singleton();
     virtual ~Singleton();
-
     Singleton(Singleton const&);
     Singleton& operator=(Singleton const&);
 };

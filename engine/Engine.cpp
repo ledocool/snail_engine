@@ -68,11 +68,24 @@ int Engine::Loop()
     auto inputEventconfig = Singleton<InputEventConfig>::get();
 
     bool shouldWork = true;
+    Uint32  lastUpdateTime, 
+            frameTime, 
+            currentUpdateTime;
+    
+    lastUpdateTime = currentUpdateTime = SDL_GetTicks();
+    
     while (shouldWork) {
+        currentUpdateTime = SDL_GetTicks();
+        frameTime = currentUpdateTime - lastUpdateTime;
+        lastUpdateTime = currentUpdateTime;
+        
         shouldWork = !inputManager->Update();
         inputEventconfig->GatherInputEvents(inputManager, eventPipeline);
-        _wm.Update(0);
-        _wm.Render(0);
+        _wm.Update(frameTime);
+        _wm.Render(frameTime);
+        eventPipeline->PropagateEvents();
+        
+        
     }
 
     return 0;

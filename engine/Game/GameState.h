@@ -15,23 +15,25 @@
  */
 
 /* 
- * File:   SpawnPlayerSystem.cpp
+ * File:   GameState.h
  * Author: LedoCool
- * 
- * Created on December 5, 2018, 4:46 PM
+ *
+ * Created on December 15, 2018, 6:34 PM
  */
 
-#include "SpawnPlayerSystem.h"
+#ifndef GAMESTATE_H
+#define GAMESTATE_H
 
-SpawnPlayerSystem::SpawnPlayerSystem()
-{
-}
+#include "engine/includes.h"
+#include "engine/Game/Map.h"
+#include "engine/Game/Camera.h"
 
-SpawnPlayerSystem::SpawnPlayerSystem(const SpawnPlayerSystem& orig)
-{
-}
+struct GameState
+{    
+    std::shared_ptr<Map> map;
+    std::shared_ptr<Camera> camera;
+    
+};
 
-SpawnPlayerSystem::~SpawnPlayerSystem()
-{
-}
+#endif /* GAMESTATE_H */
 

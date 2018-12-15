@@ -22,7 +22,9 @@
  */
 
 #include "Window.h"
-#include "Game/Map.h"
+#include "engine/Game/Map.h"
+#include "engine/Game/Camera.h"
+#include "Etc/Singleton.h"
 
 Window::Window(const char *title, const unsigned int x, const unsigned int y, const unsigned int height, const unsigned int width)
 {
@@ -34,14 +36,12 @@ Window::Window(const char *title, const unsigned int x, const unsigned int y, co
                                 SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
 
     _window.reset(win, SDL_DestroyWindow);
-
-    //Todo: create context in graphics manager;
     _context = SDL_GL_CreateContext(_window.get());
     SetContextActive();
-    //const unsigned char * version = glGetString(GL_VERSION);
     SetupOpenGlContext();
 
-    SetupMap();    
+    SetupMap();
+    _ecsExecutor = std::make_shared<EcsExecutor>();
 }
 
 Window::~Window()
@@ -50,10 +50,12 @@ Window::~Window()
 
 void Window::SetupMap()
 {
-    _map = std::shared_ptr<Map>(new Map());
+    _gameState = std::make_shared<GameState>();
+    _gameState->map = std::make_shared<Map>();
+    _gameState->camera = std::make_shared<Camera>();
     int w,h;
     SDL_GetWindowSize(_window.get(), &w, &h);   
-    _map->SetScreenSize(w,h);
+    _gameState->camera->SetScreenProportions(w, h);
 }
 
 
@@ -62,18 +64,19 @@ int Window::SetContextActive()
     SDL_GL_MakeCurrent(_window.get(), _context);
 }
 
-void Window::Render(float dt)
+void Window::Render(Uint32 dt)
 {
     SetContextActive();
     glClear(GL_COLOR_BUFFER_BIT);
-    _map->Render();
+    
+    _gameState->map->Render(_gameState->camera->GetProjectionMatrix());
     
     SDL_GL_SwapWindow(_window.get());
 }
 
-void Window::Update(float dt)
+void Window::Update(Uint32 dt)
 {
-    _map->Update(dt);
+    _ecsExecutor->ExecuteEcs(dt, _gameState);
 }
 
 void Window::ResizeWindow()
@@ -81,6 +84,7 @@ void Window::ResizeWindow()
     int w,h;
     SDL_GetWindowSize(_window.get(), &w, &h);   
     glViewport( 0, 0, ( GLsizei )w, ( GLsizei )h );
+    _gameState->camera->SetScreenProportions(w, h);
 }
 
 void Window::SetupOpenGlContext()

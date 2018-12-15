@@ -25,26 +25,45 @@
 
 void Entity::addComponent(std::shared_ptr<Component> component)
 {
-    removeComponent(component);
-    _components[component->GetComponentId()] = component;
+    if(component)
+    {
+        removeComponent(component);
+        auto componentId = component->GetComponentId();
+        _components.insert(std::make_pair(component->GetComponentId(), component)); 
+    }
 }
 
 void Entity::removeComponent(std::shared_ptr<Component> component)
 {
-    auto componentIterator = _components.find(component->GetComponentId());    
-    if(componentIterator != _components.end())
+    if(component)
     {
-        _components.erase(componentIterator);
+        auto componentIterator = _components.find(component->GetComponentId());    
+        if(componentIterator != _components.end())
+        {
+            _components.erase(componentIterator);
+        }
     }
 }
 
-void Entity::Update(Uint32 dt, System & system)
+std::vector< std::weak_ptr<Component> > Entity::GetComponents()
 {
+    std::vector< std::weak_ptr<Component> > myComponents;
     for(auto component : _components)
     {
-        system.Execute(dt, component.second);
+       myComponents.push_back( std::weak_ptr<Component>(component.second) );
     }
+    
+    return myComponents;
 }
 
-
+std::weak_ptr<Component> Entity::GetComponent(unsigned int id)
+{
+    std::weak_ptr<Component> ret;
+    if(_components.at(id))
+    {
+        ret = _components[id];
+    }
+    
+    return ret;
+}
 

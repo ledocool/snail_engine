@@ -24,10 +24,9 @@
 #ifndef MAP_H
 #define MAP_H
 
+#include "engine/includes.h"
 #include "engine/Ecs/Entity.h"
 #include "engine/Graphics/Drawables/IDrawable.h"
-#include "Camera.h"
-#include "engine/Input/Inputmanager.h"
 
 class Map
 {
@@ -36,16 +35,12 @@ public:
     virtual ~Map();
     void AddEntity(std::shared_ptr<Entity> entity);
     void RemoveEntity();
-    void SetScreenSize(unsigned int width, unsigned int height);
     
-    void Render();   
-    void Update(Uint32 dt);
+    std::vector< std::shared_ptr<Entity> > GetEntities();
+    void Render(glm::mat4 projection);   
     
 private:
-    Camera _camera;
     std::vector< std::shared_ptr<Entity> > _entities;
-    
-    InputManager * _inputManager;
 };
 
 #endif /* MAP_H */

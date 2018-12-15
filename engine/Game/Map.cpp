@@ -22,37 +22,34 @@
  */
 
 #include "Map.h"
+
+#include "engine/includes.h"
 #include "engine/Graphics/Drawables/Spaceship.h"
-#include "engine/Etc/Singleton.h"
 #include "engine/Events/EventPipeline.h"
 #include "engine/Events/EventTypes.h"
+#include "engine/Events/Event.h"
+#include "engine/Events/InputEvent.h"
+#include "engine/Input/PlayerActions.h"
 
 Map::Map()
 {
     float coords[2] = {0.f, 0.f},
           vertices[9] = {
-                -0.5f, -0.5f, 0.0f,
-                0.5f, -0.5f, 0.0f,
-                0.0f,  0.5f, 0.0f
+                -0.5f, 0.5f, 0.0f,
+                0.9f, 0.0f, 0.0f,
+                -0.5f, -0.5f, 0.0f
             };
     
     std::shared_ptr<Spaceship> playerSpaceship = std::shared_ptr<Spaceship> (new Spaceship(vertices, coords));
     _entities.push_back(playerSpaceship);
-    _inputManager = Singleton<InputManager>::get();
 }
 
 Map::~Map()
 {
 }
 
-void Map::SetScreenSize(unsigned int width, unsigned int height)
+void Map::Render(glm::mat4 projection)
 {
-    _camera.SetScreenProportions(width, height);
-}
-
-void Map::Render()
-{
-    auto projection = _camera.GetProjectionMatrix();
     for(auto & entity : _entities)
     {
         auto ptr = std::dynamic_pointer_cast<IDrawable>(entity);
@@ -73,12 +70,8 @@ void Map::RemoveEntity()
 
 }
 
-void Map::Update(Uint32 dt)
-{
-    auto eventPipeline = Singleton<EventPipeline>::get();
-    auto events = eventPipeline->GetEvents(EventTypes::INPUT);
-    if(!events.empty())
-    {
-        std::cout << "Imma working" << std::endl;
-    }
+std::vector< std::shared_ptr<Entity> > Map::GetEntities()
+{   
+    return _entities;
 }
+

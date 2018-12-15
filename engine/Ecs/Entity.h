@@ -25,16 +25,14 @@
 #define ENTITY_H
 
 #include "engine/includes.h"
-#include "System.h"
 #include "Component.h"
-
-class System;
 
 class Entity
 {
 public:
     virtual ~Entity() {};
-    void Update(Uint32 dt, System & system);
+    std::vector< std::weak_ptr<Component> > GetComponents();
+    std::weak_ptr<Component> GetComponent(unsigned int id);    
     
 protected:
     void addComponent(std::shared_ptr<Component> component);

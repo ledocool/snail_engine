@@ -25,7 +25,9 @@
 #define WINDOW_H
 
 #include "engine/includes.h"
-#include "engine/Game/Map.h"
+
+#include "engine/Game/GameState.h"
+#include "engine/Ecs/EcsExecutor.h"
 
 class Window
 {
@@ -35,15 +37,19 @@ public:
 
     SetContextActive();
 
-    virtual void Update(float dt);
-    virtual void Render(float dt);
+    virtual void Update(Uint32 dt);
+    virtual void Render(Uint32 dt);
+    
+protected:
+    std::shared_ptr<GameState> _gameState;
+    std::shared_ptr<EcsExecutor> _ecsExecutor;
+    
 private:
 
     void SetupOpenGlContext();
     void ResizeWindow();
     void SetupMap();
     
-    std::shared_ptr<Map> _map;    
     std::shared_ptr<SDL_Window> _window;
     SDL_GLContext _context;
 };

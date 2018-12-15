@@ -22,6 +22,8 @@ set(ENGINE_SOURCES
     Ecs/Entity.cpp
     Ecs/System.cpp
     Ecs/Components/Position.cpp
+    Ecs/EcsExecutor.cpp
+    Ecs/Systems/MovePlayerSystem.cpp
 
     Game/Map.cpp
     Game/Camera.cpp
@@ -61,15 +63,17 @@ set(ENGINE_HEADERS
     Ecs/Components/ComponentTypes.h
     Ecs/Components/IncludeComponents.h
     Ecs/Components/Position.h
+    Ecs/EcsExecutor.h
+    Ecs/Systems/MovePlayerSystem.h
 
     Game/Map.h
     Game/Camera.h
+    Game/GameState.h
 
     Events/EventPipeline.h
     Events/Event.h
     Events/EventTypes.h
     Events/InputEvent.h
-
 )
 
 #todo: linux config

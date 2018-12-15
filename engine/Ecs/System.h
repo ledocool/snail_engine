@@ -26,18 +26,14 @@
 
 #include "engine/includes.h"
 #include "Component.h"
+#include "engine/Game/GameState.h"
 
 class System
 {
 public:
     System();
     virtual ~System();
-    void Execute(Uint32 dt, std::shared_ptr<Component> & component);
-    
-private:
-    
-    virtual bool AcceptsComponent(std::shared_ptr<Component> & component) =0;
-    virtual void UpdateComponent(Uint32 dt, std::shared_ptr<Component> & component) =0;
+    virtual void Execute(Uint32 dt, std::shared_ptr<GameState> & gameState) =0;
 
 };
 

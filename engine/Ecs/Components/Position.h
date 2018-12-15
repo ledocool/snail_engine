@@ -40,7 +40,10 @@ public:
     float y();
     void y(float y);
     
-    virtual unsigned int GetComponentType();
+    float angle();
+    void angle(float angle);
+    
+    virtual unsigned int GetComponentId() override;
     
 private:
     float _x, _y, _angle;

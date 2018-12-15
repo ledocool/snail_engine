@@ -30,13 +30,3 @@ System::System()
 System::~System()
 {
 }
-
-void System::Execute(Uint32 dt, std::shared_ptr<Component> & component)
-{
-    if(AcceptsComponent(component))
-    {
-        UpdateComponent(dt, component);
-    }
-}
-
-

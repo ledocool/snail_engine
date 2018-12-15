@@ -59,7 +59,17 @@ void Position::y(float y)
     _y = y;
 }
 
-unsigned int Position::GetComponentType()
+float Position::angle()
+{
+    return _angle;
+}
+
+void Position::angle(float angle)
+{
+    _angle = angle;
+}
+
+unsigned int Position::GetComponentId()
 {
     return ComponentTypes::POSITION;
 }

@@ -15,24 +15,29 @@
  */
 
 /* 
- * File:   SpawnAsteroidSystem.h
+ * File:   EcsExecutor.cpp
  * Author: LedoCool
- *
- * Created on December 5, 2018, 4:47 PM
+ * 
+ * Created on December 15, 2018, 8:35 PM
  */
 
-#ifndef SPAWNASTEROIDSYSTEM_H
-#define SPAWNASTEROIDSYSTEM_H
+#include "EcsExecutor.h"
+#include "engine/Ecs/Systems/MovePlayerSystem.h"
 
-class SpawnAsteroidSystem
+EcsExecutor::EcsExecutor()
 {
-public:
-    SpawnAsteroidSystem();
-    SpawnAsteroidSystem(const SpawnAsteroidSystem& orig);
-    virtual ~SpawnAsteroidSystem();
-private:
+    _systems.push_back(std::make_shared<MovePlayerSystem>());
+}
 
-};
+EcsExecutor::~EcsExecutor()
+{
+}
 
-#endif /* SPAWNASTEROIDSYSTEM_H */
+void EcsExecutor::ExecuteEcs(Uint32 dt, std::shared_ptr<GameState> & state)
+{
+    for(std::shared_ptr<System> system : _systems)
+    {
+        system->Execute(dt, state);
+    }
+}
 

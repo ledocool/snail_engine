@@ -30,7 +30,6 @@ public:
     Color(float r, float g, float b, float a);
     
 private:
-    
     bool inBounds(float val);
     
     float _r, _g, _b, _a;

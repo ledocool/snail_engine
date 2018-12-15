@@ -27,7 +27,7 @@
 class Component 
 {
 public:
-    virtual unsigned int GetComponentId() { return 0; };
+    virtual unsigned int GetComponentId()=0;
     
 };
 

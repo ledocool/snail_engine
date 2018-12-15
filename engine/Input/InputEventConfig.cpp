@@ -30,25 +30,25 @@ InputEventConfig::InputEventConfig()
     _keyEvents.push_back(PlayerActions::GO_FORWARD);
     _keyCombinations.push_back(
             std::vector<std::pair<Key::en, KeyState::en>>(
-                1, std::pair<Key::en, KeyState::en>(Key::KEY_UP, KeyState::DOWN)
+                1, std::pair<Key::en, KeyState::en>(Key::KEY_UP, KeyState::HELD)
             ));
     
     _keyEvents.push_back(PlayerActions::GO_BACKWARD);
     _keyCombinations.push_back(
             std::vector<std::pair<Key::en, KeyState::en>>(
-                1, std::pair<Key::en, KeyState::en>(Key::KEY_DOWN, KeyState::DOWN)
+                1, std::pair<Key::en, KeyState::en>(Key::KEY_DOWN, KeyState::HELD)
             ));
     
     _keyEvents.push_back(PlayerActions::TURN_LEFT);
     _keyCombinations.push_back(
             std::vector<std::pair<Key::en, KeyState::en>>(
-                1, std::pair<Key::en, KeyState::en>(Key::KEY_LEFT, KeyState::DOWN)
+                1, std::pair<Key::en, KeyState::en>(Key::KEY_LEFT, KeyState::HELD)
             ));
     
     _keyEvents.push_back(PlayerActions::TURN_RIGHT);
     _keyCombinations.push_back(
             std::vector<std::pair<Key::en, KeyState::en>>(
-                1, std::pair<Key::en, KeyState::en>(Key::KEY_RIGHT, KeyState::DOWN)
+                1, std::pair<Key::en, KeyState::en>(Key::KEY_RIGHT, KeyState::HELD)
             ));
 }
 

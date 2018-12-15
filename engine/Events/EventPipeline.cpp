@@ -22,7 +22,6 @@
  */
 
 #include "EventPipeline.h"
-#include "Event.h"
 
 EventPipeline::EventPipeline()
 {
@@ -33,26 +32,12 @@ EventPipeline::~EventPipeline()
 {
 }
 
-std::vector<std::weak_ptr<Event> > EventPipeline::GetEvents()
+std::vector<std::weak_ptr<Event> > EventPipeline::GetAllEvents()
 {
     std::vector<std::weak_ptr<Event>> handout;
-    for(auto event : _events.front())
+    for(std::shared_ptr<Event> event : _events.front())
     {
         handout.push_back( std::weak_ptr<Event>(event) );
-    }
-    
-    return handout;
-}
-
-std::vector<std::weak_ptr<Event> > EventPipeline::GetEvents(EventTypes::en type)
-{
-    std::vector<std::weak_ptr<Event>> handout;
-    for(auto event : _events.front())
-    {
-        if(type == event->GetEventType())
-        {
-            handout.push_back( std::weak_ptr<Event>(event) );
-        }
     }
     
     return handout;

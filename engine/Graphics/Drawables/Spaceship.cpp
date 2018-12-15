@@ -22,18 +22,20 @@
  */
 
 #include "Spaceship.h"
+#include "engine/includes.h"
 #include "engine/Ecs/Components/IncludeComponents.h"
 #include "engine/Etc/Singleton.h"
 
+
 Spaceship::Spaceship(float shape[9], float coordinates[2])
 {          
-    addComponent(std::shared_ptr<Component>(new Position()));
-    
-    auto position = std::static_pointer_cast<Position>(_components[ComponentTypes::POSITION]);
+    addComponent(std::make_shared<Position>());
+    auto position = std::dynamic_pointer_cast<Position>(Spaceship::_components[ComponentTypes::POSITION]);
     if(position)
     {
         position->x(coordinates[0]);
         position->y(coordinates[1]);
+        position->angle(0.f);
     }
     
     for(int i = 0; i < 9; i++)
@@ -51,7 +53,7 @@ Spaceship::Spaceship(float shape[9], float coordinates[2])
     glBindBuffer(GL_ARRAY_BUFFER, _glVAO_Id);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
     
-    _shaderProgram = std::shared_ptr<ShaderProgram> (new ShaderProgram("resources/Shaders/BasicVertexShader.glsl", "resources/Shaders/BasicFragmentShader.glsl"));
+    _shaderProgram = std::make_shared<ShaderProgram> ("resources/Shaders/BasicVertexShader.glsl", "resources/Shaders/BasicFragmentShader.glsl");
 }
 
 Spaceship::Spaceship(const Spaceship& orig)
@@ -65,14 +67,18 @@ Spaceship::~Spaceship()
 
 void Spaceship::Draw(glm::mat4 projectionMatrix)
 {
-    auto position = _components[ComponentTypes::POSITION];
+    auto position = std::dynamic_pointer_cast<Position>(Entity::_components[ComponentTypes::POSITION]);
+    if(!position)
+    {
+        return;
+    }
+    
     glm::mat4 trans = glm::mat4(1.0f);
     glm::mat4 view = glm::mat4(1.0f);
     
-    trans = glm::translate(trans, glm::vec3(0, 0, 0));
+    trans = glm::translate(trans, glm::vec3(position->x(), position->y(), 0));
     trans = glm::scale(trans, glm::vec3(40., 40., 1.));  
-    trans = glm::rotate(trans, glm::radians(90.0f), glm::vec3(0.0, 0.0, 1.0));
-    
+    trans = glm::rotate(trans, position->angle(), glm::vec3(0.0, 0.0, 1.0));
     trans = projectionMatrix * trans;
     
     _shaderProgram->Use();
