@@ -29,6 +29,7 @@
 #include "KeyEnums.h"
 #include "InputManager.h"
 #include "engine/Events/EventPipeline.h"
+#include "engine/Events/InputEvent.h"
 
 class InputEventConfig
 {
@@ -37,10 +38,11 @@ public:
     virtual ~InputEventConfig();
     
     void GatherInputEvents(InputManager * inputManager, EventPipeline * eventPipeline);
+    std::vector<InputEvent> GatherInputEvents(InputManager * inputManager);
     
 private:
-    std::vector<std::vector<std::pair<Key::en, KeyState::en>>> _keyCombinations;
-    std::vector< PlayerActions::en > _keyEvents; 
+    std::vector <std::vector <std::pair <Key::en, int> > > _keyCombinations;
+    std::vector <PlayerActions::en> _keyEvents; 
 
 };
 

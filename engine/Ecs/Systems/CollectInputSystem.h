@@ -15,40 +15,31 @@
  */
 
 /* 
- * File:   Position.h
+ * File:   CollectInputSystem.h
  * Author: LedoCool
  *
- * Created on December 5, 2018, 2:54 PM
+ * Created on December 19, 2018, 10:53 PM
  */
 
-#ifndef POSITION_H
-#define POSITION_H
+#ifndef COLLECTINPUTSYSTEM_H
+#define COLLECTINPUTSYSTEM_H
 
-#include "engine/Ecs/Component.h"
-#include "ComponentTypes.h"
+#include "engine/includes.h"
+#include "engine/Ecs/System.h"
+#include "Input/InputEventConfig.h"
+#include "Input/InputManager.h"
 
-class Position : public Component
+class CollectInputSystem : public System
 {
 public:
-    Position();
-    Position(const float x, const float y);
-    virtual ~Position();
-    
-    float x();
-    void x(const float & x);
-    
-    float y();
-    void y(const float & y);
-    
-    float angle();
-    void angle(const float & angle);
-    
-    virtual unsigned int GetComponentId() override;
+    CollectInputSystem();
+    virtual ~CollectInputSystem();
+    void Execute(Uint32 dt, std::shared_ptr<GameState>& gameState) override;
     
 private:
-    float _x, _y, _angle;
-    
+    InputManager * _inputManager;
+    InputEventConfig * _eventConfig;
 };
 
-#endif /* POSITION_H */
+#endif /* COLLECTINPUTSYSTEM_H */
 

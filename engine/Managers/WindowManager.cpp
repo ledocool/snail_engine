@@ -47,14 +47,14 @@ void WindowManager::DestroyAllWindows()
 void WindowManager::Render(Uint32 dt)
 {
     for (auto window : _windows) {
-        window->Update(dt);
+        window->Render(dt);
     }
 }
 
 void WindowManager::Update(Uint32 dt)
 {
     for (auto window : _windows) {
-        window->Render(dt);
+        window->Update(dt);
     }
 }
 

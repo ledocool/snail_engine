@@ -35,6 +35,8 @@ public:
     virtual ~MovePlayerSystem();
 
     void Execute(Uint32 dt, std::shared_ptr<GameState> & gameState) override;
+    
+    bool _firstInput;
 };
 
 #endif /* MOVEPLAYERSYSTEM_H */

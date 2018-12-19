@@ -23,16 +23,16 @@
 
 #include "MovePlayerSystem.h"
 #include "engine/Ecs/Components/IncludeComponents.h"
-#include "engine/Etc/Singleton.h"
-#include "engine/Events/EventPipeline.h"
 #include "engine/Events/InputEvent.h"
 #include "engine/Input/PlayerActions.h"
+
 
 #define PLAYER_MOVE_SPEED (0.3)
 #define PLAYER_ROTATION_SPEED (0.007)
 
 MovePlayerSystem::MovePlayerSystem()
 {
+    _firstInput = false;
 }
 
 MovePlayerSystem::MovePlayerSystem(const MovePlayerSystem& orig)
@@ -60,42 +60,62 @@ void MovePlayerSystem::Execute(Uint32 dt, std::shared_ptr<GameState> & gameState
             continue;
         }
         
-        auto eventPipeline = Singleton<EventPipeline>::get();
         float acceleration = 0.f, rotation = 0.f;
+        bool rotate = false, move = false;
         
-        for(std::weak_ptr<InputEvent> weakInput : eventPipeline->GetEvents<InputEvent>())
+//        auto inputManager = Singleton<InputManager>::get();
+//        auto inputEventconfig = Singleton<InputEventConfig>::get();
+//        auto events = inputEventconfig->GatherInputEvents(inputManager);
+        
+        for(InputEvent & inputEvent : gameState->inputActions)
         {
-            auto inputEvent = weakInput.lock();
-            if(!inputEvent)
-            {
-                continue;
-            }
-            
-            switch(inputEvent->GetEvent())
+            switch(inputEvent.GetEvent())
             {
             case PlayerActions::GO_FORWARD:
                 acceleration += dt * PLAYER_MOVE_SPEED;
+                move = true;
                 break;
             case PlayerActions::GO_BACKWARD:
                 acceleration -= dt * PLAYER_MOVE_SPEED;
+                move = true;
                 break;
             case PlayerActions::TURN_LEFT:
                 rotation += dt * PLAYER_ROTATION_SPEED;
+                rotate = true;
                 break;
             case PlayerActions::TURN_RIGHT:
                 rotation -= dt * PLAYER_ROTATION_SPEED;
+                rotate = true;
                 break;
             }
         }
         
-        position->angle( position->angle() + rotation );
-        position->x( 
-                position->x() + std::cos(position->angle()) * acceleration
-            );
+        if(rotate)
+        {
+            _firstInput = true;
+            auto newRotation = position->angle() + rotation;
+            if(newRotation >= 2*M_PI)
+            {
+                newRotation -= 2*M_PI;
+            }else if(newRotation < 0)
+            {
+                newRotation += 2*M_PI;
+            }
+
+            position->angle( newRotation );
+        }
+        if(move)
+        {
+            _firstInput = true;
+            position->x( 
+                    position->x() + std::cos(position->angle()) * acceleration
+                );
+
+            position->y( 
+                    position->y() + std::sin(position->angle()) * acceleration
+                );
+        }
         
-        position->y( 
-                position->y() + std::sin(position->angle()) * acceleration
-            );
     }
     
 }

@@ -17,10 +17,9 @@
 #include "Engine.h"
 #include <iostream>
 
-#include "Input/InputManager.h"
-#include "Managers/WindowManager.h"
-#include "Events/EventPipeline.h"
-#include "Input/InputEventConfig.h"
+#include "engine/Managers/WindowManager.h"
+#include "engine/Events/EventPipeline.h"
+#include "engine/Input/InputEventConfig.h"
 
 Engine::Engine()
 {   
@@ -36,6 +35,8 @@ Engine::~Engine()
 /* Wrapper method for all engine initialization */
 void Engine::Init()
 {
+    _inputManager = Singleton<InputManager>::get();
+    
     InitSDL();
     CreateWindows();
 }
@@ -63,29 +64,36 @@ void Engine::CreateWindows()
 /* Base loop */
 int Engine::Loop()
 {
-    auto inputManager = Singleton<InputManager>::get();
-    auto eventPipeline = Singleton<EventPipeline>::get();
-    auto inputEventconfig = Singleton<InputEventConfig>::get();
-
     bool shouldWork = true;
+    Uint32  dt = 16;
     Uint32  lastUpdateTime, 
             frameTime, 
-            currentUpdateTime;
+            currentUpdateTime,
+            processingElapsed,
+            lastProcessingTime,
+            timeleft;
     
-    lastUpdateTime = currentUpdateTime = SDL_GetTicks();
+    //inputManager->Update();
+    lastProcessingTime = lastUpdateTime = currentUpdateTime = SDL_GetTicks();
     
-    while (shouldWork) {
+    while (shouldWork) 
+    {
         currentUpdateTime = SDL_GetTicks();
         frameTime = currentUpdateTime - lastUpdateTime;
         lastUpdateTime = currentUpdateTime;
         
-        shouldWork = !inputManager->Update();
-        inputEventconfig->GatherInputEvents(inputManager, eventPipeline);
-        _wm.Update(frameTime);
+        timeleft = dt - frameTime;
+        do
+        {
+            currentUpdateTime = SDL_GetTicks();
+            processingElapsed = currentUpdateTime - lastProcessingTime;
+            lastProcessingTime = currentUpdateTime;
+            
+            shouldWork = _inputManager->Update();
+            _wm.Update(processingElapsed);
+        }
+        while(currentUpdateTime < lastUpdateTime + timeleft && shouldWork);
         _wm.Render(frameTime);
-        eventPipeline->PropagateEvents();
-        
-        
     }
 
     return 0;

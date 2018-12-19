@@ -43,6 +43,8 @@ protected:
 private:
     std::map <Key::en, KeyState::en> _keyStates;
     std::map <short, short> _windowEvents;
+    
+    bool _quit;
 //    int _m_MouseX, _m_MouseY;
 //    std::vector < short > _mouseStates;
 //    std::map < int, short > _videoStates;

@@ -23,9 +23,11 @@
 
 #include "EcsExecutor.h"
 #include "engine/Ecs/Systems/MovePlayerSystem.h"
+#include "engine/Ecs/Systems/CollectInputSystem.h"
 
 EcsExecutor::EcsExecutor()
 {
+    _systems.push_back(std::make_shared<CollectInputSystem>());
     _systems.push_back(std::make_shared<MovePlayerSystem>());
 }
 

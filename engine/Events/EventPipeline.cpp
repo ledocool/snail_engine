@@ -35,7 +35,7 @@ EventPipeline::~EventPipeline()
 std::vector<std::weak_ptr<Event> > EventPipeline::GetAllEvents()
 {
     std::vector<std::weak_ptr<Event>> handout;
-    for(std::shared_ptr<Event> event : _events.front())
+    for(std::shared_ptr<Event> event : _events)
     {
         handout.push_back( std::weak_ptr<Event>(event) );
     }
@@ -45,22 +45,19 @@ std::vector<std::weak_ptr<Event> > EventPipeline::GetAllEvents()
 
 void EventPipeline::PopEventBatch()
 {
-    _events.pop_front();
 }
 
 void EventPipeline::PropagateEvents()
 {
-    PopEventBatch();
-    PushEventBatch();
+    _events.clear();
 }
 
 void EventPipeline::PushEventBatch()
 {
-    _events.push_back(std::vector<std::shared_ptr<Event>>());
 }
 
 void EventPipeline::RegisterEvent(Event * e)
 {
-    _events.back().push_back(std::shared_ptr<Event>(e));
+    _events.push_back(std::shared_ptr<Event>(e));
 }
 

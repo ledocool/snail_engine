@@ -44,7 +44,7 @@ public:
     template <class T> std::vector< std::weak_ptr<T> > GetEvents()
     {
         std::vector<std::weak_ptr<T>> handout;
-        for(std::shared_ptr<Event> event : _events.front())
+        for(std::shared_ptr<Event> event : _events)
         {
             std::shared_ptr<T> casted = std::dynamic_pointer_cast<T>(event);
             if(casted)
@@ -60,7 +60,7 @@ protected:
     EventPipeline();
     
 private:
-    std::deque<std::vector<std::shared_ptr<Event>>> _events;
+    std::vector< std::shared_ptr<Event> > _events;
 };
 
 #endif /* EVENTPIPELINE_H */

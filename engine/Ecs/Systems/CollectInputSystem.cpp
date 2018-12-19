@@ -15,40 +15,27 @@
  */
 
 /* 
- * File:   Position.h
+ * File:   CollectInputSystem.cpp
  * Author: LedoCool
- *
- * Created on December 5, 2018, 2:54 PM
+ * 
+ * Created on December 19, 2018, 10:53 PM
  */
 
-#ifndef POSITION_H
-#define POSITION_H
+#include "CollectInputSystem.h"
+#include "engine/Etc/Singleton.h"
 
-#include "engine/Ecs/Component.h"
-#include "ComponentTypes.h"
 
-class Position : public Component
+CollectInputSystem::CollectInputSystem()
 {
-public:
-    Position();
-    Position(const float x, const float y);
-    virtual ~Position();
-    
-    float x();
-    void x(const float & x);
-    
-    float y();
-    void y(const float & y);
-    
-    float angle();
-    void angle(const float & angle);
-    
-    virtual unsigned int GetComponentId() override;
-    
-private:
-    float _x, _y, _angle;
-    
-};
+    _inputManager = Singleton<InputManager>::get();
+    _eventConfig = Singleton<InputEventConfig>::get();
+}
 
-#endif /* POSITION_H */
+CollectInputSystem::~CollectInputSystem()
+{
+}
 
+void CollectInputSystem::Execute(Uint32 dt, std::shared_ptr<GameState>& gameState)
+{
+    gameState->inputActions = _eventConfig->GatherInputEvents(_inputManager);
+}

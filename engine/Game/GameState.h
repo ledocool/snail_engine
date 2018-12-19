@@ -27,11 +27,14 @@
 #include "engine/includes.h"
 #include "engine/Game/Map.h"
 #include "engine/Game/Camera.h"
+#include "engine/Events/InputEvent.h"
 
 struct GameState
 {    
-    std::shared_ptr<Map> map;
-    std::shared_ptr<Camera> camera;
+    std::shared_ptr <Map> map;
+    std::shared_ptr <Camera> camera;
+    
+    std::vector <InputEvent> inputActions;
     
 };
 

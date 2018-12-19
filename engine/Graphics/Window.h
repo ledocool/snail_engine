@@ -25,7 +25,6 @@
 #define WINDOW_H
 
 #include "engine/includes.h"
-
 #include "engine/Game/GameState.h"
 #include "engine/Ecs/EcsExecutor.h"
 

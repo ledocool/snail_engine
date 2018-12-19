@@ -29,7 +29,7 @@ Position::Position()
     _y = 0;
 }
 
-Position::Position(float x, float y)
+Position::Position(const float x, const float y)
 {
     _x = x;
     _y = y;
@@ -44,7 +44,7 @@ float Position::x()
     return _x;
 }
 
-void Position::x(float x)
+void Position::x(const float & x)
 {
     _x = x;
 }
@@ -54,7 +54,7 @@ float Position::y()
     return _y;
 }
 
-void Position::y(float y)
+void Position::y(const float & y)
 {
     _y = y;
 }
@@ -64,7 +64,7 @@ float Position::angle()
     return _angle;
 }
 
-void Position::angle(float angle)
+void Position::angle(const float & angle)
 {
     _angle = angle;
 }

@@ -24,7 +24,7 @@
 #include "InputManager.h"
 
 InputManager::InputManager()
-{
+{ 
 }
 
 InputManager::~InputManager()
@@ -45,7 +45,7 @@ bool InputManager::Update()
     while (SDL_PollEvent(&event)) {
         switch (event.type) {
         case SDL_QUIT:
-            return true;
+            return false;
             break;
         case SDL_KEYDOWN:
             _keyStates[(Key::en)event.key.keysym.sym] = KeyState::DOWN;
@@ -67,8 +67,6 @@ bool InputManager::Update()
 //            _mouseStates[event.button.button] = KEY_IS_DOWN;
 //            clicks.push_back((mouseClick)event.button.which);
 //            break;
-
-             
 //        case SDL_WINDOWEVENT:
 //            _windowStates[(short)event.window.event] = 
 //            if(event.window.event == SDL_WINDOWEVENT_RESIZED)
@@ -112,6 +110,6 @@ bool InputManager::Update()
             }
         }
     }
-
-    return false;
+    
+    return true;
 }

@@ -45,6 +45,7 @@
 #include <memory>
 #include <stack>
 #include <iostream>
+#include <math.h>
 
 #endif /* INCLUDES_H */
 

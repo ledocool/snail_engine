@@ -23,32 +23,33 @@
 
 #include "InputEventConfig.h"
 #include "engine/Events/EventTypes.h"
-#include "engine/Events/InputEvent.h"
 
 InputEventConfig::InputEventConfig()
 {    
+    int pressedHard = KeyState::DOWN + KeyState::HELD;
+    
     _keyEvents.push_back(PlayerActions::GO_FORWARD);
     _keyCombinations.push_back(
-            std::vector<std::pair<Key::en, KeyState::en>>(
-                1, std::pair<Key::en, KeyState::en>(Key::KEY_UP, KeyState::HELD)
+            std::vector<std::pair<Key::en, int>>(
+                1, std::pair<Key::en, int>(Key::KEY_UP, pressedHard)
             ));
     
     _keyEvents.push_back(PlayerActions::GO_BACKWARD);
     _keyCombinations.push_back(
-            std::vector<std::pair<Key::en, KeyState::en>>(
-                1, std::pair<Key::en, KeyState::en>(Key::KEY_DOWN, KeyState::HELD)
+            std::vector<std::pair<Key::en, int>>(
+                1, std::pair<Key::en, int>(Key::KEY_DOWN, pressedHard)
             ));
     
     _keyEvents.push_back(PlayerActions::TURN_LEFT);
     _keyCombinations.push_back(
-            std::vector<std::pair<Key::en, KeyState::en>>(
-                1, std::pair<Key::en, KeyState::en>(Key::KEY_LEFT, KeyState::HELD)
+            std::vector<std::pair<Key::en, int>>(
+                1, std::pair<Key::en, int>(Key::KEY_LEFT, pressedHard)
             ));
     
     _keyEvents.push_back(PlayerActions::TURN_RIGHT);
     _keyCombinations.push_back(
-            std::vector<std::pair<Key::en, KeyState::en>>(
-                1, std::pair<Key::en, KeyState::en>(Key::KEY_RIGHT, KeyState::HELD)
+            std::vector<std::pair<Key::en, int>>(
+                1, std::pair<Key::en, int>(Key::KEY_RIGHT, pressedHard)
             ));
 }
 
@@ -62,9 +63,9 @@ void InputEventConfig::GatherInputEvents(InputManager * inputManager, EventPipel
     for(auto combo : _keyCombinations)
     {
         bool comboGood = true;
-        for(auto stroke : combo)
+        for(std::pair<Key::en, int> stroke : combo)
         {
-            if(inputManager->KeyState(stroke.first) != stroke.second)
+            if( !(static_cast<int>(inputManager->KeyState(stroke.first)) & stroke.second) )
             {
                 comboGood = false;
                 break;
@@ -74,11 +75,40 @@ void InputEventConfig::GatherInputEvents(InputManager * inputManager, EventPipel
         if(comboGood)
         {
             PlayerActions::en action = _keyEvents[i];
-            //Todo: dpecific event for input;
             InputEvent * e = new InputEvent(action);
             eventPipeline->RegisterEvent(e);
         }
         i++;
     }
 }
+
+std::vector<InputEvent> InputEventConfig::GatherInputEvents(InputManager* inputManager)
+{
+    unsigned int i = 0;
+    std::vector<InputEvent> result;
+    
+    for(auto combo : _keyCombinations)
+    {
+        bool comboGood = true;
+        for(std::pair<Key::en, int> stroke : combo)
+        {
+            if( !(static_cast<int>(inputManager->KeyState(stroke.first)) & stroke.second) )
+            {
+                comboGood = false;
+                break;
+            }
+        }
+        
+        if(comboGood)
+        {
+            PlayerActions::en action = _keyEvents[i];
+            InputEvent e(action);
+            result.push_back(e);
+        }
+        i++;
+    }
+    
+    return result;
+}
+
 

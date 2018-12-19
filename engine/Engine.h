@@ -19,7 +19,8 @@
 
 #include "includes.h"
 #include "SDL.h"
-#include "Managers/WindowManager.h"
+#include "engine/Managers/WindowManager.h"
+#include "engine/Input/InputManager.h"
 
 class Engine
 {
@@ -38,6 +39,7 @@ private:
     void DestroySDL();
 
     WindowManager _wm;
+    InputManager * _inputManager;
 };
 
 #endif /* ENGINE_H */

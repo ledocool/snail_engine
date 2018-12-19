@@ -200,11 +200,11 @@ namespace KeyState
 
     enum en
     {
-        UP = 0,
-        DOWN = 1,
-        HELD = 2,
-        TOGGLED = 3,
-        UNDEFINED
+        UP = 1,
+        DOWN = 2,
+        HELD = 4,
+        TOGGLED = 8,
+        UNDEFINED =0,
     };
 }
 

@@ -24,6 +24,7 @@ set(ENGINE_SOURCES
     Ecs/Components/Position.cpp
     Ecs/EcsExecutor.cpp
     Ecs/Systems/MovePlayerSystem.cpp
+    Ecs/Systems/CollectInputSystem.cpp
 
     Game/Map.cpp
     Game/Camera.cpp
@@ -65,6 +66,7 @@ set(ENGINE_HEADERS
     Ecs/Components/Position.h
     Ecs/EcsExecutor.h
     Ecs/Systems/MovePlayerSystem.h
+    Ecs/Systems/CollectInputSystem.h
 
     Game/Map.h
     Game/Camera.h
