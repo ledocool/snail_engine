@@ -107,15 +107,14 @@ void MovePlayerSystem::Execute(Uint32 dt, std::shared_ptr<GameState> & gameState
         if(move)
         {
             _firstInput = true;
-            position->x( 
-                    position->x() + std::cos(position->angle()) * acceleration
-                );
-
-            position->y( 
-                    position->y() + std::sin(position->angle()) * acceleration
-                );
+            float newX = position->x() + std::cos(position->angle()) * acceleration, 
+                  newY = position->y() + std::sin(position->angle()) * acceleration;
+            
+            position->x(newX);
+            position->y(newY);
+            
+            gameState->camera->LookAt(newX, newY);
         }
-        
     }
     
 }

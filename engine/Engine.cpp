@@ -73,7 +73,6 @@ int Engine::Loop()
             lastProcessingTime,
             timeleft;
     
-    //inputManager->Update();
     lastProcessingTime = lastUpdateTime = currentUpdateTime = SDL_GetTicks();
     
     while (shouldWork) 
