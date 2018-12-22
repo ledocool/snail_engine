@@ -31,7 +31,7 @@ namespace ComponentTypes
     {
         UNDEFINED =0,
         POSITION,
-        
+        PLAYER
     };
 }
 

@@ -47,8 +47,13 @@ void ShaderProgram::Use()
 
 void ShaderProgram::PassData(glm::mat4 data, std::string parameterName)
 {
-    unsigned int transformLoc = glGetUniformLocation(_programId, parameterName.c_str());
-    glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(data));
+    unsigned int location = glGetUniformLocation(_programId, parameterName.c_str());
+    glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(data));
 }
 
+void ShaderProgram::PassData(glm::vec4 data, std::string parameterName)
+{
+    unsigned int location = glGetUniformLocation(_programId, parameterName.c_str());
+    glUniform4fv(location, 1, glm::value_ptr(data));
+}
 

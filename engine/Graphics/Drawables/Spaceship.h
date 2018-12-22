@@ -27,7 +27,6 @@
 #include "engine/includes.h"
 #include "engine/Ecs/Entity.h"
 #include "engine/Graphics/Drawables/IDrawable.h"
-#include "engine/Graphics/ShaderProgram.h"
 
 class Spaceship : public Entity, public IDrawable
 {
@@ -40,9 +39,6 @@ public:
     
 private:
     float _shape[9];
-    unsigned int _glVBO_Id, _glVAO_Id;
-    
-    std::shared_ptr<ShaderProgram> _shaderProgram;
 };
 
 #endif /* SPACESHIP_H */

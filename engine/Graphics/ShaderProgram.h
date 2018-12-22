@@ -35,6 +35,7 @@ public:
     
     void Use();
     void PassData(glm::mat4 data, std::string parameterName);
+    void PassData(glm::vec4 data, std::string parameterName);
     
 private:
     unsigned int _programId;

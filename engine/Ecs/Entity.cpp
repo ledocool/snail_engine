@@ -28,7 +28,6 @@ void Entity::addComponent(std::shared_ptr<Component> component)
     if(component)
     {
         removeComponent(component);
-        auto componentId = component->GetComponentId();
         _components.insert(std::make_pair(component->GetComponentId(), component)); 
     }
 }
@@ -59,7 +58,7 @@ std::vector< std::weak_ptr<Component> > Entity::GetComponents()
 std::weak_ptr<Component> Entity::GetComponent(unsigned int id)
 {
     std::weak_ptr<Component> ret;
-    if(_components.at(id))
+    if(_components.find(id) != _components.end())
     {
         ret = _components[id];
     }

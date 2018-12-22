@@ -18,10 +18,14 @@ set(ENGINE_SOURCES
     Graphics/ShaderProgram.cpp
 
     Graphics/Drawables/Spaceship.cpp
+    Graphics/Drawables/Asteroid.cpp
     
     Ecs/Entity.cpp
     Ecs/System.cpp
+
     Ecs/Components/Position.cpp
+    Ecs/Components/Player.cpp
+
     Ecs/EcsExecutor.cpp
     Ecs/Systems/MovePlayerSystem.cpp
     Ecs/Systems/CollectInputSystem.cpp
@@ -57,13 +61,17 @@ set(ENGINE_HEADERS
 
     Graphics/Drawables/IDrawable.h
     Graphics/Drawables/Spaceship.h
+    Graphics/Drawables/Asteroid.h
 
     Ecs/System.h
     Ecs/Component.h
     Ecs/Entity.h
+
     Ecs/Components/ComponentTypes.h
     Ecs/Components/IncludeComponents.h
     Ecs/Components/Position.h
+    Ecs/Components/Player.h
+    
     Ecs/EcsExecutor.h
     Ecs/Systems/MovePlayerSystem.h
     Ecs/Systems/CollectInputSystem.h

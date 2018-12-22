@@ -25,11 +25,16 @@
 #define IDRAWABLE_H
 
 #include "engine/includes.h"
+#include "engine/Graphics/ShaderProgram.h"
 
 class IDrawable
 {
 public:
     virtual void Draw(glm::mat4 projection)=0;
+    
+protected:
+    std::shared_ptr<ShaderProgram> _shaderProgram;
+    unsigned int _glVBO_Id, _glVAO_Id;
 };
 
 #endif /* IDRAWABLE_H */

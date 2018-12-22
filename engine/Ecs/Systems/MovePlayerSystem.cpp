@@ -48,6 +48,12 @@ void MovePlayerSystem::Execute(Uint32 dt, std::shared_ptr<GameState> & gameState
     auto entitites = gameState->map->GetEntities();
     for(std::shared_ptr<Entity> entity : entitites)
     {
+        auto player = entity->GetComponent(ComponentTypes::PLAYER).lock();
+        if(!player)
+        {
+            continue;
+        }
+        
         auto component = entity->GetComponent(ComponentTypes::POSITION).lock();
         if(!component)
         {

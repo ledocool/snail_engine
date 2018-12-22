@@ -15,18 +15,30 @@
  */
 
 /* 
- * File:   includeComponents.h
+ * File:   Player.h
  * Author: LedoCool
  *
- * Created on December 5, 2018, 2:55 PM
+ * Created on December 22, 2018, 5:34 PM
  */
 
-#ifndef INCLUDECOMPONENTS_H
-#define INCLUDECOMPONENTS_H
+#ifndef PLAYER_H
+#define PLAYER_H
 
+#include "engine/Ecs/Component.h"
 #include "ComponentTypes.h"
-#include "Position.h"
-#include "Player.h"
 
-#endif /* INCLUDECOMPONENTS_H */
+class Player : public Component
+{
+public:
+    Player();
+    virtual ~Player();
+    
+    virtual unsigned int GetComponentId() override;
+    
+private:
+
+    
+};
+
+#endif /* PLAYER_H */
 

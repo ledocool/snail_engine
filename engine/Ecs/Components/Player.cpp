@@ -15,18 +15,24 @@
  */
 
 /* 
- * File:   includeComponents.h
+ * File:   Player.cpp
  * Author: LedoCool
- *
- * Created on December 5, 2018, 2:55 PM
+ * 
+ * Created on December 22, 2018, 5:34 PM
  */
 
-#ifndef INCLUDECOMPONENTS_H
-#define INCLUDECOMPONENTS_H
-
-#include "ComponentTypes.h"
-#include "Position.h"
 #include "Player.h"
 
-#endif /* INCLUDECOMPONENTS_H */
+Player::Player()
+{
+}
+
+Player::~Player()
+{
+}
+
+unsigned int Player::GetComponentId()
+{
+    return ComponentTypes::PLAYER;
+}
 

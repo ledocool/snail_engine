@@ -25,6 +25,7 @@
 
 #include "engine/includes.h"
 #include "engine/Graphics/Drawables/Spaceship.h"
+#include "engine/Graphics/Drawables/Asteroid.h"
 #include "engine/Events/EventPipeline.h"
 #include "engine/Events/EventTypes.h"
 #include "engine/Events/Event.h"
@@ -42,6 +43,9 @@ Map::Map()
     
     std::shared_ptr<Spaceship> playerSpaceship = std::shared_ptr<Spaceship> (new Spaceship(vertices, coords));
     _entities.push_back(playerSpaceship);
+    
+    std::shared_ptr<Asteroid> asteroid = std::shared_ptr<Asteroid> (new Asteroid(40, coords));
+    _entities.push_back(asteroid);
 }
 
 Map::~Map()

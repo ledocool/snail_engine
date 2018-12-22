@@ -15,18 +15,19 @@
  */
 
 /* 
- * File:   Spaceship.cpp
+ * File:   Asteroid.cpp
  * Author: LedoCool
  * 
- * Created on December 5, 2018, 2:50 PM
+ * Created on December 22, 2018, 4:36 PM
  */
 
-#include "Spaceship.h"
+#include "Asteroid.h"
 #include "engine/Ecs/Components/IncludeComponents.h"
+#include "engine/Etc/Singleton.h"
 
-Spaceship::Spaceship(float shape[9], float coordinates[2])
-{          
-    addComponent(std::make_shared<Player>());
+
+Asteroid::Asteroid(float radius, float coordinates[2])
+{
     addComponent(std::make_shared<Position>());
     auto position = std::dynamic_pointer_cast<Position>(_components[ComponentTypes::POSITION]);
     if(position)
@@ -35,10 +36,20 @@ Spaceship::Spaceship(float shape[9], float coordinates[2])
         position->y(coordinates[1]);
         position->angle(0.f);
     }
+
+    _radius = radius;
     
-    for(int i = 0; i < 9; i++)
+    float step = 2 * M_PI / 50;
+    
+    for(int i=0; i<50; i++)
     {
-        _shape[i] = shape[i];
+        float angle = step * i;
+        float x = cos(angle);
+        float y = sin(angle);
+        
+        _shape[i*3] = x;
+        _shape[i*3 + 1] = y;
+        _shape[i*3 + 2] = 0.0f;
     }
     
     glGenBuffers(1, &_glVBO_Id);
@@ -54,18 +65,13 @@ Spaceship::Spaceship(float shape[9], float coordinates[2])
     _shaderProgram = std::make_shared<ShaderProgram> ("resources/Shaders/BasicVertexShader.glsl", "resources/Shaders/BasicFragmentShader.glsl");
 }
 
-Spaceship::Spaceship(const Spaceship& orig)
-{
-    
-}
-
-Spaceship::~Spaceship()
+Asteroid::~Asteroid()
 {
 }
 
-void Spaceship::Draw(glm::mat4 projectionMatrix)
+void Asteroid::Draw(glm::mat4 projection)
 {
-    auto position = std::dynamic_pointer_cast<Position>(Entity::_components[ComponentTypes::POSITION]);
+    auto position = std::dynamic_pointer_cast<Position>(_components[ComponentTypes::POSITION]);
     if(!position)
     {
         return;
@@ -75,9 +81,9 @@ void Spaceship::Draw(glm::mat4 projectionMatrix)
     glm::mat4 view = glm::mat4(1.0f);
     
     trans = glm::translate(trans, glm::vec3(position->x(), position->y(), 0));
-    trans = glm::scale(trans, glm::vec3(40., 40., 1.));  
+    trans = glm::scale(trans, glm::vec3(_radius, _radius, 1.));  
     trans = glm::rotate(trans, position->angle(), glm::vec3(0.0, 0.0, 1.0));
-    trans = projectionMatrix * trans;
+    trans = projection * trans;
     
     glm::vec4 color(0.76, 0.12, 0.12, 1.);
     
@@ -86,6 +92,6 @@ void Spaceship::Draw(glm::mat4 projectionMatrix)
     _shaderProgram->PassData(color, "color");
     
     glBindVertexArray(_glVAO_Id); 
-    glDrawArrays(GL_TRIANGLES, 0, 3);;
+    glDrawArrays(GL_LINE_LOOP, 0, 50);;
 }
 

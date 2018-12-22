@@ -15,18 +15,30 @@
  */
 
 /* 
- * File:   includeComponents.h
+ * File:   Asteroid.h
  * Author: LedoCool
  *
- * Created on December 5, 2018, 2:55 PM
+ * Created on December 22, 2018, 4:36 PM
  */
 
-#ifndef INCLUDECOMPONENTS_H
-#define INCLUDECOMPONENTS_H
+#ifndef ASTEROID_H
+#define ASTEROID_H
 
-#include "ComponentTypes.h"
-#include "Position.h"
-#include "Player.h"
+#include "engine/includes.h"
+#include "engine/Ecs/Entity.h"
+#include "engine/Graphics/Drawables/IDrawable.h"
 
-#endif /* INCLUDECOMPONENTS_H */
+class Asteroid : public IDrawable, public Entity
+{
+public:
+    Asteroid(float radius, float coordinates[2]);
+    virtual ~Asteroid();
+    
+    void Draw(glm::mat4 projection) override;
+
+private:
+    float _shape[150], _radius;
+};
+
+#endif /* ASTEROID_H */
 
