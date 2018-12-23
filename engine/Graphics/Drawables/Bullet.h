@@ -15,31 +15,31 @@
  */
 
 /* 
- * File:   IDrawable.h
+ * File:   Bullet.h
  * Author: LedoCool
  *
- * Created on November 29, 2018, 3:16 PM
+ * Created on December 23, 2018, 12:13 AM
  */
 
-#ifndef IDRAWABLE_H
-#define IDRAWABLE_H
+#ifndef BULLET_H
+#define BULLET_H
 
 #include "engine/includes.h"
-#include "engine/Graphics/ShaderProgram.h"
+#include "engine/Ecs/Entity.h"
+#include "engine/Graphics/Drawables/IDrawable.h"
 
-class IDrawable
+class Bullet : public IDrawable, public Entity
 {
 public:
-    IDrawable();
-    virtual ~IDrawable();
-    virtual void Draw(glm::mat4 projection)=0;
-    virtual void CreateOpenGlBinding(const void * shape, size_t sizeOfShape);
-    virtual void CreateShaderProgram();
+    Bullet(const float size, const float coordinates[2], const float angle, const float velocity);
+    virtual ~Bullet();
     
-protected:
-    std::shared_ptr<ShaderProgram> _shaderProgram;
-    unsigned int _glVBO_Id, _glVAO_Id;
+    void Draw(glm::mat4 projection) override;
+
+private:
+    
+    float _shape[18];
 };
 
-#endif /* IDRAWABLE_H */
+#endif /* BULLET_H */
 

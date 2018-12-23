@@ -31,7 +31,7 @@
 class Spaceship : public Entity, public IDrawable
 {
 public:
-    Spaceship(float shape[9], float coordinates[2]);
+    Spaceship(float coordinates[2]);
     Spaceship(const Spaceship& orig);
     virtual ~Spaceship();
     

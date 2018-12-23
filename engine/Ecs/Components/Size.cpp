@@ -15,31 +15,39 @@
  */
 
 /* 
- * File:   IDrawable.h
+ * File:   Size.cpp
  * Author: LedoCool
- *
- * Created on November 29, 2018, 3:16 PM
+ * 
+ * Created on December 23, 2018, 12:45 PM
  */
 
-#ifndef IDRAWABLE_H
-#define IDRAWABLE_H
+#include "Size.h"
 
-#include "engine/includes.h"
-#include "engine/Graphics/ShaderProgram.h"
-
-class IDrawable
+Size::Size()
 {
-public:
-    IDrawable();
-    virtual ~IDrawable();
-    virtual void Draw(glm::mat4 projection)=0;
-    virtual void CreateOpenGlBinding(const void * shape, size_t sizeOfShape);
-    virtual void CreateShaderProgram();
-    
-protected:
-    std::shared_ptr<ShaderProgram> _shaderProgram;
-    unsigned int _glVBO_Id, _glVAO_Id;
-};
+}
 
-#endif /* IDRAWABLE_H */
+Size::Size(const float size)
+{
+    _size = size;
+}
+
+Size::~Size()
+{
+}
+
+float Size::size()
+{
+    return _size;
+}
+
+void Size::size(const float & size)
+{
+    _size = size;
+}
+
+unsigned int Size::GetComponentId()
+{
+    return ComponentTypes::SIZE;
+}
 

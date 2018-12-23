@@ -26,18 +26,10 @@
 #include "engine/Etc/Singleton.h"
 
 
-Asteroid::Asteroid(float radius, float coordinates[2])
+Asteroid::Asteroid(const float radius, const float coordinates[2])
 {
-    addComponent(std::make_shared<Position>());
-    auto position = std::dynamic_pointer_cast<Position>(_components[ComponentTypes::POSITION]);
-    if(position)
-    {
-        position->x(coordinates[0]);
-        position->y(coordinates[1]);
-        position->angle(0.f);
-    }
-
-    _radius = radius;
+    addComponent(std::make_shared<Position>(coordinates[0], coordinates[1], 0));
+    addComponent(std::make_shared<Size>(radius));
     
     float step = 2 * M_PI / 50;
     
@@ -52,17 +44,7 @@ Asteroid::Asteroid(float radius, float coordinates[2])
         _shape[i*3 + 2] = 0.0f;
     }
     
-    glGenBuffers(1, &_glVBO_Id);
-    glBindBuffer(GL_ARRAY_BUFFER, _glVBO_Id);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(_shape), _shape, GL_STATIC_DRAW);
-    
-    glGenVertexArrays(1, &_glVAO_Id);
-    glBindVertexArray(_glVAO_Id);
-    glEnableVertexAttribArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, _glVAO_Id);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
-    
-    _shaderProgram = std::make_shared<ShaderProgram> ("resources/Shaders/BasicVertexShader.glsl", "resources/Shaders/BasicFragmentShader.glsl");
+    CreateOpenGlBinding(_shape, sizeof(_shape));
 }
 
 Asteroid::~Asteroid()
@@ -72,7 +54,8 @@ Asteroid::~Asteroid()
 void Asteroid::Draw(glm::mat4 projection)
 {
     auto position = std::dynamic_pointer_cast<Position>(_components[ComponentTypes::POSITION]);
-    if(!position)
+    auto size = std::dynamic_pointer_cast<Size>(_components[ComponentTypes::SIZE]);
+    if(!(position && size))
     {
         return;
     }
@@ -81,7 +64,7 @@ void Asteroid::Draw(glm::mat4 projection)
     glm::mat4 view = glm::mat4(1.0f);
     
     trans = glm::translate(trans, glm::vec3(position->x(), position->y(), 0));
-    trans = glm::scale(trans, glm::vec3(_radius, _radius, 1.));  
+    trans = glm::scale(trans, glm::vec3(size->size(), size->size(), 1.));  
     trans = glm::rotate(trans, position->angle(), glm::vec3(0.0, 0.0, 1.0));
     trans = projection * trans;
     
@@ -92,6 +75,6 @@ void Asteroid::Draw(glm::mat4 projection)
     _shaderProgram->PassData(color, "color");
     
     glBindVertexArray(_glVAO_Id); 
-    glDrawArrays(GL_LINE_LOOP, 0, 50);;
+    glDrawArrays(GL_LINE_LOOP, 0, 50);
 }
 

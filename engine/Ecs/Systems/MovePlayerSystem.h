@@ -36,7 +36,12 @@ public:
 
     void Execute(Uint32 dt, std::shared_ptr<GameState> & gameState) override;
     
-    bool _firstInput;
+private:
+    float bleedSpeed(float oldValue, float bleedFactor);
+    float capSpeed(float speed, float cap);
+    
+    float calculateRotation(Uint32 dt, float rotation, float addRotation);
+    void calculateSpeed(Uint32 dt, float & x, float & y, float angle, float speed);
 };
 
 #endif /* MOVEPLAYERSYSTEM_H */

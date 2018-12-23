@@ -24,11 +24,17 @@
 #include "EcsExecutor.h"
 #include "engine/Ecs/Systems/MovePlayerSystem.h"
 #include "engine/Ecs/Systems/CollectInputSystem.h"
+#include "engine/Ecs/Systems/SpawnBulletSystem.h"
+#include "engine/Ecs/Systems/ApplyVelocitySystem.h"
+#include "engine/Ecs/Systems/MoveCameraSystem.h"
 
 EcsExecutor::EcsExecutor()
 {
     _systems.push_back(std::make_shared<CollectInputSystem>());
     _systems.push_back(std::make_shared<MovePlayerSystem>());
+    _systems.push_back(std::make_shared<ApplyVelocitySystem>());
+    _systems.push_back(std::make_shared<MoveCameraSystem>());
+    _systems.push_back(std::make_shared<SpawnBulletSystem>());
 }
 
 EcsExecutor::~EcsExecutor()

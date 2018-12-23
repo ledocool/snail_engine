@@ -25,103 +25,134 @@
 #include "engine/Ecs/Components/IncludeComponents.h"
 #include "engine/Events/InputEvent.h"
 #include "engine/Input/PlayerActions.h"
+#include "engine/Etc/FloatHelper.h"
 
 
-#define PLAYER_MOVE_SPEED (0.3)
-#define PLAYER_ROTATION_SPEED (0.007)
+#define PLAYER_MOVE_SPEED (3e-4)
+#define PLAYER_ROTATION_SPEED (3e-4)
+#define MAX_VELOCITY (1e-1)
+#define MAX_ROTATION (0.007)
+#define VELOCITY_BLEEDOUT (5e-5)
+#define ROTATION_BLEEDOUT (5e-5)
 
 MovePlayerSystem::MovePlayerSystem()
 {
-    _firstInput = false;
 }
 
 MovePlayerSystem::MovePlayerSystem(const MovePlayerSystem& orig)
 {
 }
 
-MovePlayerSystem::~MovePlayerSystem()
+MovePlayerSystem::~ MovePlayerSystem()
 {
 }
 
 void MovePlayerSystem::Execute(Uint32 dt, std::shared_ptr<GameState> & gameState)
 {
     auto entitites = gameState->map->GetEntities();
-    for(std::shared_ptr<Entity> entity : entitites)
+    for (std::shared_ptr<Entity> entity : entitites)
     {
         auto player = entity->GetComponent(ComponentTypes::PLAYER).lock();
-        if(!player)
+        auto velocity = std::dynamic_pointer_cast<Velocity>(entity->GetComponent(ComponentTypes::VELOCITY).lock());
+        auto position = std::dynamic_pointer_cast<Position>(entity->GetComponent(ComponentTypes::POSITION).lock());
+        if (! (player && velocity && position))
         {
             continue;
         }
-        
-        auto component = entity->GetComponent(ComponentTypes::POSITION).lock();
-        if(!component)
-        {
-            continue;
-        }
-        
-        auto position = std::dynamic_pointer_cast<Position>(component);
-        if(!position)
-        {
-            continue;
-        }
-        
+
         float acceleration = 0.f, rotation = 0.f;
-        bool rotate = false, move = false;
-        
-//        auto inputManager = Singleton<InputManager>::get();
-//        auto inputEventconfig = Singleton<InputEventConfig>::get();
-//        auto events = inputEventconfig->GatherInputEvents(inputManager);
-        
-        for(InputEvent & inputEvent : gameState->inputActions)
+
+        for (InputEvent & inputEvent : gameState->inputActions)
         {
-            switch(inputEvent.GetEvent())
-            {
+            switch (inputEvent.GetEvent()) {
             case PlayerActions::GO_FORWARD:
-                acceleration += dt * PLAYER_MOVE_SPEED;
-                move = true;
+                acceleration += PLAYER_MOVE_SPEED;
                 break;
             case PlayerActions::GO_BACKWARD:
-                acceleration -= dt * PLAYER_MOVE_SPEED;
-                move = true;
+                acceleration -= PLAYER_MOVE_SPEED;
                 break;
             case PlayerActions::TURN_LEFT:
-                rotation += dt * PLAYER_ROTATION_SPEED;
-                rotate = true;
+                rotation += PLAYER_ROTATION_SPEED;
                 break;
             case PlayerActions::TURN_RIGHT:
-                rotation -= dt * PLAYER_ROTATION_SPEED;
-                rotate = true;
+                rotation -= PLAYER_ROTATION_SPEED;
                 break;
             }
         }
-        
-        if(rotate)
-        {
-            _firstInput = true;
-            auto newRotation = position->angle() + rotation;
-            if(newRotation >= 2*M_PI)
-            {
-                newRotation -= 2*M_PI;
-            }else if(newRotation < 0)
-            {
-                newRotation += 2*M_PI;
-            }
 
-            position->angle( newRotation );
-        }
-        if(move)
-        {
-            _firstInput = true;
-            float newX = position->x() + std::cos(position->angle()) * acceleration, 
-                  newY = position->y() + std::sin(position->angle()) * acceleration;
-            
-            position->x(newX);
-            position->y(newY);
-            
-            gameState->camera->LookAt(newX, newY);
-        }
+        velocity->rotation(
+            calculateRotation(dt, velocity->rotation(), rotation)
+        );
+        
+        float newX = velocity->x(), 
+              newY = velocity->y();
+        calculateSpeed(dt, newX, newY, position->angle(), acceleration);
+        velocity->x(newX);
+        velocity->y(newY);
+    }
+}
+
+float MovePlayerSystem::bleedSpeed(float oldValue, float bleedFactor)
+{
+    if(FloatHelper::IsNull(oldValue))
+    {
+        return 0.f;
+    }
+    if((bleedFactor > oldValue && oldValue > 0)
+       || (-bleedFactor < oldValue && oldValue < 0))
+    {
+        return 0.f;
+    }
+
+    return oldValue > 0 ? oldValue - bleedFactor : oldValue + bleedFactor;
+}
+
+float MovePlayerSystem::capSpeed(float speed, float cap)
+{
+    if (speed > cap)
+    {
+        speed = cap;
+    }
+    else if(speed < -cap)
+    {
+        speed = -cap;
     }
     
+    return speed;
+}
+
+float MovePlayerSystem::calculateRotation(Uint32 dt, float rotation, float addRotation)
+{
+    if (FloatHelper::IsNull(addRotation))
+    {
+        rotation = bleedSpeed(rotation, dt * ROTATION_BLEEDOUT);
+    }
+    else
+    {
+        rotation = rotation + addRotation * dt;
+    }
+    return capSpeed(rotation, MAX_ROTATION);
+}
+
+void MovePlayerSystem::calculateSpeed(Uint32 dt, float & x, float & y, float angle, float acceleration)
+{
+        if (FloatHelper::IsNull(acceleration))
+        {
+            const float magnitude = std::sqrt(x*x + y*y);
+            const float noramlizationConstantX = x / magnitude, 
+                        noramlizationConstantY = y / magnitude;
+            
+            const float bleedFactorX = dt * VELOCITY_BLEEDOUT * noramlizationConstantX, 
+                        bleedFactorY = dt * VELOCITY_BLEEDOUT * noramlizationConstantY;
+            
+            x = capSpeed(bleedSpeed(x, bleedFactorX), MAX_VELOCITY);
+            y = capSpeed(bleedSpeed(y, bleedFactorY), MAX_VELOCITY); 
+        }
+        else
+        {
+            acceleration = capSpeed(acceleration, MAX_VELOCITY);
+            x = x + std::cos(angle) * acceleration * dt,
+            y = y + std::sin(angle) * acceleration * dt;            
+        }
 }
 

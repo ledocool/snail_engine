@@ -31,7 +31,7 @@ class Position : public Component
 {
 public:
     Position();
-    Position(const float x, const float y);
+    Position(const float x, const float y, const float angle);
     virtual ~Position();
     
     float x();

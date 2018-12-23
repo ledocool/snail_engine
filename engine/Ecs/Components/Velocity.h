@@ -15,31 +15,38 @@
  */
 
 /* 
- * File:   IDrawable.h
+ * File:   Velocity.h
  * Author: LedoCool
  *
- * Created on November 29, 2018, 3:16 PM
+ * Created on December 23, 2018, 1:13 PM
  */
 
-#ifndef IDRAWABLE_H
-#define IDRAWABLE_H
+#ifndef VELOCITY_H
+#define VELOCITY_H
 
-#include "engine/includes.h"
-#include "engine/Graphics/ShaderProgram.h"
+#include "ComponentTypes.h"
+#include "engine/Ecs/Component.h"
 
-class IDrawable
+class Velocity : public Component
 {
 public:
-    IDrawable();
-    virtual ~IDrawable();
-    virtual void Draw(glm::mat4 projection)=0;
-    virtual void CreateOpenGlBinding(const void * shape, size_t sizeOfShape);
-    virtual void CreateShaderProgram();
+    Velocity(const float & velX, const float & velY, const float & rotVel);
+    virtual ~Velocity();
     
-protected:
-    std::shared_ptr<ShaderProgram> _shaderProgram;
-    unsigned int _glVBO_Id, _glVAO_Id;
+    float x();
+    void x(const float & x);
+    float y();
+    void y(const float & y);
+    float rotation();    
+    void rotation(const float & rot);
+    
+    unsigned int GetComponentId() override;
+    
+private:
+    
+    float _x, _y;
+    float _rotationalVelocity;
 };
 
-#endif /* IDRAWABLE_H */
+#endif /* VELOCITY_H */
 

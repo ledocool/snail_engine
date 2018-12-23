@@ -17,7 +17,7 @@
 #include "Engine.h"
 #include <iostream>
 
-#include "engine/Managers/WindowManager.h"
+#include "engine/Graphics/WindowManager.h"
 #include "engine/Events/EventPipeline.h"
 #include "engine/Input/InputEventConfig.h"
 

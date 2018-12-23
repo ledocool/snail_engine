@@ -27,6 +27,8 @@
 #include "ComponentTypes.h"
 #include "Position.h"
 #include "Player.h"
+#include "Size.h"
+#include "Velocity.h"
 
 #endif /* INCLUDECOMPONENTS_H */
 

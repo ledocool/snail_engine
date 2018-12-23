@@ -15,25 +15,24 @@
  */
 
 /* 
- * File:   Color.h
+ * File:   Cannon.h
  * Author: LedoCool
  *
- * Created on November 29, 2018, 3:13 PM
+ * Created on December 23, 2018, 4:47 PM
  */
 
-#ifndef COLOR_H
-#define COLOR_H
+#ifndef CANNON_H
+#define CANNON_H
 
-class Color
+class Cannon
 {
 public:
-    Color(float r, float g, float b, float a);
+    Cannon();
+    virtual ~Cannon();
     
 private:
-    bool inBounds(float val);
-    
-    float _r, _g, _b, _a;
+
 };
 
-#endif /* COLOR_H */
+#endif /* CANNON_H */
 

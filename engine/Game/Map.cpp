@@ -26,6 +26,7 @@
 #include "engine/includes.h"
 #include "engine/Graphics/Drawables/Spaceship.h"
 #include "engine/Graphics/Drawables/Asteroid.h"
+#include "engine/Graphics/Drawables/Bullet.h"
 #include "engine/Events/EventPipeline.h"
 #include "engine/Events/EventTypes.h"
 #include "engine/Events/Event.h"
@@ -34,18 +35,16 @@
 
 Map::Map()
 {
-    float coords[2] = {0.f, 0.f},
-          vertices[9] = {
-                -0.5f, 0.5f, 0.0f,
-                0.9f, 0.0f, 0.0f,
-                -0.5f, -0.5f, 0.0f
-            };
+    float coords[2] = {0.f, 0.f};
     
-    std::shared_ptr<Spaceship> playerSpaceship = std::shared_ptr<Spaceship> (new Spaceship(vertices, coords));
+    std::shared_ptr<Spaceship> playerSpaceship = std::shared_ptr<Spaceship> (new Spaceship(coords));
     _entities.push_back(playerSpaceship);
     
     std::shared_ptr<Asteroid> asteroid = std::shared_ptr<Asteroid> (new Asteroid(40, coords));
     _entities.push_back(asteroid);
+    
+//    std::shared_ptr<Bullet> bullet = std::shared_ptr<Bullet> (new Bullet(10, coords));
+//    _entities.push_back(bullet);
 }
 
 Map::~Map()
@@ -71,7 +70,7 @@ void Map::AddEntity(std::shared_ptr<Entity> entity)
 
 void Map::RemoveEntity()
 {
-
+    //todo: do me
 }
 
 std::vector< std::shared_ptr<Entity> > Map::GetEntities()

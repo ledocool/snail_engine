@@ -15,29 +15,32 @@
  */
 
 /* 
- * File:   Spaceship.cpp
+ * File:   Bullet.cpp
  * Author: LedoCool
  * 
- * Created on December 5, 2018, 2:50 PM
+ * Created on December 23, 2018, 12:13 AM
  */
 
-#include "Spaceship.h"
+#include "Bullet.h"
 #include "engine/Ecs/Components/IncludeComponents.h"
+#include "engine/Etc/Singleton.h"
 
-Spaceship::Spaceship(float coordinates[2])
-{          
-    addComponent(std::make_shared<Player>());
-    addComponent(std::make_shared<Position>(coordinates[0], coordinates[1], 0));
-    addComponent(std::make_shared<Size>(40));
-    addComponent(std::make_shared<Velocity>(0, 0, 0));
+Bullet::Bullet(const float size, const float coordinates[2], const float angle, const float velocity)
+{
+    addComponent(std::make_shared<Position> (coordinates[0], coordinates[1], angle));
+    addComponent(std::make_shared<Size> (size));
+    addComponent(std::make_shared<Velocity> (std::cos(angle) * velocity, std::sin(angle) * velocity, 0));
     
-    float shape [9] = {
-        -0.5f, 0.5f, 0.0f,
-        0.9f, 0.0f, 0.0f,
-        -0.5f, -0.5f, 0.0f
+    float shape [18] = {
+        -1.f, -0.5f, 0.f,
+        0.2f, -0.5f, 0.f,
+        1.f, -0.1f, 0.f,
+        1.f, 0.1f, 0.f,
+        0.2f, 0.5f, 0.f,
+        -1.f, 0.5f, 0.f,
     };
     
-    for(int i=0; i<9; i++)
+    for(int i=0; i<18; i++)
     {
         _shape[i] = shape[i];
     }
@@ -45,16 +48,11 @@ Spaceship::Spaceship(float coordinates[2])
     CreateOpenGlBinding(_shape, sizeof(_shape));
 }
 
-Spaceship::Spaceship(const Spaceship& orig)
-{
-    
-}
-
-Spaceship::~Spaceship()
+Bullet::~Bullet()
 {
 }
 
-void Spaceship::Draw(glm::mat4 projectionMatrix)
+void Bullet::Draw(glm::mat4 projection)
 {
     auto position = std::dynamic_pointer_cast<Position>(_components[ComponentTypes::POSITION]);
     auto size = std::dynamic_pointer_cast<Size>(_components[ComponentTypes::SIZE]);
@@ -64,12 +62,12 @@ void Spaceship::Draw(glm::mat4 projectionMatrix)
     }
     
     glm::mat4 trans = glm::mat4(1.0f);
-    //glm::mat4 view = glm::mat4(1.0f);
+    glm::mat4 view = glm::mat4(1.0f);
     
     trans = glm::translate(trans, glm::vec3(position->x(), position->y(), 0));
     trans = glm::scale(trans, glm::vec3(size->size(), size->size(), 1.));  
     trans = glm::rotate(trans, position->angle(), glm::vec3(0.0, 0.0, 1.0));
-    trans = projectionMatrix * trans;
+    trans = projection * trans;
     
     glm::vec4 color(0.76, 0.12, 0.12, 1.);
     
@@ -78,6 +76,5 @@ void Spaceship::Draw(glm::mat4 projectionMatrix)
     _shaderProgram->PassData(color, "color");
     
     glBindVertexArray(_glVAO_Id); 
-    glDrawArrays(GL_TRIANGLES, 0, 3);;
+    glDrawArrays(GL_LINE_LOOP, 0, 6);
 }
-

@@ -4,31 +4,40 @@ set(CMAKE_CXX_STANDARD 11)
 
 set(ENGINE_SOURCES 
     Engine.cpp
+    Etc/FloatHelper.cpp
+    
     Input/InputManager.cpp
     Input/InputEventConfig.cpp
   
     Glad/glad/glad.c
 
-    Managers/StateManager.cpp
-    Managers/WindowManager.cpp
+    States/StateManager.cpp
 
+    Graphics/WindowManager.cpp
     Graphics/Window.cpp
-    Graphics/Color.cpp
     Graphics/Shader.cpp
     Graphics/ShaderProgram.cpp
 
+    Graphics/Drawables/IDrawable.cpp
     Graphics/Drawables/Spaceship.cpp
     Graphics/Drawables/Asteroid.cpp
+    Graphics/Drawables/Bullet.cpp
     
     Ecs/Entity.cpp
     Ecs/System.cpp
 
     Ecs/Components/Position.cpp
     Ecs/Components/Player.cpp
+    Ecs/Components/Size.cpp
+    Ecs/Components/Velocity.cpp
+    Ecs/Components/Cannon.cpp
 
     Ecs/EcsExecutor.cpp
     Ecs/Systems/MovePlayerSystem.cpp
     Ecs/Systems/CollectInputSystem.cpp
+    Ecs/Systems/SpawnBulletSystem.cpp
+    Ecs/Systems/ApplyVelocitySystem.cpp
+    Ecs/Systems/MoveCameraSystem.cpp
 
     Game/Map.cpp
     Game/Camera.cpp
@@ -41,27 +50,27 @@ set(ENGINE_HEADERS
     Engine.h
     includes.h
     Etc/Singleton.h
+    Etc/FloatHelper.h
 
     Input/InputManager.h
     Input/KeyEnums.h
     Input/InputEventConfig.h
     Input/PlayerActions.h
 
-    Managers/StateManager.h
-    Managers/WindowManager.h
-
     Glad/glad/glad.h
 
+    States/StateManager.h
     States/IState.h
 
+    Graphics/WindowManager.h
     Graphics/Window.h
-    Graphics/Color.h
     Graphics/Shader.h
     Graphics/ShaderProgram.h
 
     Graphics/Drawables/IDrawable.h
     Graphics/Drawables/Spaceship.h
     Graphics/Drawables/Asteroid.h
+    Graphics/Drawables/Bullet.h
 
     Ecs/System.h
     Ecs/Component.h
@@ -71,10 +80,16 @@ set(ENGINE_HEADERS
     Ecs/Components/IncludeComponents.h
     Ecs/Components/Position.h
     Ecs/Components/Player.h
+    Ecs/Components/Size.h
+    Ecs/Components/Velocity.h
+    Ecs/Components/Cannon.h
     
     Ecs/EcsExecutor.h
     Ecs/Systems/MovePlayerSystem.h
     Ecs/Systems/CollectInputSystem.h
+    Ecs/Systems/SpawnBulletSystem.h
+    Ecs/Systems/ApplyVelocitySystem.h
+    Ecs/Systems/MoveCameraSystem.h
 
     Game/Map.h
     Game/Camera.h

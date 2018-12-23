@@ -29,10 +29,11 @@ Position::Position()
     _y = 0;
 }
 
-Position::Position(const float x, const float y)
+Position::Position(const float x, const float y, const float angle)
 {
     _x = x;
     _y = y;
+    _angle = angle;
 }
 
 Position::~Position()

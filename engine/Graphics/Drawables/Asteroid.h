@@ -31,13 +31,13 @@
 class Asteroid : public IDrawable, public Entity
 {
 public:
-    Asteroid(float radius, float coordinates[2]);
+    Asteroid(const float radius, const float coordinates[2]);
     virtual ~Asteroid();
     
     void Draw(glm::mat4 projection) override;
 
 private:
-    float _shape[150], _radius;
+    float _shape[150];
 };
 
 #endif /* ASTEROID_H */

@@ -19,7 +19,7 @@
 
 #include "includes.h"
 #include "SDL.h"
-#include "engine/Managers/WindowManager.h"
+#include "engine/Graphics/WindowManager.h"
 #include "engine/Input/InputManager.h"
 
 class Engine

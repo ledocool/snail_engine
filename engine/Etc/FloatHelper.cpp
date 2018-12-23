@@ -15,31 +15,20 @@
  */
 
 /* 
- * File:   IDrawable.h
+ * File:   FloatHelper.cpp
  * Author: LedoCool
- *
- * Created on November 29, 2018, 3:16 PM
+ * 
+ * Created on December 23, 2018, 4:59 PM
  */
 
-#ifndef IDRAWABLE_H
-#define IDRAWABLE_H
+#include "FloatHelper.h"
 
-#include "engine/includes.h"
-#include "engine/Graphics/ShaderProgram.h"
-
-class IDrawable
+bool FloatHelper::IsNull(const float var)
 {
-public:
-    IDrawable();
-    virtual ~IDrawable();
-    virtual void Draw(glm::mat4 projection)=0;
-    virtual void CreateOpenGlBinding(const void * shape, size_t sizeOfShape);
-    virtual void CreateShaderProgram();
-    
-protected:
-    std::shared_ptr<ShaderProgram> _shaderProgram;
-    unsigned int _glVBO_Id, _glVAO_Id;
-};
+    return -FLOAT_PRESCISION  <= var && var <= FLOAT_PRESCISION;
+}
 
-#endif /* IDRAWABLE_H */
-
+bool FloatHelper::IsNull(const double var)
+{
+    return -DOUBLE_PRESCISION  <= var && var <= DOUBLE_PRESCISION;
+}

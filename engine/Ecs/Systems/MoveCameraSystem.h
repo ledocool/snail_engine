@@ -15,31 +15,27 @@
  */
 
 /* 
- * File:   IDrawable.h
+ * File:   MoveCameraSystem.h
  * Author: LedoCool
  *
- * Created on November 29, 2018, 3:16 PM
+ * Created on December 23, 2018, 4:41 PM
  */
 
-#ifndef IDRAWABLE_H
-#define IDRAWABLE_H
+#ifndef MOVECAMERASYSTEM_H
+#define MOVECAMERASYSTEM_H
 
-#include "engine/includes.h"
-#include "engine/Graphics/ShaderProgram.h"
+#include "engine/Ecs/System.h"
 
-class IDrawable
+class MoveCameraSystem : public System
 {
 public:
-    IDrawable();
-    virtual ~IDrawable();
-    virtual void Draw(glm::mat4 projection)=0;
-    virtual void CreateOpenGlBinding(const void * shape, size_t sizeOfShape);
-    virtual void CreateShaderProgram();
+    MoveCameraSystem();
+    virtual ~MoveCameraSystem();
     
-protected:
-    std::shared_ptr<ShaderProgram> _shaderProgram;
-    unsigned int _glVBO_Id, _glVAO_Id;
+    void Execute(Uint32 dt, std::shared_ptr<GameState>& gameState) override;
+
+private:
 };
 
-#endif /* IDRAWABLE_H */
+#endif /* MOVECAMERASYSTEM_H */
 
