@@ -41,6 +41,8 @@ set(ENGINE_SOURCES
 
     Game/Map.cpp
     Game/Camera.cpp
+    Game/BinaryTree/TreeRoot.cpp
+    Game/BinaryTree/TreeNode.cpp
 
     Events/EventPipeline.cpp
     Events/InputEvent.cpp
@@ -94,6 +96,8 @@ set(ENGINE_HEADERS
     Game/Map.h
     Game/Camera.h
     Game/GameState.h
+    Game/BinaryTree/TreeRoot.h
+    Game/BinaryTree/TreeNode.h
 
     Events/EventPipeline.h
     Events/Event.h
