@@ -15,31 +15,24 @@
  */
 
 /* 
- * File:   CollectInputSystem.h
+ * File:   Mass.h
  * Author: LedoCool
  *
- * Created on December 19, 2018, 10:53 PM
+ * Created on December 26, 2018, 12:00 AM
  */
 
-#ifndef COLLECTINPUTSYSTEM_H
-#define COLLECTINPUTSYSTEM_H
+#ifndef MASS_H
+#define MASS_H
 
-#include "engine/includes.h"
-#include "engine/Ecs/System.h"
-#include "Input/InputEventConfig.h"
-#include "Input/InputManager.h"
-
-class CollectInputSystem : public System
+class Mass
 {
 public:
-    CollectInputSystem();
-    virtual ~CollectInputSystem();
-    void Execute(Uint32 dt, std::shared_ptr<GameState>& gameState) override;
-    
+    Mass();
+    Mass(const Mass& orig);
+    virtual ~Mass();
 private:
-    InputManager * _inputManager;
-    InputEventConfig * _eventConfig;
+
 };
 
-#endif /* COLLECTINPUTSYSTEM_H */
+#endif /* MASS_H */
 

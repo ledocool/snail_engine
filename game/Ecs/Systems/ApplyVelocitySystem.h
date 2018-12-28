@@ -15,31 +15,30 @@
  */
 
 /* 
- * File:   CollectInputSystem.h
+ * File:   ApplyVelocitySystem.h
  * Author: LedoCool
  *
- * Created on December 19, 2018, 10:53 PM
+ * Created on December 23, 2018, 4:17 PM
  */
 
-#ifndef COLLECTINPUTSYSTEM_H
-#define COLLECTINPUTSYSTEM_H
+#ifndef APPLYVELOCITYSYSTEM_H
+#define APPLYVELOCITYSYSTEM_H
 
 #include "engine/includes.h"
 #include "engine/Ecs/System.h"
-#include "Input/InputEventConfig.h"
-#include "Input/InputManager.h"
 
-class CollectInputSystem : public System
+class ApplyVelocitySystem : public System
 {
 public:
-    CollectInputSystem();
-    virtual ~CollectInputSystem();
-    void Execute(Uint32 dt, std::shared_ptr<GameState>& gameState) override;
+    ApplyVelocitySystem();
     
+    void Execute(Uint32 dt, std::shared_ptr<GameState>& gameState) override;
+
+    
+    virtual ~ApplyVelocitySystem();
 private:
-    InputManager * _inputManager;
-    InputEventConfig * _eventConfig;
+
 };
 
-#endif /* COLLECTINPUTSYSTEM_H */
+#endif /* APPLYVELOCITYSYSTEM_H */
 

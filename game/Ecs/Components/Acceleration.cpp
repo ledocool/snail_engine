@@ -15,31 +15,19 @@
  */
 
 /* 
- * File:   CollectInputSystem.h
+ * File:   Acceleration.cpp
  * Author: LedoCool
- *
- * Created on December 19, 2018, 10:53 PM
+ * 
+ * Created on December 25, 2018, 11:53 PM
  */
 
-#ifndef COLLECTINPUTSYSTEM_H
-#define COLLECTINPUTSYSTEM_H
+#include "Acceleration.h"
 
-#include "engine/includes.h"
-#include "engine/Ecs/System.h"
-#include "Input/InputEventConfig.h"
-#include "Input/InputManager.h"
-
-class CollectInputSystem : public System
+Acceleration::Acceleration()
 {
-public:
-    CollectInputSystem();
-    virtual ~CollectInputSystem();
-    void Execute(Uint32 dt, std::shared_ptr<GameState>& gameState) override;
-    
-private:
-    InputManager * _inputManager;
-    InputEventConfig * _eventConfig;
-};
+}
 
-#endif /* COLLECTINPUTSYSTEM_H */
+Acceleration::~ Acceleration()
+{
+}
 

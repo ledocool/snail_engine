@@ -30,10 +30,13 @@ class TreeRoot
 {
 public:
     TreeRoot();
-    TreeRoot(const TreeRoot& orig);
     virtual ~TreeRoot();
+    void BuildTree(float left, float right, float bottom, float top, std::vector< std::weak_ptr<Entity> > entities);
+    std::vector< std::weak_ptr <Entity> > GetObjects(float x, float y);
+    std::vector< std::weak_ptr <Entity> > GetObjects(float left, float right, float bottom, float top);
+    
 private:
-
+     std::shared_ptr<TreeNode> _root;   
 };
 
 #endif /* TREEROOT_H */

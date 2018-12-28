@@ -15,44 +15,44 @@
  */
 
 /* 
- * File:   Asteroid.cpp
+ * File:   Bullet.cpp
  * Author: LedoCool
  * 
- * Created on December 22, 2018, 4:36 PM
+ * Created on December 23, 2018, 12:13 AM
  */
 
-#include "Asteroid.h"
+#include "Bullet.h"
 #include "engine/Ecs/Components/IncludeComponents.h"
 #include "engine/Etc/Singleton.h"
 
-
-Asteroid::Asteroid(const float radius, const float coordinates[2], const float velocity[2])
+Bullet::Bullet(const float size, const float coordinates[2], const float angle, const float velocity)
 {
-    addComponent(std::make_shared<Position>(coordinates[0], coordinates[1], 0.f));
-    addComponent(std::make_shared<Velocity>(velocity[0], velocity[1], 0.f));
-    addComponent(std::make_shared<Size>(radius));
+    addComponent(std::make_shared<Position> (coordinates[0], coordinates[1], angle));
+    addComponent(std::make_shared<Size> (size));
+    addComponent(std::make_shared<Velocity> (std::cos(angle) * velocity, std::sin(angle) * velocity, 0));
     
-    float step = 2 * M_PI / 50;
+    float shape [18] = {
+        -1.f, -0.5f, 0.f,
+        0.2f, -0.5f, 0.f,
+        1.f, -0.1f, 0.f,
+        1.f, 0.1f, 0.f,
+        0.2f, 0.5f, 0.f,
+        -1.f, 0.5f, 0.f,
+    };
     
-    for(int i=0; i<50; i++)
+    for(int i=0; i<18; i++)
     {
-        float angle = step * i;
-        float x = cos(angle);
-        float y = sin(angle);
-        
-        _shape[i*3] = x;
-        _shape[i*3 + 1] = y;
-        _shape[i*3 + 2] = 0.0f;
+        _shape[i] = shape[i];
     }
     
     CreateOpenGlBinding(_shape, sizeof(_shape));
 }
 
-Asteroid::~Asteroid()
+Bullet::~Bullet()
 {
 }
 
-void Asteroid::Draw(glm::mat4 projection)
+void Bullet::Draw(glm::mat4 projection)
 {
     auto position = std::dynamic_pointer_cast<Position>(_components[ComponentTypes::POSITION]);
     auto size = std::dynamic_pointer_cast<Size>(_components[ComponentTypes::SIZE]);
@@ -76,6 +76,5 @@ void Asteroid::Draw(glm::mat4 projection)
     _shaderProgram->PassData(color, "color");
     
     glBindVertexArray(_glVAO_Id); 
-    glDrawArrays(GL_LINE_LOOP, 0, 50);
+    glDrawArrays(GL_LINE_LOOP, 0, 6);
 }
-

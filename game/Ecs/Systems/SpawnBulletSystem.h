@@ -15,31 +15,30 @@
  */
 
 /* 
- * File:   CollectInputSystem.h
+ * File:   SpawnBulletSystem.h
  * Author: LedoCool
  *
- * Created on December 19, 2018, 10:53 PM
+ * Created on December 23, 2018, 2:32 PM
  */
 
-#ifndef COLLECTINPUTSYSTEM_H
-#define COLLECTINPUTSYSTEM_H
+#ifndef SPAWNBULLETSYSTEM_H
+#define SPAWNBULLETSYSTEM_H
 
 #include "engine/includes.h"
 #include "engine/Ecs/System.h"
-#include "Input/InputEventConfig.h"
-#include "Input/InputManager.h"
 
-class CollectInputSystem : public System
+class SpawnBulletSystem : public System
 {
 public:
-    CollectInputSystem();
-    virtual ~CollectInputSystem();
+    SpawnBulletSystem();
+    SpawnBulletSystem(const SpawnBulletSystem& orig);
+    virtual ~SpawnBulletSystem();
+
     void Execute(Uint32 dt, std::shared_ptr<GameState>& gameState) override;
     
 private:
-    InputManager * _inputManager;
-    InputEventConfig * _eventConfig;
+
 };
 
-#endif /* COLLECTINPUTSYSTEM_H */
+#endif /* SPAWNBULLETSYSTEM_H */
 

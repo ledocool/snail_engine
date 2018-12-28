@@ -15,31 +15,28 @@
  */
 
 /* 
- * File:   CollectInputSystem.h
+ * File:   CheckCollisions.cpp
  * Author: LedoCool
- *
- * Created on December 19, 2018, 10:53 PM
+ * 
+ * Created on December 24, 2018, 8:35 PM
  */
 
-#ifndef COLLECTINPUTSYSTEM_H
-#define COLLECTINPUTSYSTEM_H
+#include "CheckCollisions.h"
 
-#include "engine/includes.h"
-#include "engine/Ecs/System.h"
-#include "Input/InputEventConfig.h"
-#include "Input/InputManager.h"
-
-class CollectInputSystem : public System
+CheckCollisions::CheckCollisions()
 {
-public:
-    CollectInputSystem();
-    virtual ~CollectInputSystem();
-    void Execute(Uint32 dt, std::shared_ptr<GameState>& gameState) override;
+}
+
+CheckCollisions::~ CheckCollisions()
+{
+}
+
+void CheckCollisions::Execute(Uint32 dt, std::shared_ptr<GameState>& gameState)
+{
     
-private:
-    InputManager * _inputManager;
-    InputEventConfig * _eventConfig;
-};
+}
 
-#endif /* COLLECTINPUTSYSTEM_H */
+void CheckCollisions::BuildBinaryTree(std::shared_ptr<GameState>& gameState)
+{
 
+}

@@ -27,6 +27,7 @@ include_directories("D:\\projects\\libraries\\sdl2\\include\\SDL2")
 # add the binary tree to the search path for include files
 include_directories("${PROJECT_BINARY_DIR}")
 add_subdirectory("engine")
+#add_subdirectory("game")
 
 # add executable
 add_executable(snail_engine main.cpp)

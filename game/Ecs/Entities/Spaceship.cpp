@@ -15,44 +15,46 @@
  */
 
 /* 
- * File:   Asteroid.cpp
+ * File:   Spaceship.cpp
  * Author: LedoCool
  * 
- * Created on December 22, 2018, 4:36 PM
+ * Created on December 5, 2018, 2:50 PM
  */
 
-#include "Asteroid.h"
+#include "Spaceship.h"
 #include "engine/Ecs/Components/IncludeComponents.h"
-#include "engine/Etc/Singleton.h"
 
-
-Asteroid::Asteroid(const float radius, const float coordinates[2], const float velocity[2])
-{
-    addComponent(std::make_shared<Position>(coordinates[0], coordinates[1], 0.f));
-    addComponent(std::make_shared<Velocity>(velocity[0], velocity[1], 0.f));
-    addComponent(std::make_shared<Size>(radius));
+Spaceship::Spaceship(float coordinates[2])
+{          
+    addComponent(std::make_shared<Player>());
+    addComponent(std::make_shared<Position>(coordinates[0], coordinates[1], 0));
+    addComponent(std::make_shared<Size>(40));
+    addComponent(std::make_shared<Velocity>(0, 0, 0));
     
-    float step = 2 * M_PI / 50;
+    float shape [9] = {
+        -0.5f, 0.5f, 0.0f,
+        0.9f, 0.0f, 0.0f,
+        -0.5f, -0.5f, 0.0f
+    };
     
-    for(int i=0; i<50; i++)
+    for(int i=0; i<9; i++)
     {
-        float angle = step * i;
-        float x = cos(angle);
-        float y = sin(angle);
-        
-        _shape[i*3] = x;
-        _shape[i*3 + 1] = y;
-        _shape[i*3 + 2] = 0.0f;
+        _shape[i] = shape[i];
     }
     
     CreateOpenGlBinding(_shape, sizeof(_shape));
 }
 
-Asteroid::~Asteroid()
+Spaceship::Spaceship(const Spaceship& orig)
+{
+    
+}
+
+Spaceship::~Spaceship()
 {
 }
 
-void Asteroid::Draw(glm::mat4 projection)
+void Spaceship::Draw(glm::mat4 projectionMatrix)
 {
     auto position = std::dynamic_pointer_cast<Position>(_components[ComponentTypes::POSITION]);
     auto size = std::dynamic_pointer_cast<Size>(_components[ComponentTypes::SIZE]);
@@ -62,12 +64,12 @@ void Asteroid::Draw(glm::mat4 projection)
     }
     
     glm::mat4 trans = glm::mat4(1.0f);
-    glm::mat4 view = glm::mat4(1.0f);
+    //glm::mat4 view = glm::mat4(1.0f);
     
     trans = glm::translate(trans, glm::vec3(position->x(), position->y(), 0));
     trans = glm::scale(trans, glm::vec3(size->size(), size->size(), 1.));  
     trans = glm::rotate(trans, position->angle(), glm::vec3(0.0, 0.0, 1.0));
-    trans = projection * trans;
+    trans = projectionMatrix * trans;
     
     glm::vec4 color(0.76, 0.12, 0.12, 1.);
     
@@ -76,6 +78,6 @@ void Asteroid::Draw(glm::mat4 projection)
     _shaderProgram->PassData(color, "color");
     
     glBindVertexArray(_glVAO_Id); 
-    glDrawArrays(GL_LINE_LOOP, 0, 50);
+    glDrawArrays(GL_TRIANGLES, 0, 3);;
 }
 

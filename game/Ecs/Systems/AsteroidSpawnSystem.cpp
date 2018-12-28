@@ -15,27 +15,34 @@
  */
 
 /* 
- * File:   CollectInputSystem.cpp
+ * File:   AsteroidSpawnSystem.cpp
  * Author: LedoCool
  * 
- * Created on December 19, 2018, 10:53 PM
+ * Created on December 26, 2018, 10:09 PM
  */
 
-#include "CollectInputSystem.h"
-#include "engine/Etc/Singleton.h"
+#include "AsteroidSpawnSystem.h"
 
+#include "engine/Graphics/Drawables/Asteroid.h"
 
-CollectInputSystem::CollectInputSystem()
-{
-    _inputManager = Singleton<InputManager>::get();
-    _eventConfig = Singleton<InputEventConfig>::get();
-}
+#define MAX_ASTEROIDS (5)
 
-CollectInputSystem::~CollectInputSystem()
+AsteroidSpawnSystem::AsteroidSpawnSystem()
 {
 }
 
-void CollectInputSystem::Execute(Uint32 dt, std::shared_ptr<GameState>& gameState)
+AsteroidSpawnSystem::~ AsteroidSpawnSystem()
 {
-    gameState->inputActions = _eventConfig->GatherInputEvents(_inputManager);
+}
+
+void AsteroidSpawnSystem::Execute(Uint32 dt, std::shared_ptr<GameState>& gameState)
+{
+    if(!gameState->asteroidCooldown && gameState->asteroidCounter < MAX_ASTEROIDS)
+    {
+        float coords[2] = {0.f, 0.f};
+                
+        auto asteroid = std::make_shared<Asteroid>(10.f, coords);
+        
+        gameState->map->AddEntity();
+    }
 }

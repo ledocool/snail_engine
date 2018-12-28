@@ -15,31 +15,31 @@
  */
 
 /* 
- * File:   CollectInputSystem.h
+ * File:   Spaceship.h
  * Author: LedoCool
  *
- * Created on December 19, 2018, 10:53 PM
+ * Created on December 5, 2018, 2:50 PM
  */
 
-#ifndef COLLECTINPUTSYSTEM_H
-#define COLLECTINPUTSYSTEM_H
+#ifndef SPACESHIP_H
+#define SPACESHIP_H
 
 #include "engine/includes.h"
-#include "engine/Ecs/System.h"
-#include "Input/InputEventConfig.h"
-#include "Input/InputManager.h"
+#include "engine/Ecs/Entity.h"
+#include "engine/Graphics/Drawables/IDrawable.h"
 
-class CollectInputSystem : public System
+class Spaceship : public Entity, public IDrawable
 {
 public:
-    CollectInputSystem();
-    virtual ~CollectInputSystem();
-    void Execute(Uint32 dt, std::shared_ptr<GameState>& gameState) override;
+    Spaceship(float coordinates[2]);
+    Spaceship(const Spaceship& orig);
+    virtual ~Spaceship();
+    
+    void Draw(glm::mat4 projectionMatrix) override;
     
 private:
-    InputManager * _inputManager;
-    InputEventConfig * _eventConfig;
+    float _shape[9];
 };
 
-#endif /* COLLECTINPUTSYSTEM_H */
+#endif /* SPACESHIP_H */
 

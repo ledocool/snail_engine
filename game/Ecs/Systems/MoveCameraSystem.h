@@ -15,31 +15,27 @@
  */
 
 /* 
- * File:   CollectInputSystem.h
+ * File:   MoveCameraSystem.h
  * Author: LedoCool
  *
- * Created on December 19, 2018, 10:53 PM
+ * Created on December 23, 2018, 4:41 PM
  */
 
-#ifndef COLLECTINPUTSYSTEM_H
-#define COLLECTINPUTSYSTEM_H
+#ifndef MOVECAMERASYSTEM_H
+#define MOVECAMERASYSTEM_H
 
-#include "engine/includes.h"
 #include "engine/Ecs/System.h"
-#include "Input/InputEventConfig.h"
-#include "Input/InputManager.h"
 
-class CollectInputSystem : public System
+class MoveCameraSystem : public System
 {
 public:
-    CollectInputSystem();
-    virtual ~CollectInputSystem();
-    void Execute(Uint32 dt, std::shared_ptr<GameState>& gameState) override;
+    MoveCameraSystem();
+    virtual ~MoveCameraSystem();
     
+    void Execute(Uint32 dt, std::shared_ptr<GameState>& gameState) override;
+
 private:
-    InputManager * _inputManager;
-    InputEventConfig * _eventConfig;
 };
 
-#endif /* COLLECTINPUTSYSTEM_H */
+#endif /* MOVECAMERASYSTEM_H */
 

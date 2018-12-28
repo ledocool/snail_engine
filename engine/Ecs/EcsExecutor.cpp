@@ -27,10 +27,12 @@
 #include "engine/Ecs/Systems/SpawnBulletSystem.h"
 #include "engine/Ecs/Systems/ApplyVelocitySystem.h"
 #include "engine/Ecs/Systems/MoveCameraSystem.h"
+#include "engine/Ecs/Systems/AsteroidSpawnSystem.h"
 
 EcsExecutor::EcsExecutor()
 {
     _systems.push_back(std::make_shared<CollectInputSystem>());
+    _systems.push_back(std::make_shared<AsteroidSpawnSystem>());
     _systems.push_back(std::make_shared<MovePlayerSystem>());
     _systems.push_back(std::make_shared<ApplyVelocitySystem>());
     _systems.push_back(std::make_shared<MoveCameraSystem>());

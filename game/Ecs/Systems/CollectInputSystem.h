@@ -15,31 +15,31 @@
  */
 
 /* 
- * File:   GameState.h
+ * File:   CollectInputSystem.h
  * Author: LedoCool
  *
- * Created on December 15, 2018, 6:34 PM
+ * Created on December 19, 2018, 10:53 PM
  */
 
-#ifndef GAMESTATE_H
-#define GAMESTATE_H
+#ifndef COLLECTINPUTSYSTEM_H
+#define COLLECTINPUTSYSTEM_H
 
 #include "engine/includes.h"
-#include "engine/Game/Map.h"
-#include "engine/Game/Camera.h"
-#include "engine/Events/InputEvent.h"
+#include "engine/Ecs/System.h"
+#include "Input/InputEventConfig.h"
+#include "Input/InputManager.h"
 
-struct GameState
-{    
-    std::shared_ptr <Map> map;
-    std::shared_ptr <Camera> camera;
-
-    unsigned int asteroidCounter;
-    Uint32 asteroidCooldown;
+class CollectInputSystem : public System
+{
+public:
+    CollectInputSystem();
+    virtual ~CollectInputSystem();
+    void Execute(Uint32 dt, std::shared_ptr<GameState>& gameState) override;
     
-    std::vector <InputEvent> inputActions;
-    
+private:
+    InputManager * _inputManager;
+    InputEventConfig * _eventConfig;
 };
 
-#endif /* GAMESTATE_H */
+#endif /* COLLECTINPUTSYSTEM_H */
 

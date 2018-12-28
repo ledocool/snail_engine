@@ -15,31 +15,27 @@
  */
 
 /* 
- * File:   GameState.h
+ * File:   CollectInputSystem.cpp
  * Author: LedoCool
- *
- * Created on December 15, 2018, 6:34 PM
+ * 
+ * Created on December 19, 2018, 10:53 PM
  */
 
-#ifndef GAMESTATE_H
-#define GAMESTATE_H
+#include "CollectInputSystem.h"
+#include "engine/Etc/Singleton.h"
 
-#include "engine/includes.h"
-#include "engine/Game/Map.h"
-#include "engine/Game/Camera.h"
-#include "engine/Events/InputEvent.h"
 
-struct GameState
-{    
-    std::shared_ptr <Map> map;
-    std::shared_ptr <Camera> camera;
+CollectInputSystem::CollectInputSystem()
+{
+    _inputManager = Singleton<InputManager>::get();
+    _eventConfig = Singleton<InputEventConfig>::get();
+}
 
-    unsigned int asteroidCounter;
-    Uint32 asteroidCooldown;
-    
-    std::vector <InputEvent> inputActions;
-    
-};
+CollectInputSystem::~CollectInputSystem()
+{
+}
 
-#endif /* GAMESTATE_H */
-
+void CollectInputSystem::Execute(Uint32 dt, std::shared_ptr<GameState>& gameState)
+{
+    gameState->inputActions = _eventConfig->GatherInputEvents(_inputManager);
+}

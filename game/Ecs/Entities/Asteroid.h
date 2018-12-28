@@ -15,31 +15,30 @@
  */
 
 /* 
- * File:   CollectInputSystem.h
+ * File:   Asteroid.h
  * Author: LedoCool
  *
- * Created on December 19, 2018, 10:53 PM
+ * Created on December 22, 2018, 4:36 PM
  */
 
-#ifndef COLLECTINPUTSYSTEM_H
-#define COLLECTINPUTSYSTEM_H
+#ifndef ASTEROID_H
+#define ASTEROID_H
 
 #include "engine/includes.h"
-#include "engine/Ecs/System.h"
-#include "Input/InputEventConfig.h"
-#include "Input/InputManager.h"
+#include "engine/Ecs/Entity.h"
+#include "engine/Graphics/Drawables/IDrawable.h"
 
-class CollectInputSystem : public System
+class Asteroid : public IDrawable, public Entity
 {
 public:
-    CollectInputSystem();
-    virtual ~CollectInputSystem();
-    void Execute(Uint32 dt, std::shared_ptr<GameState>& gameState) override;
+    Asteroid(const float radius, const float coordinates[2]);
+    virtual ~Asteroid();
     
+    void Draw(glm::mat4 projection) override;
+
 private:
-    InputManager * _inputManager;
-    InputEventConfig * _eventConfig;
+    float _shape[150];
 };
 
-#endif /* COLLECTINPUTSYSTEM_H */
+#endif /* ASTEROID_H */
 

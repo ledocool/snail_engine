@@ -33,16 +33,37 @@ TreeNode::TreeNode(float left, float right, float top, float bottom, std::vector
     _bottom = bottom;
     _parent = parent;
     
+    _leftLeaf = NULL;
+    _rightLeaf = NULL;
+    
     for(std::weak_ptr< Entity > weakEntity : entities)
     {
         if(auto entity = weakEntity.lock())
         {
+            bool belongs = false;
+            
+            
             if(auto position = std::dynamic_pointer_cast<Position>(entity->GetComponent(ComponentTypes::POSITION).lock()))
             {
                 if(PointInBounds(position->x(), position->y()))
                 {
-                    _belongingEntitites.push_back(weakEntity);
+                    belongs = true;
                 }
+                
+                if(auto size = std::dynamic_pointer_cast<Size>(entity->GetComponent(ComponentTypes::SIZE).lock()))
+                {
+                    float halfSize = size->size() / 2.f;
+                    if(RectIntersects(position->x() - halfSize, position->x() + halfSize, 
+                                      position->y() - halfSize, position->y() + halfSize))
+                    {
+                        belongs = true;
+                    }
+                }
+            }
+            
+            if(belongs)
+            {
+                _belongingEntitites.push_back(weakEntity);
             }
         }
     }
@@ -93,6 +114,45 @@ TreeNode::~ TreeNode()
     delete _rightLeaf;
 }
 
+std::vector<std::weak_ptr<Entity> > TreeNode::GetBelongingEntities(float x, float y)
+{
+    if(!PointInBounds(x, y))
+    {
+        return std::vector<std::weak_ptr<Entity> >();
+    }
+    
+    if(_leftLeaf && _leftLeaf->PointInBounds(x, y))
+    {
+        return _leftLeaf->GetBelongingEntities(x, y);
+    }
+    else if(_rightLeaf && _rightLeaf->PointInBounds(x, y))
+    {
+        return _rightLeaf->GetBelongingEntities(x, y);
+    }
+    
+    return GetEntities();
+}
+
+std::vector<std::weak_ptr<Entity> > TreeNode::GetBelongingEntities(float left, float right, float bottom, float top)
+{
+    if(!RectIntersects(left, right, bottom, top))
+    {
+        return std::vector<std::weak_ptr<Entity> >();
+    }
+    
+    if(_leftLeaf && _leftLeaf->RectInside(left, right, bottom, top))
+    {
+        return _leftLeaf->GetBelongingEntities(left, right, bottom, top);
+    }
+    else if(_rightLeaf && _rightLeaf->RectInside(left, right, bottom, top))
+    {
+        return _rightLeaf->GetBelongingEntities(left, right, bottom, top);
+    }
+    
+    return GetEntities();
+}
+
+
 std::vector<std::weak_ptr<Entity> > TreeNode::GetEntities()
 {
     return _belongingEntitites;
@@ -107,3 +167,9 @@ bool TreeNode::RectIntersects(float left, float right, float bottom, float top)
 {
     return (left <= _right || right >= _left) && (bottom <= _top || top >= _bottom);
 }
+
+bool TreeNode::RectInside(float left, float right, float bottom, float top)
+{
+    return (_left <= left) && (right <= _right) && (_bottom <= bottom) && (top <= _top);
+}
+

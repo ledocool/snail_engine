@@ -5,6 +5,7 @@ set(CMAKE_CXX_STANDARD 11)
 set(ENGINE_SOURCES 
     Engine.cpp
     Etc/FloatHelper.cpp
+    Etc/Vector2.cpp
     
     Input/InputManager.cpp
     Input/InputEventConfig.cpp
@@ -38,6 +39,7 @@ set(ENGINE_SOURCES
     Ecs/Systems/SpawnBulletSystem.cpp
     Ecs/Systems/ApplyVelocitySystem.cpp
     Ecs/Systems/MoveCameraSystem.cpp
+    Ecs/Systems/AsteroidSpawnSystem.cpp
 
     Game/Map.cpp
     Game/Camera.cpp
@@ -53,6 +55,7 @@ set(ENGINE_HEADERS
     includes.h
     Etc/Singleton.h
     Etc/FloatHelper.h
+    Etc/Vector2.h
 
     Input/InputManager.h
     Input/KeyEnums.h
@@ -92,6 +95,7 @@ set(ENGINE_HEADERS
     Ecs/Systems/SpawnBulletSystem.h
     Ecs/Systems/ApplyVelocitySystem.h
     Ecs/Systems/MoveCameraSystem.h
+    Ecs/Systems/AsteroidSpawnSystem.h
 
     Game/Map.h
     Game/Camera.h

@@ -15,31 +15,31 @@
  */
 
 /* 
- * File:   CollectInputSystem.h
+ * File:   IDrawable.h
  * Author: LedoCool
  *
- * Created on December 19, 2018, 10:53 PM
+ * Created on November 29, 2018, 3:16 PM
  */
 
-#ifndef COLLECTINPUTSYSTEM_H
-#define COLLECTINPUTSYSTEM_H
+#ifndef IDRAWABLE_H
+#define IDRAWABLE_H
 
 #include "engine/includes.h"
-#include "engine/Ecs/System.h"
-#include "Input/InputEventConfig.h"
-#include "Input/InputManager.h"
+#include "engine/Graphics/ShaderProgram.h"
 
-class CollectInputSystem : public System
+class IDrawable
 {
 public:
-    CollectInputSystem();
-    virtual ~CollectInputSystem();
-    void Execute(Uint32 dt, std::shared_ptr<GameState>& gameState) override;
+    IDrawable();
+    virtual ~IDrawable();
+    virtual void Draw(glm::mat4 projection)=0;
+    virtual void CreateOpenGlBinding(const void * shape, size_t sizeOfShape);
+    virtual void CreateShaderProgram();
     
-private:
-    InputManager * _inputManager;
-    InputEventConfig * _eventConfig;
+protected:
+    std::shared_ptr<ShaderProgram> _shaderProgram;
+    unsigned int _glVBO_Id, _glVAO_Id;
 };
 
-#endif /* COLLECTINPUTSYSTEM_H */
+#endif /* IDRAWABLE_H */
 

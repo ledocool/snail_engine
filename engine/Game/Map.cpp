@@ -40,8 +40,8 @@ Map::Map()
     std::shared_ptr<Spaceship> playerSpaceship = std::shared_ptr<Spaceship> (new Spaceship(coords));
     _entities.push_back(playerSpaceship);
     
-    std::shared_ptr<Asteroid> asteroid = std::shared_ptr<Asteroid> (new Asteroid(40, coords));
-    _entities.push_back(asteroid);
+//    std::shared_ptr<Asteroid> asteroid = std::shared_ptr<Asteroid> (new Asteroid(40, coords));
+//    _entities.push_back(asteroid);
     
 //    std::shared_ptr<Bullet> bullet = std::shared_ptr<Bullet> (new Bullet(10, coords));
 //    _entities.push_back(bullet);

@@ -27,8 +27,19 @@ TreeRoot::TreeRoot()
 {
 }
 
-TreeRoot::TreeRoot(const TreeRoot& orig)
+void TreeRoot::BuildTree(float left, float right, float bottom, float top,  std::vector< std::weak_ptr<Entity> > entities)
 {
+    _root = std::make_shared<TreeNode>(left, right, top, bottom, entities, nullptr, true);
+}
+
+std::vector< std::weak_ptr <Entity> > TreeRoot::GetObjects(float x, float y)
+{
+    return _root->GetBelongingEntities(x, y);
+}
+
+std::vector< std::weak_ptr <Entity> > TreeRoot::GetObjects(float left, float right, float bottom, float top)
+{
+    return _root->GetBelongingEntities(left, right, bottom, top);
 }
 
 TreeRoot::~ TreeRoot()

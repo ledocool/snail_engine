@@ -31,7 +31,7 @@
 class Asteroid : public IDrawable, public Entity
 {
 public:
-    Asteroid(const float radius, const float coordinates[2]);
+    Asteroid(const float radius, const float coordinates[2], const float velocity[2]);
     virtual ~Asteroid();
     
     void Draw(glm::mat4 projection) override;

@@ -36,11 +36,16 @@ public:
     std::vector < std::weak_ptr <Entity> > GetEntities();
     bool PointInBounds(float x, float y);
     bool RectIntersects(float left, float right, float bottom, float top);
+    bool RectInside(float left, float right, float bottom, float top);
+    
+    std::vector < std::weak_ptr <Entity> > GetBelongingEntities(float x, float y);
+    std::vector < std::weak_ptr <Entity> > GetBelongingEntities(float left, float right, float bottom, float top);
     
 private:
-    
+
     std::vector < std::weak_ptr <Entity> > _belongingEntitites;    
-    TreeNode * _leftLeaf, _rightLeaf;
+    TreeNode * _leftLeaf; 
+    TreeNode * _rightLeaf;
     TreeNode * _parent;
     
     float _left, _right, _top, _bottom;
