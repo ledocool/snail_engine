@@ -34,7 +34,9 @@ public:
     Map();
     virtual ~Map();
     void AddEntity(std::shared_ptr<Entity> entity);
-    void RemoveEntity();
+    void RemoveEntity(std::shared_ptr<Entity> removable);
+    void RemoveEntities(std::vector< std::shared_ptr<Entity> > removables);
+    std::vector< std::shared_ptr<Entity> >::iterator FindEntity(std::shared_ptr<Entity> entity);   
     
     std::vector< std::shared_ptr<Entity> > GetEntities();
     void Render(glm::mat4 projection);   

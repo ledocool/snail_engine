@@ -39,12 +39,6 @@ Map::Map()
     
     std::shared_ptr<Spaceship> playerSpaceship = std::shared_ptr<Spaceship> (new Spaceship(coords));
     _entities.push_back(playerSpaceship);
-    
-//    std::shared_ptr<Asteroid> asteroid = std::shared_ptr<Asteroid> (new Asteroid(40, coords));
-//    _entities.push_back(asteroid);
-    
-//    std::shared_ptr<Bullet> bullet = std::shared_ptr<Bullet> (new Bullet(10, coords));
-//    _entities.push_back(bullet);
 }
 
 Map::~Map()
@@ -68,9 +62,58 @@ void Map::AddEntity(std::shared_ptr<Entity> entity)
     _entities.push_back(entity);
 }
 
-void Map::RemoveEntity()
+void Map::RemoveEntity(std::shared_ptr<Entity> removable)
 {
-    //todo: do me
+    auto iterator = FindEntity(removable);
+    if(iterator != _entities.end())
+    {
+        _entities.erase(iterator);
+    }
+}
+
+std::vector<std::shared_ptr<Entity> >::iterator Map::FindEntity(std::shared_ptr<Entity> entity)
+{
+    for(std::vector< std::shared_ptr<Entity> >::iterator en = _entities.begin(); en < _entities.end(); en++)
+    {
+        unsigned int id = (*en)->GetId();
+        if(id == entity->GetId())
+        {
+            return en;
+        }
+    }
+    
+    return _entities.end();
+}
+
+void Map::RemoveEntities(std::vector<std::shared_ptr<Entity> > removables)
+{
+    std::vector< std::shared_ptr<Entity> > newEntities;
+    
+    for(auto mapEntity : _entities)
+    {
+        bool toBeRemoved = false;
+        
+        for(auto entity : removables)
+        {
+            auto iterator = FindEntity(entity);
+            if(iterator != _entities.end())
+            {
+                toBeRemoved = true;
+                break;
+            }
+            
+        }
+        
+        if(!toBeRemoved)
+        {
+            newEntities.push_back(mapEntity);
+        }
+    }
+    
+    if(!newEntities.empty())
+    {
+        _entities = newEntities;
+    }
 }
 
 std::vector< std::shared_ptr<Entity> > Map::GetEntities()

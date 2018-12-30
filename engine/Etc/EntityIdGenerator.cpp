@@ -15,21 +15,27 @@
  */
 
 /* 
- * File:   includeComponents.h
+ * File:   EntityIdGenerator.cpp
  * Author: LedoCool
- *
- * Created on December 5, 2018, 2:55 PM
+ * 
+ * Created on December 31, 2018, 12:03 AM
  */
 
-#ifndef INCLUDECOMPONENTS_H
-#define INCLUDECOMPONENTS_H
+#include "EntityIdGenerator.h"
+#include <limits>
 
-#include "ComponentTypes.h"
-#include "Position.h"
-#include "Player.h"
-#include "Size.h"
-#include "Velocity.h"
-#include "DespawnOutsideScreen.h"
+EntityIdGenerator::~ EntityIdGenerator()
+{
+    _lastId = 0;
+    _maxId = std::numeric_limits<unsigned int>::max();
+}
 
-#endif /* INCLUDECOMPONENTS_H */
+unsigned int EntityIdGenerator::GenerateId()
+{
+    if(_lastId == _maxId)
+    {
+        //todo: throw exception?
+    }
+    return _lastId++;
+}
 

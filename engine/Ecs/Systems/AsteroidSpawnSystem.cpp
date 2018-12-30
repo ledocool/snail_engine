@@ -61,7 +61,8 @@ void AsteroidSpawnSystem::Execute(Uint32 dt, std::shared_ptr<GameState>& gameSta
         float cameraX, cameraY;
         unsigned int height, width;
         gameState->camera->GetScreenProportions(width, height);
-        gameState->camera->GetCoordinates(cameraX, cameraY);        
+        gameState->camera->GetCoordinates(cameraX, cameraY);
+
         float asteroidSize = 10.f;
         float velocity[2] = {0.f, 0.f}, 
                 coords[2] = {0.f, 0.f};

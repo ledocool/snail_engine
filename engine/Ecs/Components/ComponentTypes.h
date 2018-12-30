@@ -33,7 +33,8 @@ namespace ComponentTypes
         POSITION,
         PLAYER,
         SIZE,
-        VELOCITY
+        VELOCITY,
+        DESPAWN_OUTSIDE_SCREEN
     };
 }
 

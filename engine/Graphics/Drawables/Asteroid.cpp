@@ -31,6 +31,7 @@ Asteroid::Asteroid(const float radius, const float coordinates[2], const float v
     addComponent(std::make_shared<Position>(coordinates[0], coordinates[1], 0.f));
     addComponent(std::make_shared<Velocity>(velocity[0], velocity[1], 0.f));
     addComponent(std::make_shared<Size>(radius));
+    addComponent(std::make_shared<DespawnOutsideScreen>());
     
     float step = 2 * M_PI / 50;
     

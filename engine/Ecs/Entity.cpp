@@ -22,6 +22,17 @@
  */
 
 #include "Entity.h"
+#include "engine/Etc/EntityIdGenerator.h"
+#include "engine/Etc/Singleton.h"
+
+Entity::Entity()
+{
+    _id = Singleton<EntityIdGenerator>::get()->GenerateId();
+}
+
+Entity::~ Entity()
+{
+}
 
 void Entity::addComponent(std::shared_ptr<Component> component)
 {
@@ -65,4 +76,10 @@ std::weak_ptr<Component> Entity::GetComponent(unsigned int id)
     
     return ret;
 }
+
+unsigned int Entity::GetId()
+{
+    return _id;
+}
+
 

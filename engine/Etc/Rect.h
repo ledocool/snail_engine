@@ -15,36 +15,35 @@
  */
 
 /* 
- * File:   Entity.h
+ * File:   Rect.h
  * Author: LedoCool
  *
- * Created on December 4, 2018, 8:32 PM
+ * Created on December 30, 2018, 11:29 PM
  */
 
-#ifndef ENTITY_H
-#define ENTITY_H
+#ifndef RECT_H
+#define RECT_H
 
-#include "engine/includes.h"
-#include "Component.h"
-
-class Entity
-{
-public:
-    virtual ~Entity();;
-    std::vector< std::weak_ptr<Component> > GetComponents();
-    std::weak_ptr<Component> GetComponent(unsigned int id);    
-    unsigned int GetId();
+template <typename Type>
+struct Rect {
+    Rect()
+    {
+        left = 0;
+        right = 0;
+        top = 0;
+        bottom = 0;
+    }
     
-protected:
-    void addComponent(std::shared_ptr<Component> component);
-    void removeComponent(std::shared_ptr<Component> component);
-    std::map< unsigned int, std::shared_ptr<Component> > _components;
+    Rect(Type l, Type r, Type b, Type t)
+    {
+        left = l;
+        right = r;
+        top = t;
+        bottom = b;
+    }
     
-    Entity();
-    
-private:
-    unsigned int _id;
+    Type left, right, top, bottom;
 };
 
-#endif /* ENTITY_H */
+#endif /* RECT_H */
 

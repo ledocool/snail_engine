@@ -6,6 +6,7 @@ set(ENGINE_SOURCES
     Engine.cpp
     Etc/FloatHelper.cpp
     Etc/Vector2.cpp
+    Etc/EntityIdGenerator.cpp
     
     Input/InputManager.cpp
     Input/InputEventConfig.cpp
@@ -32,6 +33,7 @@ set(ENGINE_SOURCES
     Ecs/Components/Size.cpp
     Ecs/Components/Velocity.cpp
     Ecs/Components/Cannon.cpp
+    Ecs/Components/DespawnOutsideScreen.cpp
 
     Ecs/EcsExecutor.cpp
     Ecs/Systems/MovePlayerSystem.cpp
@@ -40,6 +42,7 @@ set(ENGINE_SOURCES
     Ecs/Systems/ApplyVelocitySystem.cpp
     Ecs/Systems/MoveCameraSystem.cpp
     Ecs/Systems/AsteroidSpawnSystem.cpp
+    Ecs/Systems/DespawnEntitiesSystem.cpp
 
     Game/Map.cpp
     Game/Camera.cpp
@@ -56,6 +59,8 @@ set(ENGINE_HEADERS
     Etc/Singleton.h
     Etc/FloatHelper.h
     Etc/Vector2.h
+    Etc/Rect.h
+    Etc/EntityIdGenerator.h
 
     Input/InputManager.h
     Input/KeyEnums.h
@@ -88,6 +93,7 @@ set(ENGINE_HEADERS
     Ecs/Components/Size.h
     Ecs/Components/Velocity.h
     Ecs/Components/Cannon.h
+    Ecs/Components/DespawnOutsideScreen.h
     
     Ecs/EcsExecutor.h
     Ecs/Systems/MovePlayerSystem.h

@@ -30,7 +30,13 @@
 #include "engine/Events/InputEvent.h"
 
 struct GameState
-{    
+{   
+    GameState()
+    {
+        asteroidCounter = 0;
+        asteroidCooldown = 0;
+    }
+    
     std::shared_ptr <Map> map;
     std::shared_ptr <Camera> camera;
 

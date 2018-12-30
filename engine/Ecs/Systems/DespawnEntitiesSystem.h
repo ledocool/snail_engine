@@ -15,36 +15,31 @@
  */
 
 /* 
- * File:   Entity.h
+ * File:   DespawnEntities.h
  * Author: LedoCool
  *
- * Created on December 4, 2018, 8:32 PM
+ * Created on December 28, 2018, 9:34 PM
  */
 
-#ifndef ENTITY_H
-#define ENTITY_H
+#ifndef DESPAWNENTITIES_H
+#define DESPAWNENTITIES_H
 
 #include "engine/includes.h"
-#include "Component.h"
+#include "engine/Ecs/Entity.h"
+#include "engine/Ecs/System.h"
 
-class Entity
+class DespawnEntitiesSystem : public System
 {
 public:
-    virtual ~Entity();;
-    std::vector< std::weak_ptr<Component> > GetComponents();
-    std::weak_ptr<Component> GetComponent(unsigned int id);    
-    unsigned int GetId();
-    
-protected:
-    void addComponent(std::shared_ptr<Component> component);
-    void removeComponent(std::shared_ptr<Component> component);
-    std::map< unsigned int, std::shared_ptr<Component> > _components;
-    
-    Entity();
+    DespawnEntitiesSystem();
+    virtual ~DespawnEntitiesSystem();
+    void Execute(Uint32 dt, std::shared_ptr<GameState>& gameState) override;
     
 private:
-    unsigned int _id;
+    bool TryDespawnOutsideSquare(std::shared_ptr<Entity> entity, Rect<float> screenRect);
+    
+    std::vector< std::shared_ptr<Entity> > _toBeRemoved;
 };
 
-#endif /* ENTITY_H */
+#endif /* DESPAWNENTITIES_H */
 

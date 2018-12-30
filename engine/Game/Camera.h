@@ -25,6 +25,7 @@
 #define CAMERA_H
 
 #include "engine/includes.h"
+#include "engine/Etc/Rect.h"
 
 class Camera
 {
@@ -37,6 +38,7 @@ public:
 
     void GetCoordinates(float & x, float & y);
     void GetScreenProportions(unsigned int & width, unsigned int & height);
+    Rect<float> GetScreenRect();
     
     float x();
     float y();

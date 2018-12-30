@@ -28,6 +28,7 @@
 #include "engine/Ecs/Systems/ApplyVelocitySystem.h"
 #include "engine/Ecs/Systems/MoveCameraSystem.h"
 #include "engine/Ecs/Systems/AsteroidSpawnSystem.h"
+#include "engine/Ecs/Systems/DespawnEntitiesSystem.h"
 
 EcsExecutor::EcsExecutor()
 {
@@ -37,6 +38,7 @@ EcsExecutor::EcsExecutor()
     _systems.push_back(std::make_shared<ApplyVelocitySystem>());
     _systems.push_back(std::make_shared<MoveCameraSystem>());
     _systems.push_back(std::make_shared<SpawnBulletSystem>());
+    _systems.push_back(std::make_shared<DespawnEntitiesSystem>());
 }
 
 EcsExecutor::~EcsExecutor()

@@ -15,36 +15,30 @@
  */
 
 /* 
- * File:   Entity.h
+ * File:   DespawnOutsideScreen.h
  * Author: LedoCool
  *
- * Created on December 4, 2018, 8:32 PM
+ * Created on December 30, 2018, 11:08 PM
  */
 
-#ifndef ENTITY_H
-#define ENTITY_H
+#ifndef DESPAWNOUTSIDESCREEN_H
+#define DESPAWNOUTSIDESCREEN_H
 
-#include "engine/includes.h"
-#include "Component.h"
+#include "engine/Ecs/Component.h"
 
-class Entity
+class DespawnOutsideScreen : public Component
 {
 public:
-    virtual ~Entity();;
-    std::vector< std::weak_ptr<Component> > GetComponents();
-    std::weak_ptr<Component> GetComponent(unsigned int id);    
-    unsigned int GetId();
+    DespawnOutsideScreen();
+    virtual ~DespawnOutsideScreen();
+    float despawnMargin();
+    unsigned int GetComponentId() override;
+
     
-protected:
-    void addComponent(std::shared_ptr<Component> component);
-    void removeComponent(std::shared_ptr<Component> component);
-    std::map< unsigned int, std::shared_ptr<Component> > _components;
-    
-    Entity();
     
 private:
-    unsigned int _id;
+    float _despawnMargin;
 };
 
-#endif /* ENTITY_H */
+#endif /* DESPAWNOUTSIDESCREEN_H */
 

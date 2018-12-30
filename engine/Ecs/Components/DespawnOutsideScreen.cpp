@@ -15,21 +15,31 @@
  */
 
 /* 
- * File:   includeComponents.h
+ * File:   DespawnOutsideScreen.cpp
  * Author: LedoCool
- *
- * Created on December 5, 2018, 2:55 PM
+ * 
+ * Created on December 30, 2018, 11:08 PM
  */
 
-#ifndef INCLUDECOMPONENTS_H
-#define INCLUDECOMPONENTS_H
-
-#include "ComponentTypes.h"
-#include "Position.h"
-#include "Player.h"
-#include "Size.h"
-#include "Velocity.h"
 #include "DespawnOutsideScreen.h"
+#include "ComponentTypes.h"
 
-#endif /* INCLUDECOMPONENTS_H */
+DespawnOutsideScreen::DespawnOutsideScreen()
+{
+    _despawnMargin = 15;
+}
+
+DespawnOutsideScreen::~ DespawnOutsideScreen()
+{
+}
+
+float DespawnOutsideScreen::despawnMargin()
+{
+    return _despawnMargin;
+}
+
+unsigned int DespawnOutsideScreen::GetComponentId()
+{
+    return ComponentTypes::DESPAWN_OUTSIDE_SCREEN;
+}
 

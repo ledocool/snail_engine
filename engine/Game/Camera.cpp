@@ -95,3 +95,15 @@ float Camera::y()
 {
     return _y;
 }
+
+Rect<float> Camera::GetScreenRect()
+{
+    unsigned int halfWidth = _width/2, 
+            halfHeight = _height/2; 
+    float   left = _x - halfWidth, 
+            right = _x + halfWidth, 
+            top = _y + halfWidth, 
+            bottom = _y - halfWidth;
+    
+    return Rect<float>(left, right, bottom, top);
+}

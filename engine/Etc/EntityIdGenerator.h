@@ -15,36 +15,27 @@
  */
 
 /* 
- * File:   Entity.h
+ * File:   EntityIdGenerator.h
  * Author: LedoCool
  *
- * Created on December 4, 2018, 8:32 PM
+ * Created on December 31, 2018, 12:03 AM
  */
 
-#ifndef ENTITY_H
-#define ENTITY_H
+#ifndef ENTITYIDGENERATOR_H
+#define ENTITYIDGENERATOR_H
 
-#include "engine/includes.h"
-#include "Component.h"
-
-class Entity
+class EntityIdGenerator
 {
 public:
-    virtual ~Entity();;
-    std::vector< std::weak_ptr<Component> > GetComponents();
-    std::weak_ptr<Component> GetComponent(unsigned int id);    
-    unsigned int GetId();
+    virtual ~EntityIdGenerator();
+
     
-protected:
-    void addComponent(std::shared_ptr<Component> component);
-    void removeComponent(std::shared_ptr<Component> component);
-    std::map< unsigned int, std::shared_ptr<Component> > _components;
-    
-    Entity();
+    unsigned int GenerateId();
     
 private:
-    unsigned int _id;
+    unsigned int _lastId;
+    unsigned int _maxId;
 };
 
-#endif /* ENTITY_H */
+#endif /* ENTITYIDGENERATOR_H */
 
