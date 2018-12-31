@@ -45,7 +45,8 @@ void MoveCameraSystem::Execute(Uint32 dt, std::shared_ptr<GameState>& gameState)
             continue;
         }
         
-        gameState->camera->LookAt(position->x(), position->y());
+        auto coordinates = position->coords();
+        gameState->camera->LookAt(coordinates.x(), coordinates.y());
     }
 }
 

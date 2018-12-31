@@ -26,6 +26,7 @@
 
 #include "engine/includes.h"
 #include "engine/Etc/Rect.h"
+#include "engine/Etc/Vector2.h"
 
 class Camera
 {
@@ -35,9 +36,11 @@ public:
     
     void SetScreenProportions(unsigned int width, unsigned int height, bool generateMatrix = true);
     void LookAt(float x, float y, bool generateMatrix = true);
+    void SetScreenProportions(Vector2<unsigned int> size, bool generateMatrix = true);
+    void LookAt(Vector2<float> coords, bool generateMatrix = true);
 
-    void GetCoordinates(float & x, float & y);
-    void GetScreenProportions(unsigned int & width, unsigned int & height);
+    Vector2<float> GetCoordinates();
+    Vector2<unsigned int> GetScreenProportions();
     Rect<float> GetScreenRect();
     
     float x();
@@ -48,7 +51,7 @@ public:
 private:
     void GenerateProjectionMatrix();
     
-    float _x, _y;
+    Vector2<float> _pos;
     unsigned int _height, _width;
     glm::mat4 _projectionMatrix;    
 };

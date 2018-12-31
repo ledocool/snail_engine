@@ -5,7 +5,6 @@ set(CMAKE_CXX_STANDARD 11)
 set(ENGINE_SOURCES 
     Engine.cpp
     Etc/FloatHelper.cpp
-    Etc/Vector2.cpp
     Etc/EntityIdGenerator.cpp
     
     Input/InputManager.cpp

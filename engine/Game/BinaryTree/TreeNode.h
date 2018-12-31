@@ -26,20 +26,22 @@
 
 #include "engine/Ecs/Entity.h"
 #include "engine/Ecs/Components/IncludeComponents.h"
+#include "engine/Etc/Vector2.h"
+#include "engine/Etc/Rect.h"
 
 class TreeNode
 {
 public:
-    TreeNode(float left, float right, float top, float bottom, std::vector<std::weak_ptr< Entity > > & entities, TreeNode * parent, bool horizontal);
+    TreeNode(Rect<float> rect, std::vector<std::weak_ptr< Entity > > & entities, TreeNode * parent, bool horizontal);
     virtual ~TreeNode();
     
     std::vector < std::weak_ptr <Entity> > GetEntities();
-    bool PointInBounds(float x, float y);
-    bool RectIntersects(float left, float right, float bottom, float top);
-    bool RectInside(float left, float right, float bottom, float top);
+    bool PointInBounds(Vector2<float> pos);
+    bool RectIntersects(Rect<float> rect);
+    bool RectInside(Rect<float> rect);
     
-    std::vector < std::weak_ptr <Entity> > GetBelongingEntities(float x, float y);
-    std::vector < std::weak_ptr <Entity> > GetBelongingEntities(float left, float right, float bottom, float top);
+    std::vector < std::weak_ptr <Entity> > GetBelongingEntities(Vector2<float> & pos);
+    std::vector < std::weak_ptr <Entity> > GetBelongingEntities(Rect<float> & rect);
     
 private:
 
@@ -48,7 +50,7 @@ private:
     TreeNode * _rightLeaf;
     TreeNode * _parent;
     
-    float _left, _right, _top, _bottom;
+    Rect<float> _bounds;
 };
 
 #endif /* TREENODE_H */

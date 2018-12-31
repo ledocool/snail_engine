@@ -26,6 +26,7 @@
 
 #include "engine/includes.h"
 #include "engine/Ecs/System.h"
+#include "engine/Etc/Vector2.h"
 
 class MovePlayerSystem : public System
 {
@@ -37,11 +38,13 @@ public:
     void Execute(Uint32 dt, std::shared_ptr<GameState> & gameState) override;
     
 private:
-    float bleedSpeed(float oldValue, float bleedFactor);
-    float capSpeed(float speed, float cap);
+    Vector2<float> bleedSpeed(Vector2<float> oldValue, Vector2<float> bleedFactor);
+    float bleedSpeed(float oldValue, float bleedFactor); 
+    Vector2<float> capSpeed(Vector2<float> speed, float cap);
+    float capSpeed(float speed, float cap); 
     
     float calculateRotation(Uint32 dt, float rotation, float addRotation);
-    void calculateSpeed(Uint32 dt, float & x, float & y, float angle, float speed);
+    Vector2<float> calculateSpeed(Uint32 dt, Vector2<float> velocity, Vector2<float> acceleration);
 };
 
 #endif /* MOVEPLAYERSYSTEM_H */

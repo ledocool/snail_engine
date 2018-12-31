@@ -26,19 +26,17 @@
 
 #include "engine/Ecs/Component.h"
 #include "ComponentTypes.h"
+#include "engine/Etc/Vector2.h"
 
 class Position : public Component
 {
 public:
     Position();
-    Position(const float x, const float y, const float angle);
+    Position(const Vector2<float> & coords, const float & angle);
     virtual ~Position();
     
-    float x();
-    void x(const float & x);
-    
-    float y();
-    void y(const float & y);
+    Vector2<float> coords();
+    void coords(Vector2<float> vec);
     
     float angle();
     void angle(const float & angle);
@@ -46,7 +44,8 @@ public:
     virtual unsigned int GetComponentId() override;
     
 private:
-    float _x, _y, _angle;
+    Vector2<float> _pos;
+    float _angle;
     
 };
 

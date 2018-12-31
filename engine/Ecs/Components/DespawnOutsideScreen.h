@@ -33,11 +33,10 @@ public:
     virtual ~DespawnOutsideScreen();
     float despawnMargin();
     unsigned int GetComponentId() override;
-
-    
     
 private:
     float _despawnMargin;
+    
 };
 
 #endif /* DESPAWNOUTSIDESCREEN_H */

@@ -25,11 +25,11 @@
 #include "engine/Ecs/Components/IncludeComponents.h"
 #include "engine/Etc/Singleton.h"
 
-Bullet::Bullet(const float size, const float coordinates[2], const float angle, const float velocity)
+Bullet::Bullet(const float size, const Vector2<float> coordinates, const float angle, const float velocity)
 {
-    addComponent(std::make_shared<Position> (coordinates[0], coordinates[1], angle));
+    addComponent(std::make_shared<Position> (coordinates, angle));
     addComponent(std::make_shared<Size> (size));
-    addComponent(std::make_shared<Velocity> (std::cos(angle) * velocity, std::sin(angle) * velocity, 0));
+    addComponent(std::make_shared<Velocity> (Vector2<float>(std::cos(angle) * velocity, std::sin(angle) * velocity), 0));
     addComponent(std::make_shared<DespawnOutsideScreen>());
     
     float shape [18] = {
@@ -64,8 +64,8 @@ void Bullet::Draw(glm::mat4 projection)
     
     glm::mat4 trans = glm::mat4(1.0f);
     glm::mat4 view = glm::mat4(1.0f);
-    
-    trans = glm::translate(trans, glm::vec3(position->x(), position->y(), 0));
+    auto coordinates = position->coords();
+    trans = glm::translate(trans, glm::vec3(coordinates.x(), coordinates.y(), 0));
     trans = glm::scale(trans, glm::vec3(size->size(), size->size(), 1.));  
     trans = glm::rotate(trans, position->angle(), glm::vec3(0.0, 0.0, 1.0));
     trans = projection * trans;

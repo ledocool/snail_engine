@@ -50,9 +50,11 @@ void SpawnBulletSystem::Execute(Uint32 dt, std::shared_ptr<GameState>& gameState
         {
             if(action.GetEvent() == PlayerActions::SHOOT)
             {
-                float coordinates[2];
-                coordinates[0] = position->x() + cos(position->angle()) * size->size();
-                coordinates[1] = position->y() + sin(position->angle()) * size->size();
+                auto shooterPosition = position->coords();
+                Vector2<float> coordinates(
+                    shooterPosition.x() + cos(position->angle()) * size->size(),
+                    shooterPosition.y() + sin(position->angle()) * size->size()
+                );
                                 
                 auto bullet = std::make_shared<Bullet>(10, coordinates, position->angle(), 0.2);
                 gameState->map->AddEntity(bullet);

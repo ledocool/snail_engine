@@ -25,15 +25,17 @@
 #define TREEROOT_H
 
 #include "TreeNode.h"
+#include "engine/Etc/Rect.h"
+#include "engine/Etc/Vector2.h"
 
 class TreeRoot
 {
 public:
     TreeRoot();
     virtual ~TreeRoot();
-    void BuildTree(float left, float right, float bottom, float top, std::vector< std::weak_ptr<Entity> > entities);
-    std::vector< std::weak_ptr <Entity> > GetObjects(float x, float y);
-    std::vector< std::weak_ptr <Entity> > GetObjects(float left, float right, float bottom, float top);
+    void BuildTree(Rect<float> rect, std::vector< std::weak_ptr<Entity> > entities);
+    std::vector< std::weak_ptr <Entity> > GetObjects(Vector2<float> & pos);
+    std::vector< std::weak_ptr <Entity> > GetObjects(Rect<float> & rect);
     
 private:
      std::shared_ptr<TreeNode> _root;   

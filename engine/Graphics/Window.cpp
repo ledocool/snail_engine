@@ -56,6 +56,8 @@ void Window::SetupMap()
     int w,h;
     SDL_GetWindowSize(_window.get(), &w, &h);   
     _gameState->camera->SetScreenProportions(w, h);
+    _gameState->asteroidCounter = 0;
+    _gameState->asteroidCooldown = 0;
 }
 
 

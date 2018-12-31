@@ -84,11 +84,10 @@ void MovePlayerSystem::Execute(Uint32 dt, std::shared_ptr<GameState> & gameState
             calculateRotation(dt, velocity->rotation(), rotation)
         );
         
-        float newX = velocity->x(), 
-              newY = velocity->y();
-        calculateSpeed(dt, newX, newY, position->angle(), acceleration);
-        velocity->x(newX);
-        velocity->y(newY);
+        Vector2<float> newVector;
+        
+        Vector2<float> accelVector(std::cos(position->angle()) * acceleration, std::sin(position->angle()) * acceleration);
+        velocity->velocity(calculateSpeed(dt, velocity->velocity(), accelVector));
     }
 }
 
@@ -107,6 +106,15 @@ float MovePlayerSystem::bleedSpeed(float oldValue, float bleedFactor)
     return oldValue > 0 ? oldValue - bleedFactor : oldValue + bleedFactor;
 }
 
+Vector2<float> MovePlayerSystem::bleedSpeed(Vector2<float> oldValue, Vector2<float> bleedFactor)
+{
+    for(int i=0; i<2; i++)
+    {
+        oldValue[i] = bleedSpeed(oldValue[i], bleedFactor[i]);
+    }
+    return oldValue;
+}
+
 float MovePlayerSystem::capSpeed(float speed, float cap)
 {
     if (speed > cap)
@@ -118,6 +126,15 @@ float MovePlayerSystem::capSpeed(float speed, float cap)
         speed = -cap;
     }
     
+    return speed;
+}
+
+Vector2<float> MovePlayerSystem::capSpeed(Vector2<float> speed, float cap)
+{
+    for(int i=0; i<2; i++)
+    {
+        speed[i] = capSpeed(speed[i], cap);
+    }    
     return speed;
 }
 
@@ -134,25 +151,19 @@ float MovePlayerSystem::calculateRotation(Uint32 dt, float rotation, float addRo
     return capSpeed(rotation, MAX_ROTATION);
 }
 
-void MovePlayerSystem::calculateSpeed(Uint32 dt, float & x, float & y, float angle, float acceleration)
+Vector2<float> MovePlayerSystem::calculateSpeed(Uint32 dt, Vector2<float> velocity, Vector2<float> acceleration)
 {
-        if (FloatHelper::IsNull(acceleration))
+        if (acceleration.IsNull())
         {
-            const float magnitude = std::sqrt(x*x + y*y);
-            const float noramlizationConstantX = x / magnitude, 
-                        noramlizationConstantY = y / magnitude;
-            
-            const float bleedFactorX = dt * VELOCITY_BLEEDOUT * noramlizationConstantX, 
-                        bleedFactorY = dt * VELOCITY_BLEEDOUT * noramlizationConstantY;
-            
-            x = capSpeed(bleedSpeed(x, bleedFactorX), MAX_VELOCITY);
-            y = capSpeed(bleedSpeed(y, bleedFactorY), MAX_VELOCITY); 
+            Vector2<float> bleedFactor = velocity.Normal();
+            bleedFactor *= (VELOCITY_BLEEDOUT * dt);
+            return capSpeed(bleedSpeed(velocity, bleedFactor), MAX_VELOCITY);
         }
         else
         {
-            acceleration = capSpeed(acceleration, MAX_VELOCITY);
-            x = x + std::cos(angle) * acceleration * dt,
-            y = y + std::sin(angle) * acceleration * dt;            
+            acceleration *= dt;
+            velocity += acceleration;
+            return capSpeed(velocity, MAX_VELOCITY);         
         }
 }
 

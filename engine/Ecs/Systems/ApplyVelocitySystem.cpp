@@ -61,16 +61,10 @@ void ApplyVelocitySystem::Execute(Uint32 dt, std::shared_ptr<GameState>& gameSta
             position->angle(newRotation);
         }
 
-        if (! FloatHelper::IsNull(velocity->x()))
+        if(!velocity->velocity().IsNull())
         {
-            float newX = position->x() + velocity->x() * dt;
-            position->x(newX);
-        }
-
-        if (! FloatHelper::IsNull(velocity->y()))
-        {
-            float newY = position->y() + velocity->y() * dt;
-            position->y(newY);
+            auto vel = velocity->velocity() * dt;
+            position->coords(position->coords() + vel);
         }
     }
 }

@@ -15,46 +15,23 @@
  */
 
 /* 
- * File:   Velocity.cpp
+ * File:   CollisionFrame.cpp
  * Author: LedoCool
  * 
- * Created on December 23, 2018, 1:13 PM
+ * Created on December 31, 2018, 6:08 PM
  */
 
-#include "Velocity.h"
+#include "CollisionFrame.h"
 
-Velocity::Velocity(const Vector2<float>& velocity, const float& rotVel)
+CollisionFrame::CollisionFrame()
 {
-    _velocity = velocity;
-    _rotationalVelocity = rotVel;
 }
 
-float Velocity::rotation()
+CollisionFrame::CollisionFrame(const CollisionFrame& orig)
 {
-    return _rotationalVelocity;
 }
 
-Vector2<float> Velocity::velocity()
-{
-    return _velocity;
-}
-
-void Velocity::velocity(const Vector2<float>& newVelocity)
-{
-    _velocity = newVelocity;
-}
-
-void Velocity::rotation(const float & rot)
-{
-    _rotationalVelocity = rot;
-}
-
-unsigned int Velocity::GetComponentId()
-{
-    return ComponentTypes::VELOCITY;
-}
-
-Velocity::~Velocity()
+CollisionFrame::~ CollisionFrame()
 {
 }
 

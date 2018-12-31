@@ -27,11 +27,12 @@
 #include "engine/includes.h"
 #include "engine/Ecs/Entity.h"
 #include "engine/Graphics/Drawables/IDrawable.h"
+#include "engine/Etc/Vector2.h"
 
 class Bullet : public IDrawable, public Entity
 {
 public:
-    Bullet(const float size, const float coordinates[2], const float angle, const float velocity);
+    Bullet(const float size, const Vector2<float> coordinates, const float angle, const float velocity);
     virtual ~Bullet();
     
     void Draw(glm::mat4 projection) override;

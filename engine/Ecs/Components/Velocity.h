@@ -26,17 +26,16 @@
 
 #include "ComponentTypes.h"
 #include "engine/Ecs/Component.h"
+#include "engine/Etc/Vector2.h"
 
 class Velocity : public Component
 {
 public:
-    Velocity(const float & velX, const float & velY, const float & rotVel);
+    Velocity(const Vector2<float> & velocity, const float & rotVel);
     virtual ~Velocity();
     
-    float x();
-    void x(const float & x);
-    float y();
-    void y(const float & y);
+    Vector2<float> velocity();
+    void velocity(const Vector2<float> & newVelocity); 
     float rotation();    
     void rotation(const float & rot);
     
@@ -44,7 +43,7 @@ public:
     
 private:
     
-    float _x, _y;
+    Vector2<float> _velocity;
     float _rotationalVelocity;
 };
 

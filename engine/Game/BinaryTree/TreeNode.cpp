@@ -25,13 +25,9 @@
 
 #define MIN_NODE_SIZE (1)
 
-TreeNode::TreeNode(float left, float right, float top, float bottom, std::vector<std::weak_ptr< Entity > > & entities, TreeNode * parent, bool horizontal)
+TreeNode::TreeNode(Rect<float> rect, std::vector<std::weak_ptr< Entity > > & entities, TreeNode * parent, bool horizontal)
 {
-    _left = left;
-    _right = right;
-    _top = top;
-    _bottom = bottom;
-    _parent = parent;
+    _bounds = rect;
     
     _leftLeaf = NULL;
     _rightLeaf = NULL;
@@ -45,7 +41,7 @@ TreeNode::TreeNode(float left, float right, float top, float bottom, std::vector
             
             if(auto position = std::dynamic_pointer_cast<Position>(entity->GetComponent(ComponentTypes::POSITION).lock()))
             {
-                if(PointInBounds(position->x(), position->y()))
+                if(PointInBounds(position->coords()))
                 {
                     belongs = true;
                 }
@@ -53,8 +49,11 @@ TreeNode::TreeNode(float left, float right, float top, float bottom, std::vector
                 if(auto size = std::dynamic_pointer_cast<Size>(entity->GetComponent(ComponentTypes::SIZE).lock()))
                 {
                     float halfSize = size->size() / 2.f;
-                    if(RectIntersects(position->x() - halfSize, position->x() + halfSize, 
-                                      position->y() - halfSize, position->y() + halfSize))
+                    auto coordinates = position->coords();
+                    Rect<float> rect(coordinates.x() - halfSize, coordinates.x() + halfSize,
+                                     coordinates.y() - halfSize, coordinates.y() + halfSize);
+                    
+                    if(RectIntersects(rect))
                     {
                         belongs = true;
                     }
@@ -68,8 +67,8 @@ TreeNode::TreeNode(float left, float right, float top, float bottom, std::vector
         }
     }
     
-    float width = _right - _left, 
-          height = _top - _bottom;
+    float width = _bounds.right - _bounds.left, 
+          height = _bounds.top - _bounds.bottom;
     
     if(_belongingEntitites.size() < 2)
     {
@@ -86,26 +85,27 @@ TreeNode::TreeNode(float left, float right, float top, float bottom, std::vector
     
     float newLeft_left = 0, newRight_left = 0, newTop_left = 0, newBottom_left = 0;
     float newLeft_right = 0, newRight_right = 0, newTop_right = 0, newBottom_right = 0;
+    Rect<float> newLeft, newRight;
 
     if(horizontal)
     {
-        newLeft_left = _left;
-        newLeft_right = newRight_left = _left + halfWidth;
-        newRight_right = _right;
-        newTop_left = newTop_right = _top;
-        newBottom_left = newBottom_right = _bottom;
+        newLeft.left = _bounds.left;
+        newRight.left = newLeft.right = _bounds.left + halfWidth;
+        newRight.right = _bounds.right;
+        newLeft.top = newRight.top = _bounds.top;
+        newLeft.bottom = newRight.bottom = _bounds.bottom;
     }
     else
     {
-        newTop_left = _top;
-        newTop_right = newBottom_left = _top + halfHeight;
-        newBottom_right = _bottom;
-        newLeft_left = newLeft_right = _left;
-        newRight_right = newRight_left = _right;
+        newLeft.top = _bounds.top;
+        newRight.top = newLeft.bottom = _bounds.top + halfHeight;
+        newRight.bottom = _bounds.bottom;
+        newLeft.left = newRight.left = _bounds.left;
+        newLeft.right = newRight.right = _bounds.right;
     }
     
-    _leftLeaf = new TreeNode (newLeft_left, newRight_left, newTop_left, newBottom_left, _belongingEntitites, this, !horizontal);
-    _rightLeaf = new TreeNode (newLeft_right, newRight_right, newTop_right, newBottom_right, _belongingEntitites, this, !horizontal);
+    _leftLeaf = new TreeNode (newLeft, _belongingEntitites, this, !horizontal);
+    _rightLeaf = new TreeNode (newRight, _belongingEntitites, this, !horizontal);
 }
 
 TreeNode::~ TreeNode()
@@ -114,39 +114,39 @@ TreeNode::~ TreeNode()
     delete _rightLeaf;
 }
 
-std::vector<std::weak_ptr<Entity> > TreeNode::GetBelongingEntities(float x, float y)
+std::vector<std::weak_ptr<Entity> > TreeNode::GetBelongingEntities(Vector2<float> & pos)
 {
-    if(!PointInBounds(x, y))
+    if(!PointInBounds(pos))
     {
         return std::vector<std::weak_ptr<Entity> >();
     }
     
-    if(_leftLeaf && _leftLeaf->PointInBounds(x, y))
+    if(_leftLeaf && _leftLeaf->PointInBounds(pos))
     {
-        return _leftLeaf->GetBelongingEntities(x, y);
+        return _leftLeaf->GetBelongingEntities(pos);
     }
-    else if(_rightLeaf && _rightLeaf->PointInBounds(x, y))
+    else if(_rightLeaf && _rightLeaf->PointInBounds(pos))
     {
-        return _rightLeaf->GetBelongingEntities(x, y);
+        return _rightLeaf->GetBelongingEntities(pos);
     }
     
     return GetEntities();
 }
 
-std::vector<std::weak_ptr<Entity> > TreeNode::GetBelongingEntities(float left, float right, float bottom, float top)
+std::vector<std::weak_ptr<Entity> > TreeNode::GetBelongingEntities(Rect<float> & rect)
 {
-    if(!RectIntersects(left, right, bottom, top))
+    if(!RectIntersects(rect))
     {
         return std::vector<std::weak_ptr<Entity> >();
     }
     
-    if(_leftLeaf && _leftLeaf->RectInside(left, right, bottom, top))
+    if(_leftLeaf && _leftLeaf->RectInside(rect))
     {
-        return _leftLeaf->GetBelongingEntities(left, right, bottom, top);
+        return _leftLeaf->GetBelongingEntities(rect);
     }
-    else if(_rightLeaf && _rightLeaf->RectInside(left, right, bottom, top))
+    else if(_rightLeaf && _rightLeaf->RectInside(rect))
     {
-        return _rightLeaf->GetBelongingEntities(left, right, bottom, top);
+        return _rightLeaf->GetBelongingEntities(rect);
     }
     
     return GetEntities();
@@ -158,18 +158,21 @@ std::vector<std::weak_ptr<Entity> > TreeNode::GetEntities()
     return _belongingEntitites;
 }
 
-bool TreeNode::PointInBounds(float x, float y)
+bool TreeNode::PointInBounds(Vector2<float> pos)
 {
-    return (_left <= x && x <= _right) && (_bottom <= y && y <= _top);
+    return (_bounds.left <= pos.x() && pos.x() <= _bounds.right) 
+            && (_bounds.bottom <= pos.y() && pos.y() <= _bounds.top);
 }
 
-bool TreeNode::RectIntersects(float left, float right, float bottom, float top)
+bool TreeNode::RectIntersects(Rect<float> rect)
 {
-    return (left <= _right || right >= _left) && (bottom <= _top || top >= _bottom);
+    return (rect.left <= _bounds.right || rect.right >= _bounds.left) 
+            && (rect.bottom <= _bounds.top || rect.top >= _bounds.bottom);
 }
 
-bool TreeNode::RectInside(float left, float right, float bottom, float top)
+bool TreeNode::RectInside(Rect<float> rect)
 {
-    return (_left <= left) && (right <= _right) && (_bottom <= bottom) && (top <= _top);
+    return (_bounds.left <= rect.left) && (rect.right <= _bounds.right) 
+            && (_bounds.bottom <= rect.bottom) && (rect.top <= _bounds.top);
 }
 

@@ -25,14 +25,12 @@
 
 Position::Position()
 {
-    _x = 0;
-    _y = 0;
+
 }
 
-Position::Position(const float x, const float y, const float angle)
+Position::Position(const Vector2<float>& coords, const float& angle)
 {
-    _x = x;
-    _y = y;
+    _pos = coords;
     _angle = angle;
 }
 
@@ -40,24 +38,14 @@ Position::~Position()
 {
 }
 
-float Position::x()
+Vector2<float> Position::coords()
 {
-    return _x;
+    return _pos;
 }
 
-void Position::x(const float & x)
+void Position::coords(Vector2<float> vec)
 {
-    _x = x;
-}
-
-float Position::y()
-{
-    return _y;
-}
-
-void Position::y(const float & y)
-{
-    _y = y;
+    _pos = vec;
 }
 
 float Position::angle()

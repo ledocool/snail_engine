@@ -15,34 +15,24 @@
  */
 
 /* 
- * File:   TreeRoot.cpp
+ * File:   CollisionFrame.h
  * Author: LedoCool
- * 
- * Created on December 24, 2018, 8:39 PM
+ *
+ * Created on December 31, 2018, 6:08 PM
  */
 
-#include "TreeRoot.h"
+#ifndef COLLISIONFRAME_H
+#define COLLISIONFRAME_H
 
-TreeRoot::TreeRoot()
+class CollisionFrame
 {
-}
+public:
+    CollisionFrame();
+    CollisionFrame(const CollisionFrame& orig);
+    virtual ~CollisionFrame();
+private:
+    
+};
 
-void TreeRoot::BuildTree(Rect<float> rect, std::vector< std::weak_ptr<Entity> > entities)
-{
-    _root = std::make_shared<TreeNode>(rect, entities, nullptr, true);
-}
-
-std::vector< std::weak_ptr <Entity> > TreeRoot::GetObjects(Vector2<float> & pos)
-{
-    return _root->GetBelongingEntities(pos);
-}
-
-std::vector< std::weak_ptr <Entity> > TreeRoot::GetObjects(Rect<float> & rect)
-{
-    return _root->GetBelongingEntities(rect);
-}
-
-TreeRoot::~ TreeRoot()
-{
-}
+#endif /* COLLISIONFRAME_H */
 

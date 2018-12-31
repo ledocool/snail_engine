@@ -26,6 +26,7 @@
 
 #include "engine/includes.h"
 #include "engine/Ecs/System.h"
+#include "engine/Etc/Vector2.h"
 
 class AsteroidSpawnSystem : public System
 {
@@ -36,10 +37,9 @@ public:
     void Execute(Uint32 dt, std::shared_ptr<GameState>& gameState) override;
 
 private:
-    void CalculateAsteroidCoordinates(float cameraX, float cameraY, 
-                                        unsigned int screenHeight, 
-                                        unsigned int screenWidth, 
-                                        float * coordinates);
+    Vector2<float> CalculateAsteroidCoordinates(Vector2<float> & cameraCoordinates,
+                                        Vector2<unsigned int> & screenProportions, 
+                                        float asteroidSize) const;
 };
 
 #endif /* ASTEROIDSPAWNSYSTEM_H */

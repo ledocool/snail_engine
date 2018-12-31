@@ -25,8 +25,7 @@
 
 Camera::Camera()
 {
-    _x = 0;
-    _y = 0;
+    _pos.set(0, 0);
     _height = 0;
     _width = 0;
     _projectionMatrix = glm::mat4(1.f);
@@ -38,13 +37,8 @@ Camera::~Camera()
 
 void Camera::GenerateProjectionMatrix()
 {
-    float halfHeight = _height/2.f, halfWidth = _width/2.f;
-    float   left = _x - halfWidth, 
-            right = _x + halfWidth, 
-            top = _y + halfHeight, 
-            bottom = _y - halfHeight;
-    
-    _projectionMatrix = glm::ortho(left, right, bottom, top, 0.f, 1.f);
+    auto rect = GetScreenRect();    
+    _projectionMatrix = glm::ortho(rect.left, rect.right, rect.bottom, rect.top, 0.f, 1.f);
 }
 
 glm::mat4 Camera::GetProjectionMatrix()
@@ -54,13 +48,16 @@ glm::mat4 Camera::GetProjectionMatrix()
 
 void Camera::LookAt(float x, float y, bool generateMatrix /* = true */)
 {
-    _x = x;
-    _y = y;
-    
+    _pos.set(x, y);    
     if(generateMatrix)
     {
         GenerateProjectionMatrix();
     }
+}
+
+void Camera::LookAt(Vector2<float> coords, bool generateMatrix /* = true */)
+{
+    LookAt(coords.x(), coords.y(), generateMatrix);
 }
 
 void Camera::SetScreenProportions(unsigned int width, unsigned int height, bool generateMatrix /* = true */)
@@ -74,36 +71,39 @@ void Camera::SetScreenProportions(unsigned int width, unsigned int height, bool 
     }
 }
 
-void Camera::GetCoordinates(float& x, float& y)
+void Camera::SetScreenProportions(Vector2<unsigned int> size, bool generateMatrix /* = true */)
 {
-    x = _x;
-    y = _y;
+    SetScreenProportions(size.x(), size.y(), generateMatrix);
 }
 
-void Camera::GetScreenProportions(unsigned int& width, unsigned int& height)
+Vector2<float> Camera::GetCoordinates()
 {
-    height = _height;
-    width = _width;
+    return _pos;
+}
+
+Vector2<unsigned int> Camera::GetScreenProportions()
+{
+    return Vector2<unsigned int>(_width, _height);
 }
 
 float Camera::x()
 {
-    return _x;
+    return _pos.x();
 }
 
 float Camera::y()
 {
-    return _y;
+    return _pos.y();
 }
 
 Rect<float> Camera::GetScreenRect()
 {
     unsigned int halfWidth = _width/2, 
             halfHeight = _height/2; 
-    float   left = _x - halfWidth, 
-            right = _x + halfWidth, 
-            top = _y + halfWidth, 
-            bottom = _y - halfWidth;
+    float   left = _pos.x() - halfWidth, 
+            right = _pos.x() + halfWidth, 
+            top = _pos.y() + halfHeight, 
+            bottom = _pos.y() - halfHeight;
     
     return Rect<float>(left, right, bottom, top);
 }

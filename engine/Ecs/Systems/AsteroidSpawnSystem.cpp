@@ -42,7 +42,7 @@ AsteroidSpawnSystem::~ AsteroidSpawnSystem()
 }
 
 void AsteroidSpawnSystem::Execute(Uint32 dt, std::shared_ptr<GameState>& gameState)
-{       
+{   
     if(!gameState->asteroidCooldown && gameState->asteroidCounter < MAX_ASTEROIDS)
     {   
         std::shared_ptr<Position> playerPosition;
@@ -57,28 +57,16 @@ void AsteroidSpawnSystem::Execute(Uint32 dt, std::shared_ptr<GameState>& gameSta
                 }
             }
         }
-        
-        float cameraX, cameraY;
-        unsigned int height, width;
-        gameState->camera->GetScreenProportions(width, height);
-        gameState->camera->GetCoordinates(cameraX, cameraY);
 
         float asteroidSize = 10.f;
-        float velocity[2] = {0.f, 0.f}, 
-                coords[2] = {0.f, 0.f};
+        auto cameraPos = gameState->camera->GetCoordinates();
+        auto screenSize = gameState->camera->GetScreenProportions();
         
-        CalculateAsteroidCoordinates(cameraX, cameraY, height, width, coords);
-        
-        float dx = playerPosition->x() - coords[0], 
-              dy = playerPosition->y() - coords[1];        
-        float magnitude = std::sqrt(dx*dx + dy*dy);
-        float normY = dy/magnitude, 
-              normX = dx/magnitude;
-        
-        velocity[0] = ASTEROID_SPEED * normX;
-        velocity[1] = ASTEROID_SPEED * normY;
-        auto asteroid = std::make_shared<Asteroid>(asteroidSize, coords, velocity);
-        gameState->map->AddEntity(asteroid);
+        auto coords = CalculateAsteroidCoordinates(cameraPos, screenSize, asteroidSize);                       
+        Vector2<float> delta = playerPosition->coords() - coords;
+        auto normDelta = delta.Normal();
+        Vector2<float> velocity (normDelta * ASTEROID_SPEED);
+        gameState->map->AddEntity(std::make_shared<Asteroid>(asteroidSize, coords, velocity));
         
         gameState->asteroidCounter += 1;
         gameState->asteroidCooldown = ASTEROID_COOLDOWN;
@@ -93,32 +81,33 @@ void AsteroidSpawnSystem::Execute(Uint32 dt, std::shared_ptr<GameState>& gameSta
     }
 }
 
-void AsteroidSpawnSystem::CalculateAsteroidCoordinates(float cameraX, float cameraY, 
-                                                       unsigned int screenHeight, 
-                                                       unsigned int screenWidth, 
-                                                       float * coordinates)
+Vector2<float> AsteroidSpawnSystem::CalculateAsteroidCoordinates(Vector2<float> & cameraCoordinates, 
+                                                                 Vector2<unsigned int> & screenProportions, 
+                                                                 float asteroidSize) const
 {
-    unsigned int halfHeight = screenHeight/2, halfWidth = screenWidth/2;
-    
+    Vector2<unsigned int> halfScreen = screenProportions / 2;
     float   randX = static_cast <float> (std::rand()) 
-                    / static_cast <float> (RAND_MAX) * screenWidth, 
+                    / static_cast <float> (RAND_MAX) * screenProportions.x(), 
             randY = static_cast <float> (std::rand()) 
-                    / static_cast <float> (RAND_MAX) * screenHeight;
+                    / static_cast <float> (RAND_MAX) * screenProportions.y();
     
     bool vertical = std::rand() % 2;
-    float asteroidSize = 10.f;
-
+    
+    Vector2<float> coordinates;
     if(vertical)
-    {
-        coordinates[0] = randX + (cameraX - halfWidth);
-        coordinates[1] = randY > halfHeight ? cameraY + asteroidSize + halfHeight
-                                    : cameraY - asteroidSize - halfHeight;
+    {   
+        coordinates[0] = randX + cameraCoordinates.x() - halfScreen.x();
+        coordinates[1] = randY > screenProportions.y() 
+                ? cameraCoordinates.y() + /*asteroidSize +*/ halfScreen.y()
+                : cameraCoordinates.y() - /*asteroidSize -*/ halfScreen.y();
     }
     else
     {
-        coordinates[0] = randX > halfWidth ? cameraX + asteroidSize + halfWidth
-                                    : cameraX - asteroidSize - halfWidth;
-        coordinates[1] = randY + (cameraY - halfHeight);
-    } 
+        coordinates[0] = randX > screenProportions.x() 
+                ? cameraCoordinates.x() + /*asteroidSize +*/ halfScreen.x()
+                : cameraCoordinates.x() - /*asteroidSize -*/ halfScreen.x();
+        coordinates[1] = randY + cameraCoordinates.y() - halfScreen.y();
+    }
+    
+    return coordinates;
 }
-
