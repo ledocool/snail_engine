@@ -34,7 +34,11 @@ namespace ComponentTypes
         PLAYER,
         SIZE,
         VELOCITY,
-        DESPAWN_OUTSIDE_SCREEN
+        ACCELERATION,
+        DESPAWN_OUTSIDE_SCREEN,
+        CANNON,
+        SHOOTABLE,
+        BULLET_COLLIDABLE
     };
 }
 

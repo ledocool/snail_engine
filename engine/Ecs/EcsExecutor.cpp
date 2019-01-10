@@ -29,16 +29,22 @@
 #include "engine/Ecs/Systems/MoveCameraSystem.h"
 #include "engine/Ecs/Systems/AsteroidSpawnSystem.h"
 #include "engine/Ecs/Systems/DespawnEntitiesSystem.h"
+#include "engine/Ecs/Systems/ApplyAccelerationSystem.h"
+#include "engine/Ecs/Systems/CheckCollisionsSystem.h"
+#include "engine/Ecs/Systems/BulletCollisionSystem.h"
 
 EcsExecutor::EcsExecutor()
 {
     _systems.push_back(std::make_shared<CollectInputSystem>());
     _systems.push_back(std::make_shared<AsteroidSpawnSystem>());
+    _systems.push_back(std::make_shared<CheckCollisionsSystem>());
     _systems.push_back(std::make_shared<MovePlayerSystem>());
+    _systems.push_back(std::make_shared<ApplyAccelerationSystem>());
     _systems.push_back(std::make_shared<ApplyVelocitySystem>());
     _systems.push_back(std::make_shared<MoveCameraSystem>());
     _systems.push_back(std::make_shared<SpawnBulletSystem>());
     _systems.push_back(std::make_shared<DespawnEntitiesSystem>());
+    _systems.push_back(std::make_shared<BulletCollisionSystem>());
 }
 
 EcsExecutor::~EcsExecutor()

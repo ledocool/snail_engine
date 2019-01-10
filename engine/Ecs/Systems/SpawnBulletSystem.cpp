@@ -41,23 +41,32 @@ void SpawnBulletSystem::Execute(Uint32 dt, std::shared_ptr<GameState>& gameState
         auto player = std::dynamic_pointer_cast<Player> (entity->GetComponent(ComponentTypes::PLAYER).lock());
         auto position = std::dynamic_pointer_cast<Position>( entity->GetComponent(ComponentTypes::POSITION).lock() );
         auto size = std::dynamic_pointer_cast<Size> (entity->GetComponent(ComponentTypes::SIZE).lock());
-        if(!(player && position && size))
+        auto cannon = std::dynamic_pointer_cast<Cannon> (entity->GetComponent(ComponentTypes::CANNON).lock());
+        if(!size)
+        {
+            size = std::make_shared<Size>(0.f);
+        }
+        
+        if(!(player && position && size && cannon))
         {
             continue;
         }
         
         for(auto action : gameState->inputActions)
         {
-            if(action.GetEvent() == PlayerActions::SHOOT)
+            if(action.GetEvent() == PlayerActions::SHOOT && !cannon->cooldown())
             {
                 auto shooterPosition = position->coords();
                 Vector2<float> coordinates(
                     shooterPosition.x() + cos(position->angle()) * size->size(),
                     shooterPosition.y() + sin(position->angle()) * size->size()
                 );
-                                
+                
+                cannon->SetCooldownToMax();
                 auto bullet = std::make_shared<Bullet>(10, coordinates, position->angle(), 0.2);
                 gameState->map->AddEntity(bullet);
+            }else{
+                cannon->ReduceCooldown(dt);
             }
         }
         

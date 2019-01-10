@@ -22,12 +22,56 @@
  */
 
 #include "Cannon.h"
+#include "ComponentTypes.h"
 
-Cannon::Cannon()
+Cannon::Cannon(Uint32 maxCooldown)
 {
+    _maxCooldown = maxCooldown;
+    _cooldown = 0;
 }
 
 Cannon::~ Cannon()
 {
+}
+
+Uint32 Cannon::ReduceCooldown(Uint32 cooldown)
+{
+    if(cooldown > _cooldown)
+    {
+        _cooldown = 0;
+    }else{
+        _cooldown -= cooldown;
+    }
+    return _cooldown;
+}
+
+void Cannon::SetCooldownToMax()
+{
+    _cooldown = _maxCooldown;
+}
+
+void Cannon::cooldown(Uint32 val)
+{
+    _cooldown = val;
+}
+
+Uint32 Cannon::cooldown()
+{
+    return _cooldown;
+}
+
+void Cannon::maxCooldown(Uint32 val)
+{
+    _maxCooldown = val;
+}
+
+Uint32 Cannon::maxCooldown()
+{
+    return _maxCooldown;
+}
+
+unsigned int Cannon::GetComponentId()
+{
+    return ComponentTypes::CANNON;
 }
 

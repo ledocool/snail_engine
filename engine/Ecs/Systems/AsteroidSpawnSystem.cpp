@@ -43,33 +43,36 @@ AsteroidSpawnSystem::~ AsteroidSpawnSystem()
 
 void AsteroidSpawnSystem::Execute(Uint32 dt, std::shared_ptr<GameState>& gameState)
 {   
-    if(!gameState->asteroidCooldown && gameState->asteroidCounter < MAX_ASTEROIDS)
+    if(!gameState->asteroidCooldown)
     {   
-        std::shared_ptr<Position> playerPosition;
-        for(auto playerEntity : gameState->map->GetEntities())
+        if(gameState->asteroidCounter < MAX_ASTEROIDS)
         {
-            if(auto position = std::dynamic_pointer_cast<Position>(playerEntity->GetComponent(ComponentTypes::POSITION).lock()))
+            std::shared_ptr<Position> playerPosition;
+            for(auto playerEntity : gameState->map->GetEntities())
             {
-                if(auto player = playerEntity->GetComponent(ComponentTypes::PLAYER).lock())
+                if(auto position = std::dynamic_pointer_cast<Position>(playerEntity->GetComponent(ComponentTypes::POSITION).lock()))
                 {
-                    playerPosition = position;
-                    break;
+                    if(auto player = playerEntity->GetComponent(ComponentTypes::PLAYER).lock())
+                    {
+                        playerPosition = position;
+                        break;
+                    }
                 }
             }
-        }
 
-        float asteroidSize = 10.f;
-        auto cameraPos = gameState->camera->GetCoordinates();
-        auto screenSize = gameState->camera->GetScreenProportions();
-        
-        auto coords = CalculateAsteroidCoordinates(cameraPos, screenSize, asteroidSize);                       
-        Vector2<float> delta = playerPosition->coords() - coords;
-        auto normDelta = delta.Normal();
-        Vector2<float> velocity (normDelta * ASTEROID_SPEED);
-        gameState->map->AddEntity(std::make_shared<Asteroid>(asteroidSize, coords, velocity));
-        
-        gameState->asteroidCounter += 1;
-        gameState->asteroidCooldown = ASTEROID_COOLDOWN;
+            float asteroidSize = 10.f;
+            auto cameraPos = gameState->camera->GetCoordinates();
+            auto screenSize = gameState->camera->GetScreenProportions();
+
+            auto coords = CalculateAsteroidCoordinates(cameraPos, screenSize, asteroidSize);                       
+            Vector2<float> delta = playerPosition->coords() - coords;
+            auto normDelta = delta.Normal();
+            Vector2<float> velocity (normDelta * ASTEROID_SPEED);
+            gameState->map->AddEntity(std::make_shared<Asteroid>(asteroidSize, coords, velocity));
+
+            gameState->asteroidCounter += 1;
+            gameState->asteroidCooldown = ASTEROID_COOLDOWN;
+        }
     }
     else if(gameState->asteroidCooldown > dt)
     {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 LedoCool.
+ * Copyright 2019 LedoCool.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,47 +15,48 @@
  */
 
 /* 
- * File:   ApplyVelocitySystem.cpp
+ * File:   ApplyAccelerationSystem.cpp
  * Author: LedoCool
  * 
- * Created on December 23, 2018, 4:17 PM
+ * Created on January 2, 2019, 6:44 PM
  */
 
-#include "ApplyVelocitySystem.h"
-#include "engine/Etc/FloatHelper.h"
+#include "ApplyAccelerationSystem.h"
 #include "engine/Ecs/Components/IncludeComponents.h"
 
-ApplyVelocitySystem::ApplyVelocitySystem()
+ApplyAccelerationSystem::ApplyAccelerationSystem()
 {
 }
 
-ApplyVelocitySystem::~ ApplyVelocitySystem()
+ApplyAccelerationSystem::ApplyAccelerationSystem(const ApplyAccelerationSystem& orig)
 {
 }
 
-void ApplyVelocitySystem::Execute(Uint32 dt, std::shared_ptr<GameState>& gameState)
+ApplyAccelerationSystem::~ ApplyAccelerationSystem()
+{
+}
+
+void ApplyAccelerationSystem::Execute(Uint32 dt, std::shared_ptr<GameState>& gameState)
 {
     for (auto entity : gameState->map->GetEntities())
     {
-        auto position = std::dynamic_pointer_cast<Position>(entity->GetComponent(ComponentTypes::POSITION).lock());
+        auto acceleration = std::dynamic_pointer_cast<Acceleration>(entity->GetComponent(ComponentTypes::ACCELERATION).lock());
         auto velocity = std::dynamic_pointer_cast<Velocity> (entity->GetComponent(ComponentTypes::VELOCITY).lock());
         
-        if (! (position && velocity))
+        if (! (acceleration && velocity))
         {
             continue;
         }
 
-        if (! FloatHelper::IsNull(velocity->rotation()))
+        if (! FloatHelper::IsNull(acceleration->rotation()))
         {
-            float newRotation = position->angle() + velocity->rotation() * dt;
-            position->angle(newRotation);
+            velocity->rotation(velocity->rotation() + acceleration->rotation() * dt);
         }
 
-        if(!velocity->velocity().IsNull())
+        if(!acceleration->vector().IsNull())
         {
-            auto vel = velocity->velocity() * dt;
-            position->coords(position->coords() + vel);
+            auto vel = acceleration->vector() * dt;
+            velocity->velocity(velocity->velocity() + vel);
         }
     }
 }
-

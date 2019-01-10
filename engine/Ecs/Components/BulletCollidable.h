@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 LedoCool.
+ * Copyright 2019 LedoCool.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,28 +15,28 @@
  */
 
 /* 
- * File:   CheckCollisions.cpp
+ * File:   BulletCollidable.h
  * Author: LedoCool
- * 
- * Created on December 24, 2018, 8:35 PM
+ *
+ * Created on January 9, 2019, 8:17 PM
  */
 
-#include "CheckCollisions.h"
+#ifndef BULLETCOLLIDABLE_H
+#define BULLETCOLLIDABLE_H
 
-CheckCollisions::CheckCollisions()
+#include "engine/Ecs/Component.h"
+
+class BulletCollidable : public Component
 {
-}
+public:
+    BulletCollidable();
+    BulletCollidable(const BulletCollidable& orig);
+    virtual ~BulletCollidable();
+    unsigned int GetComponentId() override;
 
-CheckCollisions::~ CheckCollisions()
-{
-}
+private:
 
-void CheckCollisions::Execute(Uint32 dt, std::shared_ptr<GameState>& gameState)
-{
-    
-}
+};
 
-void CheckCollisions::BuildBinaryTree(std::shared_ptr<GameState>& gameState)
-{
+#endif /* BULLETCOLLIDABLE_H */
 
-}

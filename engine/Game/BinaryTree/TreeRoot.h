@@ -34,6 +34,7 @@ public:
     TreeRoot();
     virtual ~TreeRoot();
     void BuildTree(Rect<float> rect, std::vector< std::weak_ptr<Entity> > entities);
+    void BuildTree(Rect<float> rect, const std::vector< std::shared_ptr<Entity> > & entities);
     std::vector< std::weak_ptr <Entity> > GetObjects(Vector2<float> & pos);
     std::vector< std::weak_ptr <Entity> > GetObjects(Rect<float> & rect);
     

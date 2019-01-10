@@ -23,14 +23,16 @@
 
 #include "TreeNode.h"
 
-#define MIN_NODE_SIZE (1)
+#define MIN_NODE_SIZE (20)
+#define MAX_TREE_DEPTH (5)
 
-TreeNode::TreeNode(Rect<float> rect, std::vector<std::weak_ptr< Entity > > & entities, TreeNode * parent, bool horizontal)
+TreeNode::TreeNode(Rect<float> rect, std::vector<std::weak_ptr< Entity > > & entities, TreeNode * parent, bool horizontal, unsigned int depth)
 {
     _bounds = rect;
     
     _leftLeaf = NULL;
     _rightLeaf = NULL;
+    _depth = depth;
     
     for(std::weak_ptr< Entity > weakEntity : entities)
     {
@@ -74,19 +76,19 @@ TreeNode::TreeNode(Rect<float> rect, std::vector<std::weak_ptr< Entity > > & ent
     {
         return;
     }
-    
+    if(_depth == MAX_TREE_DEPTH)
+    {
+        return;
+    }
     if(width <= MIN_NODE_SIZE || height <= MIN_NODE_SIZE)
     {
         return;
     }
     
     float halfWidth = width/2.f, 
-        halfHeight = height/2.f;
+        halfHeight = height/2.f;    
     
-    float newLeft_left = 0, newRight_left = 0, newTop_left = 0, newBottom_left = 0;
-    float newLeft_right = 0, newRight_right = 0, newTop_right = 0, newBottom_right = 0;
     Rect<float> newLeft, newRight;
-
     if(horizontal)
     {
         newLeft.left = _bounds.left;
@@ -98,14 +100,14 @@ TreeNode::TreeNode(Rect<float> rect, std::vector<std::weak_ptr< Entity > > & ent
     else
     {
         newLeft.top = _bounds.top;
-        newRight.top = newLeft.bottom = _bounds.top + halfHeight;
+        newRight.top = newLeft.bottom = _bounds.bottom + halfHeight;
         newRight.bottom = _bounds.bottom;
         newLeft.left = newRight.left = _bounds.left;
         newLeft.right = newRight.right = _bounds.right;
     }
     
-    _leftLeaf = new TreeNode (newLeft, _belongingEntitites, this, !horizontal);
-    _rightLeaf = new TreeNode (newRight, _belongingEntitites, this, !horizontal);
+    _leftLeaf = new TreeNode (newLeft, _belongingEntitites, this, !horizontal, _depth + 1);
+    _rightLeaf = new TreeNode (newRight, _belongingEntitites, this, !horizontal, _depth + 1);
 }
 
 TreeNode::~ TreeNode()

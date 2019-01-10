@@ -41,6 +41,7 @@
 //general
 #include <string>
 #include <map>
+#include <list>
 #include <vector>
 #include <memory>
 #include <stack>

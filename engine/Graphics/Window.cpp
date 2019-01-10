@@ -51,13 +51,9 @@ Window::~Window()
 void Window::SetupMap()
 {
     _gameState = std::make_shared<GameState>();
-    _gameState->map = std::make_shared<Map>();
-    _gameState->camera = std::make_shared<Camera>();
     int w,h;
     SDL_GetWindowSize(_window.get(), &w, &h);   
     _gameState->camera->SetScreenProportions(w, h);
-    _gameState->asteroidCounter = 0;
-    _gameState->asteroidCooldown = 0;
 }
 
 

@@ -53,8 +53,16 @@ float Position::angle()
     return _angle;
 }
 
-void Position::angle(const float & angle)
+void Position::angle(float angle)
 {
+    if (angle >= 2 * M_PI)
+    {
+        angle -= 2 * M_PI;
+    }
+    else if (angle < 0)
+    {
+        angle += 2 * M_PI;
+    }       
     _angle = angle;
 }
 

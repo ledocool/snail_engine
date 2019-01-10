@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 LedoCool.
+ * Copyright 2019 LedoCool.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,32 +15,35 @@
  */
 
 /* 
- * File:   Spaceship.h
+ * File:   Acceleration.h
  * Author: LedoCool
  *
- * Created on December 5, 2018, 2:50 PM
+ * Created on January 2, 2019, 6:21 PM
  */
 
-#ifndef SPACESHIP_H
-#define SPACESHIP_H
+#ifndef ACCELERATION_H
+#define ACCELERATION_H
 
-#include "engine/includes.h"
-#include "engine/Ecs/Entity.h"
-#include "engine/Graphics/Drawables/IDrawable.h"
+#include "engine/Ecs/Component.h"
 #include "engine/Etc/Vector2.h"
 
-class Spaceship : public Entity, public IDrawable
+class Acceleration : public Component
 {
 public:
-    Spaceship(Vector2<float> coordinates);
-    Spaceship(const Spaceship& orig);
-    virtual ~Spaceship();
+    Acceleration();
+    Acceleration(const Vector2<float> & acceleration, const float rotation);
+    virtual ~Acceleration();
+    void vector(Vector2<float> & data);
+    Vector2<float> vector();
+    void rotation(float rotation);
+    float rotation();
     
-    void Draw(glm::mat4 projectionMatrix) override;
+    unsigned int GetComponentId() override;
     
-private:
-    float _shape[9];
+private:    
+    Vector2<float> _vector;
+    float _rotation;
 };
 
-#endif /* SPACESHIP_H */
+#endif /* ACCELERATION_H */
 

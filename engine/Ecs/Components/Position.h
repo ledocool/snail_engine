@@ -39,7 +39,7 @@ public:
     void coords(Vector2<float> vec);
     
     float angle();
-    void angle(const float & angle);
+    void angle(float angle);
     
     virtual unsigned int GetComponentId() override;
     

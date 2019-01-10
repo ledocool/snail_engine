@@ -32,3 +32,13 @@ bool FloatHelper::IsNull(const double var)
 {
     return -DOUBLE_PRESCISION  <= var && var <= DOUBLE_PRESCISION;
 }
+
+bool FloatHelper::IsNull(const unsigned int var)
+{
+    return var == 0;
+}
+
+bool FloatHelper::IsNull(const int var)
+{
+    return var == 0;
+}

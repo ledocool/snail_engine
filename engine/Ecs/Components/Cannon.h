@@ -24,14 +24,29 @@
 #ifndef CANNON_H
 #define CANNON_H
 
-class Cannon
+#include "engine/includes.h"
+#include "engine/Ecs/Component.h"
+
+#define SHOOT_COOLDOWN (240)
+
+class Cannon : public Component
 {
 public:
-    Cannon();
+    Cannon(Uint32 maxCooldown);
     virtual ~Cannon();
+    void maxCooldown(Uint32 val);    
+    Uint32 maxCooldown();
+    void cooldown(Uint32 val);
+    Uint32 cooldown();
+    
+    Uint32 ReduceCooldown(Uint32 cooldown);
+    void SetCooldownToMax();
+    
+    unsigned int GetComponentId() override;
+
     
 private:
-
+    Uint32 _cooldown, _maxCooldown;
 };
 
 #endif /* CANNON_H */

@@ -15,32 +15,28 @@
  */
 
 /* 
- * File:   Spaceship.h
+ * File:   CheckCollisions.h
  * Author: LedoCool
  *
- * Created on December 5, 2018, 2:50 PM
+ * Created on December 24, 2018, 8:35 PM
  */
 
-#ifndef SPACESHIP_H
-#define SPACESHIP_H
+#ifndef CHECKCOLLISIONS_H
+#define CHECKCOLLISIONS_H
 
 #include "engine/includes.h"
-#include "engine/Ecs/Entity.h"
-#include "engine/Graphics/Drawables/IDrawable.h"
-#include "engine/Etc/Vector2.h"
+#include "engine/Ecs/System.h"
 
-class Spaceship : public Entity, public IDrawable
+class CheckCollisionsSystem : public System
 {
 public:
-    Spaceship(Vector2<float> coordinates);
-    Spaceship(const Spaceship& orig);
-    virtual ~Spaceship();
-    
-    void Draw(glm::mat4 projectionMatrix) override;
-    
+    CheckCollisionsSystem();
+    virtual ~CheckCollisionsSystem();
+    void Execute(Uint32 dt, std::shared_ptr<GameState>& gameState) override;
+
 private:
-    float _shape[9];
+    void BuildBinaryTree(std::shared_ptr<GameState>& gameState);
 };
 
-#endif /* SPACESHIP_H */
+#endif /* CHECKCOLLISIONS_H */
 

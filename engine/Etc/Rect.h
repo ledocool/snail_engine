@@ -42,6 +42,22 @@ struct Rect {
         bottom = b;
     }
     
+    Rect <Type> addPosition(Type x, Type y)
+    {
+        return Rect<Type>(
+                x - left,
+                x + right,
+                y - bottom,
+                y + top
+        );
+    }
+    
+    bool CollidesWith(Rect<Type> rect)
+    {
+        return (rect.left <= this->right || rect.right >= this->left) 
+            && (rect.bottom <= this->top || rect.top >= this->bottom);
+    }
+    
     Type left, right, top, bottom;
 };
 

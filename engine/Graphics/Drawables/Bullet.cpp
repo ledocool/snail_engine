@@ -31,6 +31,7 @@ Bullet::Bullet(const float size, const Vector2<float> coordinates, const float a
     addComponent(std::make_shared<Size> (size));
     addComponent(std::make_shared<Velocity> (Vector2<float>(std::cos(angle) * velocity, std::sin(angle) * velocity), 0));
     addComponent(std::make_shared<DespawnOutsideScreen>());
+    addComponent(std::make_shared<Shootable>());
     
     float shape [18] = {
         -1.f, -0.5f, 0.f,

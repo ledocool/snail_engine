@@ -32,7 +32,8 @@ class FloatHelper
 public:
     static bool IsNull(const float var);
     static bool IsNull(const double var);
-    
+    static bool IsNull(const unsigned int var);
+    static bool IsNull(const int var);
 };
 
 #endif /* FLOATHELPER_H */

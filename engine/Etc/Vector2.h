@@ -49,78 +49,79 @@ public:
     }
     virtual ~Vector2() {}
 
-    Vector2<T> operator = (const Vector2 & vec)
+    Vector2<T> operator = (Vector2 vec)
     {
         _data[0] = vec._data[0];
         _data[1] = vec._data[1];
         return *this;
     }
-    Vector2<T> operator += (Vector2 & vec)
+    Vector2<T> operator += (Vector2 vec)
     {
         _data[0] += vec._data[0];
         _data[1] += vec._data[1];
         return *this;
     }
-    Vector2<T> operator -= (Vector2 & vec)
+    Vector2<T> operator -= (Vector2 vec)
     {
         _data[0] -= vec[0];
         _data[1] -= vec[1];
         return *this;
     }
     
-    Vector2<T> operator + (Vector2 & val)
+    Vector2<T> operator + (Vector2 & val) const
     {
         return Vector2<T>(_data[0] + val[0], _data[1] + val[1]);
     }
     
-    Vector2<T> operator - (Vector2 & val)
+    Vector2<T> operator - (Vector2 & val) const
     {
         return Vector2<T>(_data[0] - val[0], _data[1] - val[1]);
     }
     
-    template <typename K> Vector2<T> operator *= (const K & mul)
+    template <typename K> Vector2<T> operator *= (K mul)
     {
         _data[0] *= mul;
         _data[1] *= mul;
         return *this;
     };
     
-    template <typename K> Vector2<T> operator += (const K & mul)
+    template <typename K> Vector2<T> operator += (K mul)
     {
         _data[0] += mul;
         _data[1] += mul;
         return *this;
     }
     
-    template <typename K> Vector2<T> operator -= (const K & mul)
+    template <typename K> Vector2<T> operator -= (K mul)
     {
         _data[0] -= mul;
         _data[1] -= mul;
         return *this;
     }
     
-    template <typename K> Vector2<T> operator /= (const K & mul)
+    template <typename K> Vector2<T> operator /= (K mul)
     {
         _data[0] /= mul;
         _data[1] /= mul;
         return *this;
     }
     
-    template <typename K> Vector2<T> operator * (const K & mul) const
+    template <typename K> Vector2<T> operator * (K mul) const
     {
         return Vector2<T> (_data[0] * mul, _data[1] * mul);
     }
-    template <typename K> Vector2<T> operator + (const K & val) const
+    
+    template <typename K> Vector2<T> operator + (K val) const
     {
         return Vector2<T> (_data[0] + val, _data[1] + val);
     }
     
-    template <typename K> Vector2<T> operator - (const K & val) const
+    template <typename K> Vector2<T> operator - (K val) const
     {
         return Vector2<T> (_data[0] - val, _data[1] - val);
     }
     
-    template <typename K> Vector2<T> operator / (const K & val) const
+    template <typename K> Vector2<T> operator / (K val) const
     {
         return Vector2<T> (_data[0] / val, _data[1] / val);
     }

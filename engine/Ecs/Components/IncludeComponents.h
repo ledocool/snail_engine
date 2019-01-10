@@ -30,6 +30,10 @@
 #include "Size.h"
 #include "Velocity.h"
 #include "DespawnOutsideScreen.h"
+#include "Acceleration.h"
+#include "Cannon.h"
+#include "BulletCollidable.h"
+#include "Shootable.h"
 
 #endif /* INCLUDECOMPONENTS_H */
 

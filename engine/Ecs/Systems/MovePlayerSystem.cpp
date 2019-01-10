@@ -55,21 +55,22 @@ void MovePlayerSystem::Execute(Uint32 dt, std::shared_ptr<GameState> & gameState
         auto player = entity->GetComponent(ComponentTypes::PLAYER).lock();
         auto velocity = std::dynamic_pointer_cast<Velocity>(entity->GetComponent(ComponentTypes::VELOCITY).lock());
         auto position = std::dynamic_pointer_cast<Position>(entity->GetComponent(ComponentTypes::POSITION).lock());
-        if (! (player && velocity && position))
+        auto acceleration = std::dynamic_pointer_cast<Acceleration>(entity->GetComponent(ComponentTypes::ACCELERATION).lock());
+        if (! (player && velocity && position && acceleration))
         {
             continue;
         }
 
-        float acceleration = 0.f, rotation = 0.f;
-
+        float rotation = 0.f, accel = 0.f;
+        
         for (InputEvent & inputEvent : gameState->inputActions)
         {
             switch (inputEvent.GetEvent()) {
             case PlayerActions::GO_FORWARD:
-                acceleration += PLAYER_MOVE_SPEED;
+                accel += PLAYER_MOVE_SPEED;
                 break;
             case PlayerActions::GO_BACKWARD:
-                acceleration -= PLAYER_MOVE_SPEED;
+                accel -= PLAYER_MOVE_SPEED;
                 break;
             case PlayerActions::TURN_LEFT:
                 rotation += PLAYER_ROTATION_SPEED;
@@ -84,10 +85,8 @@ void MovePlayerSystem::Execute(Uint32 dt, std::shared_ptr<GameState> & gameState
             calculateRotation(dt, velocity->rotation(), rotation)
         );
         
-        Vector2<float> newVector;
-        
-        Vector2<float> accelVector(std::cos(position->angle()) * acceleration, std::sin(position->angle()) * acceleration);
-        velocity->velocity(calculateSpeed(dt, velocity->velocity(), accelVector));
+        Vector2<float> accelVector(std::cos(position->angle()) * accel, std::sin(position->angle()) * accel);
+        acceleration->vector(accelVector);
     }
 }
 

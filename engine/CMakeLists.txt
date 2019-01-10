@@ -33,6 +33,9 @@ set(ENGINE_SOURCES
     Ecs/Components/Velocity.cpp
     Ecs/Components/Cannon.cpp
     Ecs/Components/DespawnOutsideScreen.cpp
+    Ecs/Components/Acceleration.cpp
+    Ecs/Components/Shootable.cpp
+    Ecs/Components/BulletCollidable.cpp
 
     Ecs/EcsExecutor.cpp
     Ecs/Systems/MovePlayerSystem.cpp
@@ -42,6 +45,9 @@ set(ENGINE_SOURCES
     Ecs/Systems/MoveCameraSystem.cpp
     Ecs/Systems/AsteroidSpawnSystem.cpp
     Ecs/Systems/DespawnEntitiesSystem.cpp
+    Ecs/Systems/ApplyAccelerationSystem.cpp
+    Ecs/Systems/CheckCollisionsSystem.cpp
+    Ecs/Systems/BulletCollisionSystem.cpp
 
     Game/Map.cpp
     Game/Camera.cpp
@@ -80,6 +86,8 @@ set(ENGINE_HEADERS
     Graphics/Drawables/Spaceship.h
     Graphics/Drawables/Asteroid.h
     Graphics/Drawables/Bullet.h
+    Ecs/Components/Shootable.h
+    Ecs/Components/BulletCollidable.h
 
     Ecs/System.h
     Ecs/Component.h
@@ -93,6 +101,7 @@ set(ENGINE_HEADERS
     Ecs/Components/Velocity.h
     Ecs/Components/Cannon.h
     Ecs/Components/DespawnOutsideScreen.h
+    Ecs/Components/Acceleration.h
     
     Ecs/EcsExecutor.h
     Ecs/Systems/MovePlayerSystem.h
@@ -101,6 +110,9 @@ set(ENGINE_HEADERS
     Ecs/Systems/ApplyVelocitySystem.h
     Ecs/Systems/MoveCameraSystem.h
     Ecs/Systems/AsteroidSpawnSystem.h
+    Ecs/Systems/ApplyAccelerationSystem.h
+    Ecs/Systems/CheckCollisionsSystem.h
+    Ecs/Systems/BulletCollisionSystem.cpp
 
     Game/Map.h
     Game/Camera.h
@@ -127,14 +139,14 @@ find_package(GLM REQUIRED)
 file(COPY ${SDL2_BINARIES} DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 add_library(snail_core ${ENGINE_HEADERS} ${ENGINE_SOURCES})
 target_link_libraries(snail_core 
-                        ${SDL2_LIBRARIES}
+                        ${SDL2_LIBRARIES} 
                         ${OPENGL_gl_LIBRARY}
 )
 
 target_include_directories( 
                             snail_core
-                            PUBLIC ${GLAD_INCLUDE_DIR}
-                            PUBLIC ${SDL2_INCLUDE_DIRS}
-                            PUBLIC ${GLAD_DIRECTORIES}
-                            PUBLIC ${GLM_INCLUDE_DIRS}
+                            PUBLIC ${GLAD_INCLUDE_DIR} 
+                            PUBLIC ${SDL2_INCLUDE_DIRS} 
+                            PUBLIC ${GLAD_DIRECTORIES} 
+                            PUBLIC ${GLM_INCLUDE_DIRS} 
 )

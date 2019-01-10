@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 LedoCool.
+ * Copyright 2019 LedoCool.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,32 +15,24 @@
  */
 
 /* 
- * File:   Spaceship.h
+ * File:   AsteroidCollisionSystem.h
  * Author: LedoCool
  *
- * Created on December 5, 2018, 2:50 PM
+ * Created on January 9, 2019, 8:07 PM
  */
 
-#ifndef SPACESHIP_H
-#define SPACESHIP_H
+#ifndef ASTEROIDCOLLISIONSYSTEM_H
+#define ASTEROIDCOLLISIONSYSTEM_H
 
-#include "engine/includes.h"
-#include "engine/Ecs/Entity.h"
-#include "engine/Graphics/Drawables/IDrawable.h"
-#include "engine/Etc/Vector2.h"
-
-class Spaceship : public Entity, public IDrawable
+class AsteroidCollisionSystem
 {
 public:
-    Spaceship(Vector2<float> coordinates);
-    Spaceship(const Spaceship& orig);
-    virtual ~Spaceship();
-    
-    void Draw(glm::mat4 projectionMatrix) override;
-    
+    AsteroidCollisionSystem();
+    AsteroidCollisionSystem(const AsteroidCollisionSystem& orig);
+    virtual ~AsteroidCollisionSystem();
 private:
-    float _shape[9];
+
 };
 
-#endif /* SPACESHIP_H */
+#endif /* ASTEROIDCOLLISIONSYSTEM_H */
 

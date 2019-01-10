@@ -45,6 +45,7 @@ private:
     
     Vector2<float> _velocity;
     float _rotationalVelocity;
+    float _maxVelocity, _maxRotation;
 };
 
 #endif /* VELOCITY_H */

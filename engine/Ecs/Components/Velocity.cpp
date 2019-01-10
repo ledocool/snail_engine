@@ -45,7 +45,7 @@ void Velocity::velocity(const Vector2<float>& newVelocity)
 }
 
 void Velocity::rotation(const float & rot)
-{
+{   
     _rotationalVelocity = rot;
 }
 

@@ -32,7 +32,7 @@
 class TreeNode
 {
 public:
-    TreeNode(Rect<float> rect, std::vector<std::weak_ptr< Entity > > & entities, TreeNode * parent, bool horizontal);
+    TreeNode(Rect<float> rect, std::vector<std::weak_ptr< Entity > > & entities, TreeNode * parent, bool horizontal, unsigned int depth);
     virtual ~TreeNode();
     
     std::vector < std::weak_ptr <Entity> > GetEntities();
@@ -49,6 +49,8 @@ private:
     TreeNode * _leftLeaf; 
     TreeNode * _rightLeaf;
     TreeNode * _parent;
+    
+    unsigned int _depth;
     
     Rect<float> _bounds;
 };

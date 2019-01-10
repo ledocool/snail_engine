@@ -38,7 +38,6 @@ public:
 private:
     bool TryDespawnOutsideSquare(std::shared_ptr<Entity> entity, Rect<float> screenRect);
     
-    std::vector< std::shared_ptr<Entity> > _toBeRemoved;
 };
 
 #endif /* DESPAWNENTITIES_H */

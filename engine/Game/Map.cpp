@@ -35,9 +35,7 @@
 
 Map::Map()
 {
-    float coords[2] = {0.f, 0.f};
-    
-    std::shared_ptr<Spaceship> playerSpaceship = std::shared_ptr<Spaceship> (new Spaceship(coords));
+    std::shared_ptr<Spaceship> playerSpaceship = std::shared_ptr<Spaceship> (new Spaceship(Vector2<float>(0.f, 0.f)));
     _entities.push_back(playerSpaceship);
 }
 

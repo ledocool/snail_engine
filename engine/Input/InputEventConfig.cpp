@@ -55,7 +55,7 @@ InputEventConfig::InputEventConfig()
     _keyEvents.push_back(PlayerActions::SHOOT);
     _keyCombinations.push_back(
             std::vector<std::pair<Key::en, int>>(
-                1, std::pair<Key::en, int>(Key::KEY_s, KeyState::DOWN)
+                1, std::pair<Key::en, int>(Key::KEY_s, pressedHard)
             ));
 }
 

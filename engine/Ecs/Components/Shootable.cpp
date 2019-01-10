@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 LedoCool.
+ * Copyright 2019 LedoCool.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,28 +15,24 @@
  */
 
 /* 
- * File:   CheckCollisions.h
+ * File:   Bullet.cpp
  * Author: LedoCool
- *
- * Created on December 24, 2018, 8:35 PM
+ * 
+ * Created on January 9, 2019, 9:09 PM
  */
 
-#ifndef CHECKCOLLISIONS_H
-#define CHECKCOLLISIONS_H
+#include "Shootable.h"
+#include "ComponentTypes.h"
 
-#include "engine/includes.h"
-#include "engine/Ecs/System.h"
-
-class CheckCollisions : public System
+Shootable::Shootable()
 {
-public:
-    CheckCollisions();
-    virtual ~CheckCollisions();
-    void Execute(Uint32 dt, std::shared_ptr<GameState>& gameState) override;
+}
 
-private:
-    void BuildBinaryTree(std::shared_ptr<GameState>& gameState);
-};
+Shootable::~ Shootable()
+{
+}
 
-#endif /* CHECKCOLLISIONS_H */
-
+unsigned int Shootable::GetComponentId()
+{
+    return ComponentTypes::SHOOTABLE;
+}

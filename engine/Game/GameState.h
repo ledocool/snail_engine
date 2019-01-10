@@ -28,6 +28,7 @@
 #include "engine/Game/Map.h"
 #include "engine/Game/Camera.h"
 #include "engine/Events/InputEvent.h"
+#include "engine/Game/BinaryTree/TreeRoot.h"
 
 struct GameState
 {   
@@ -35,6 +36,9 @@ struct GameState
     {
         asteroidCounter = 0;
         asteroidCooldown = 0;
+        map = std::make_shared<Map>();
+        camera = std::make_shared<Camera>();
+        collisionTree = std::make_shared<TreeRoot>();
     }
     
     std::shared_ptr <Map> map;
@@ -42,8 +46,10 @@ struct GameState
 
     unsigned int asteroidCounter;
     Uint32 asteroidCooldown;
-    
+   
+    std::shared_ptr <TreeRoot> collisionTree;
     std::vector <InputEvent> inputActions;
+    std::list <std::pair<std::weak_ptr<Entity>, std::weak_ptr<Entity> > > collidingEntitites;
     
 };
 
