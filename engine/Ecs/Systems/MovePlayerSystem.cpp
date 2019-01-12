@@ -50,8 +50,14 @@ MovePlayerSystem::~ MovePlayerSystem()
 void MovePlayerSystem::Execute(Uint32 dt, std::shared_ptr<GameState> & gameState)
 {
     auto entitites = gameState->map->GetEntities();
-    for (std::shared_ptr<Entity> entity : entitites)
+    for (std::weak_ptr<Entity> weakEntity : entitites)
     {
+        std::shared_ptr<Entity> entity = weakEntity.lock();
+        if(!entity)
+        {
+            continue;
+        }
+        
         auto player = entity->GetComponent(ComponentTypes::PLAYER).lock();
         auto velocity = std::dynamic_pointer_cast<Velocity>(entity->GetComponent(ComponentTypes::VELOCITY).lock());
         auto position = std::dynamic_pointer_cast<Position>(entity->GetComponent(ComponentTypes::POSITION).lock());

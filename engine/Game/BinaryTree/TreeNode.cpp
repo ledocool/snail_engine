@@ -26,7 +26,7 @@
 #define MIN_NODE_SIZE (20)
 #define MAX_TREE_DEPTH (5)
 
-TreeNode::TreeNode(Rect<float> rect, std::vector<std::weak_ptr< Entity > > & entities, TreeNode * parent, bool horizontal, unsigned int depth)
+TreeNode::TreeNode(Rect<float> rect, std::list<std::weak_ptr< Entity > > & entities, TreeNode * parent, bool horizontal, unsigned int depth)
 {
     _bounds = rect;
     
@@ -116,11 +116,11 @@ TreeNode::~ TreeNode()
     delete _rightLeaf;
 }
 
-std::vector<std::weak_ptr<Entity> > TreeNode::GetBelongingEntities(Vector2<float> & pos)
+std::list<std::weak_ptr<Entity> > TreeNode::GetBelongingEntities(Vector2<float> & pos)
 {
     if(!PointInBounds(pos))
     {
-        return std::vector<std::weak_ptr<Entity> >();
+        return std::list<std::weak_ptr<Entity> >();
     }
     
     if(_leftLeaf && _leftLeaf->PointInBounds(pos))
@@ -135,11 +135,11 @@ std::vector<std::weak_ptr<Entity> > TreeNode::GetBelongingEntities(Vector2<float
     return GetEntities();
 }
 
-std::vector<std::weak_ptr<Entity> > TreeNode::GetBelongingEntities(Rect<float> & rect)
+std::list<std::weak_ptr<Entity> > TreeNode::GetBelongingEntities(Rect<float> & rect)
 {
     if(!RectIntersects(rect))
     {
-        return std::vector<std::weak_ptr<Entity> >();
+        return std::list<std::weak_ptr<Entity> >();
     }
     
     if(_leftLeaf && _leftLeaf->RectInside(rect))
@@ -155,7 +155,7 @@ std::vector<std::weak_ptr<Entity> > TreeNode::GetBelongingEntities(Rect<float> &
 }
 
 
-std::vector<std::weak_ptr<Entity> > TreeNode::GetEntities()
+std::list<std::weak_ptr<Entity> > TreeNode::GetEntities()
 {
     return _belongingEntitites;
 }

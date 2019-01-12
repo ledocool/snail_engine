@@ -33,6 +33,7 @@ Asteroid::Asteroid(const float radius, const Vector2<float> & coordinates, const
     addComponent(std::make_shared<Size>(radius));
     addComponent(std::make_shared<DespawnOutsideScreen>());
     addComponent(std::make_shared<BulletCollidable>());
+    addComponent(std::make_shared<Projectile>());
     
     float step = 2 * M_PI / 50;
     

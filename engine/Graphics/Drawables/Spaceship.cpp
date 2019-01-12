@@ -32,6 +32,7 @@ Spaceship::Spaceship(Vector2<float> coordinates)
     addComponent(std::make_shared<Velocity>(Vector2<float>(0, 0), 0));
     addComponent(std::make_shared<Acceleration>(Vector2<float>(0, 0), 0));
     addComponent(std::make_shared<Cannon>(120));
+    addComponent(std::make_shared<ProjectileCollidable>());
     
     float shape [9] = {
         -0.5f, 0.5f, 0.0f,

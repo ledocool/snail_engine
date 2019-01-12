@@ -32,6 +32,7 @@
 #include "engine/Ecs/Systems/ApplyAccelerationSystem.h"
 #include "engine/Ecs/Systems/CheckCollisionsSystem.h"
 #include "engine/Ecs/Systems/BulletCollisionSystem.h"
+#include "engine/Ecs/Systems/AsteroidCollisionSystem.h"
 
 EcsExecutor::EcsExecutor()
 {
@@ -45,6 +46,7 @@ EcsExecutor::EcsExecutor()
     _systems.push_back(std::make_shared<SpawnBulletSystem>());
     _systems.push_back(std::make_shared<DespawnEntitiesSystem>());
     _systems.push_back(std::make_shared<BulletCollisionSystem>());
+    _systems.push_back(std::make_shared<AsteroidCollisionSystem>());
 }
 
 EcsExecutor::~EcsExecutor()

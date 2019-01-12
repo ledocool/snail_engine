@@ -35,8 +35,9 @@
 
 Map::Map()
 {
+    _forceRebuildBuffer = false;
     std::shared_ptr<Spaceship> playerSpaceship = std::shared_ptr<Spaceship> (new Spaceship(Vector2<float>(0.f, 0.f)));
-    _entities.push_back(playerSpaceship);
+    AddEntity(playerSpaceship);
 }
 
 Map::~Map()
@@ -58,6 +59,7 @@ void Map::Render(glm::mat4 projection)
 void Map::AddEntity(std::shared_ptr<Entity> entity)
 {
     _entities.push_back(entity);
+    _forceRebuildBuffer = true;
 }
 
 void Map::RemoveEntity(std::shared_ptr<Entity> removable)
@@ -67,11 +69,12 @@ void Map::RemoveEntity(std::shared_ptr<Entity> removable)
     {
         _entities.erase(iterator);
     }
+    _forceRebuildBuffer = true;
 }
 
-std::vector<std::shared_ptr<Entity> >::iterator Map::FindEntity(std::shared_ptr<Entity> entity)
+std::list<std::shared_ptr<Entity> >::iterator Map::FindEntity(std::shared_ptr<Entity> entity)
 {
-    for(std::vector< std::shared_ptr<Entity> >::iterator en = _entities.begin(); en < _entities.end(); en++)
+    for(std::list< std::shared_ptr<Entity> >::iterator en = _entities.begin(); en != _entities.end(); en++)
     {
         unsigned int id = (*en)->GetId();
         if(id == entity->GetId())
@@ -85,37 +88,29 @@ std::vector<std::shared_ptr<Entity> >::iterator Map::FindEntity(std::shared_ptr<
 
 void Map::RemoveEntities(std::vector<std::shared_ptr<Entity> > removables)
 {
-    std::vector< std::shared_ptr<Entity> > newEntities;
-    
-    for(auto mapEntity : _entities)
+    for(auto removable : removables)
     {
-        bool toBeRemoved = false;
-        
-        for(auto entity : removables)
-        {
-            auto iterator = FindEntity(entity);
-            if(iterator != _entities.end())
-            {
-                toBeRemoved = true;
-                break;
-            }
-            
-        }
-        
-        if(!toBeRemoved)
-        {
-            newEntities.push_back(mapEntity);
-        }
-    }
-    
-    if(!newEntities.empty())
-    {
-        _entities = newEntities;
+        RemoveEntity(removable);
     }
 }
 
-std::vector< std::shared_ptr<Entity> > Map::GetEntities()
-{   
+void Map::PrepareMapBuffer()
+{
+    _buffer.resize(_entities.size());
+    for(auto mapEntity : _entities)
+    {
+        if(mapEntity)
+        {
+            std::weak_ptr<Entity> weakEntity(mapEntity);
+            _buffer.push_back(mapEntity);
+        }else{
+            //todo deal with dead entities.
+        }
+    }
+}
+
+std::list< std::shared_ptr<Entity> > Map::GetEntities()
+{       
     return _entities;
 }
 

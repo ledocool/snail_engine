@@ -28,15 +28,14 @@ TreeRoot::TreeRoot()
     _root = nullptr;
 }
 
-void TreeRoot::BuildTree(Rect<float> rect, std::vector< std::weak_ptr<Entity> > entities)
+void TreeRoot::BuildTree(Rect<float> rect, std::list< std::weak_ptr<Entity> > entities)
 {
     _root = std::make_shared<TreeNode>(rect, entities, nullptr, true, 0);
 }
 
-void TreeRoot::BuildTree(Rect<float> rect, const std::vector< std::shared_ptr<Entity> > & entities)
+void TreeRoot::BuildTree(Rect<float> rect, const std::list< std::shared_ptr<Entity> > & entities)
 {
-    std::vector< std::weak_ptr<Entity> > weakEntities;
-    weakEntities.reserve(entities.size());
+    std::list< std::weak_ptr<Entity> > weakEntities;
     for(auto entity : entities)
     {
         weakEntities.push_back(entity);
@@ -45,12 +44,12 @@ void TreeRoot::BuildTree(Rect<float> rect, const std::vector< std::shared_ptr<En
     BuildTree(rect, weakEntities);
 }
 
-std::vector< std::weak_ptr <Entity> > TreeRoot::GetObjects(Vector2<float> & pos)
+std::list< std::weak_ptr <Entity> > TreeRoot::GetObjects(Vector2<float> & pos)
 {
     return _root->GetBelongingEntities(pos);
 }
 
-std::vector< std::weak_ptr <Entity> > TreeRoot::GetObjects(Rect<float> & rect)
+std::list< std::weak_ptr <Entity> > TreeRoot::GetObjects(Rect<float> & rect)
 {
     return _root->GetBelongingEntities(rect);
 }

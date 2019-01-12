@@ -24,12 +24,18 @@
 #ifndef ASTEROIDCOLLISIONSYSTEM_H
 #define ASTEROIDCOLLISIONSYSTEM_H
 
-class AsteroidCollisionSystem
+#include "engine/includes.h"
+#include "engine/Ecs/System.h"
+
+class AsteroidCollisionSystem : public System
 {
 public:
     AsteroidCollisionSystem();
     AsteroidCollisionSystem(const AsteroidCollisionSystem& orig);
     virtual ~AsteroidCollisionSystem();
+    
+    void Execute(Uint32 dt, std::shared_ptr<GameState>& gameState) override;
+
 private:
 
 };

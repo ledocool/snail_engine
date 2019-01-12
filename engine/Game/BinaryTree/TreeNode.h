@@ -32,20 +32,20 @@
 class TreeNode
 {
 public:
-    TreeNode(Rect<float> rect, std::vector<std::weak_ptr< Entity > > & entities, TreeNode * parent, bool horizontal, unsigned int depth);
+    TreeNode(Rect<float> rect, std::list<std::weak_ptr< Entity > > & entities, TreeNode * parent, bool horizontal, unsigned int depth);
     virtual ~TreeNode();
     
-    std::vector < std::weak_ptr <Entity> > GetEntities();
+    std::list < std::weak_ptr <Entity> > GetEntities();
     bool PointInBounds(Vector2<float> pos);
     bool RectIntersects(Rect<float> rect);
     bool RectInside(Rect<float> rect);
     
-    std::vector < std::weak_ptr <Entity> > GetBelongingEntities(Vector2<float> & pos);
-    std::vector < std::weak_ptr <Entity> > GetBelongingEntities(Rect<float> & rect);
+    std::list < std::weak_ptr <Entity> > GetBelongingEntities(Vector2<float> & pos);
+    std::list < std::weak_ptr <Entity> > GetBelongingEntities(Rect<float> & rect);
     
 private:
 
-    std::vector < std::weak_ptr <Entity> > _belongingEntitites;    
+    std::list < std::weak_ptr <Entity> > _belongingEntitites;    
     TreeNode * _leftLeaf; 
     TreeNode * _rightLeaf;
     TreeNode * _parent;

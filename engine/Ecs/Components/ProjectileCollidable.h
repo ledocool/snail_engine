@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 LedoCool.
+ * Copyright 2019 LedoCool.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,34 +15,29 @@
  */
 
 /* 
- * File:   ComponentTypes.h
+ * File:   ProjectileCollidable.h
  * Author: LedoCool
  *
- * Created on December 5, 2018, 2:59 PM
+ * Created on January 10, 2019, 8:49 PM
  */
 
-#ifndef COMPONENTTYPES_H
-#define COMPONENTTYPES_H
+#ifndef PROJECTILECOLLIDABLE_H
+#define PROJECTILECOLLIDABLE_H
 
-namespace ComponentTypes
+#include "engine/Ecs/Component.h"
+#include "ComponentTypes.h"
+
+class ProjectileCollidable : public Component
 {
+public:
+    ProjectileCollidable();
+    ProjectileCollidable(const ProjectileCollidable& orig);
+    virtual ~ProjectileCollidable();
+    unsigned int GetComponentId() override;
+    
+private:
 
-    enum en
-    {
-        UNDEFINED =0,
-        POSITION,
-        PLAYER,
-        SIZE,
-        VELOCITY,
-        ACCELERATION,
-        DESPAWN_OUTSIDE_SCREEN,
-        CANNON,
-        SHOOTABLE,
-        BULLET_COLLIDABLE,
-        PROJECTILE,
-        PROJECTILE_COLLIDABLE
-    };
-}
+};
 
-#endif /* COMPONENTTYPES_H */
+#endif /* PROJECTILECOLLIDABLE_H */
 

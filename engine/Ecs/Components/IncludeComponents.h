@@ -34,6 +34,8 @@
 #include "Cannon.h"
 #include "BulletCollidable.h"
 #include "Shootable.h"
+#include "Projectile.h"
+#include "ProjectileCollidable.h"
 
 #endif /* INCLUDECOMPONENTS_H */
 

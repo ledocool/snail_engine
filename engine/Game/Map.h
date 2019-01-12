@@ -35,14 +35,21 @@ public:
     virtual ~Map();
     void AddEntity(std::shared_ptr<Entity> entity);
     void RemoveEntity(std::shared_ptr<Entity> removable);
-    void RemoveEntities(std::vector< std::shared_ptr<Entity> > removables);
-    std::vector< std::shared_ptr<Entity> >::iterator FindEntity(std::shared_ptr<Entity> entity);   
+    void RemoveEntities(std::vector< std::shared_ptr<Entity> > removables);  
     
-    std::vector< std::shared_ptr<Entity> > GetEntities();
+    std::list< std::shared_ptr<Entity> > GetEntities();
     void Render(glm::mat4 projection);   
+
     
 private:
-    std::vector< std::shared_ptr<Entity> > _entities;
+    void PrepareMapBuffer();
+    std::list< std::shared_ptr<Entity> >::iterator FindEntity(std::shared_ptr<Entity> entity); 
+    
+    std::list< std::shared_ptr<Entity> > _entities;
+    std::vector< std::weak_ptr<Entity> > _buffer;
+    
+    unsigned int _bufferSize;
+    bool _forceRebuildBuffer;
 };
 
 #endif /* MAP_H */

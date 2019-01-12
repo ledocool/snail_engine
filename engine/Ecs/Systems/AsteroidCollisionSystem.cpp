@@ -22,6 +22,7 @@
  */
 
 #include "AsteroidCollisionSystem.h"
+#include "engine/Ecs/Components/IncludeComponents.h"
 
 AsteroidCollisionSystem::AsteroidCollisionSystem()
 {
@@ -33,5 +34,31 @@ AsteroidCollisionSystem::AsteroidCollisionSystem(const AsteroidCollisionSystem& 
 
 AsteroidCollisionSystem::~ AsteroidCollisionSystem()
 {
+}
+
+void AsteroidCollisionSystem::Execute(Uint32 dt, std::shared_ptr<GameState>& gameState)
+{   
+    for(auto collidingPair : gameState->collidingEntitites)
+    {
+        auto entity1 = collidingPair.first.lock();
+        auto entity2 = collidingPair.second.lock();
+                
+        if(!(entity1 && entity2))
+        {
+            continue;
+        }
+        
+        auto projectileComponent1 = entity1->GetComponent(ComponentTypes::PROJECTILE).lock();
+        auto projectileCollidableComponent1 = entity1->GetComponent(ComponentTypes::PROJECTILE_COLLIDABLE).lock();
+        auto projectileComponent2 = entity2->GetComponent(ComponentTypes::PROJECTILE).lock();
+        auto projectileCollidableComponent2 = entity2->GetComponent(ComponentTypes::PROJECTILE_COLLIDABLE).lock();
+        
+        if((projectileComponent1 && projectileCollidableComponent2) 
+            || (projectileComponent2 && projectileCollidableComponent1))
+        {
+            gameState->map->RemoveEntity(entity1);
+            gameState->map->RemoveEntity(entity2);
+        }
+    }
 }
 

@@ -38,6 +38,12 @@ void SpawnBulletSystem::Execute(Uint32 dt, std::shared_ptr<GameState>& gameState
 {
     for(auto entity : gameState->map->GetEntities())
     {
+//        std::shared_ptr<Entity> entity = weakEntity.lock();
+//        if(!entity)
+//        {
+//            continue;
+//        }
+        
         auto player = std::dynamic_pointer_cast<Player> (entity->GetComponent(ComponentTypes::PLAYER).lock());
         auto position = std::dynamic_pointer_cast<Position>( entity->GetComponent(ComponentTypes::POSITION).lock() );
         auto size = std::dynamic_pointer_cast<Size> (entity->GetComponent(ComponentTypes::SIZE).lock());

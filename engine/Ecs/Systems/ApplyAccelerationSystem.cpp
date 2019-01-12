@@ -40,6 +40,12 @@ void ApplyAccelerationSystem::Execute(Uint32 dt, std::shared_ptr<GameState>& gam
 {
     for (auto entity : gameState->map->GetEntities())
     {
+//        std::shared_ptr<Entity> entity = weakEntity.lock();
+//        if(!entity)
+//        {
+//            continue;
+//        }
+        
         auto acceleration = std::dynamic_pointer_cast<Acceleration>(entity->GetComponent(ComponentTypes::ACCELERATION).lock());
         auto velocity = std::dynamic_pointer_cast<Velocity> (entity->GetComponent(ComponentTypes::VELOCITY).lock());
         

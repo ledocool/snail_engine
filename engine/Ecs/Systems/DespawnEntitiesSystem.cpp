@@ -37,30 +37,18 @@ DespawnEntitiesSystem::~ DespawnEntitiesSystem()
 
 void DespawnEntitiesSystem::Execute(Uint32 dt, std::shared_ptr<GameState>& gameState)
 {
-    std::vector< std::shared_ptr<Entity> > toBeRemoved;
     for(auto entity : gameState->map->GetEntities())
     {
+//        std::shared_ptr<Entity> entity = weakEntity.lock();
+//        if(!entity)
+//        {
+//            continue;
+//        }
+        
         if(TryDespawnOutsideSquare(entity, gameState->camera->GetScreenRect()))
         {
-            toBeRemoved.push_back(entity);
+            gameState->map->RemoveEntity(entity);
         }   
-    }
-
-    if(!toBeRemoved.empty())
-    {
-        if(toBeRemoved.size() > 1)
-        {
-            gameState->map->RemoveEntities(toBeRemoved);
-        }else{
-            gameState->map->RemoveEntity(toBeRemoved[0]);
-        }
-        
-        if(gameState->asteroidCounter < toBeRemoved.size())
-        {
-            gameState->asteroidCounter = 0;
-        }else{
-            gameState->asteroidCounter -= toBeRemoved.size();
-        }
     }
 }
 

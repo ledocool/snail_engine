@@ -36,6 +36,8 @@ set(ENGINE_SOURCES
     Ecs/Components/Acceleration.cpp
     Ecs/Components/Shootable.cpp
     Ecs/Components/BulletCollidable.cpp
+    Ecs/Components/ProjectileCollidable.cpp
+    Ecs/Components/Projectile.cpp
 
     Ecs/EcsExecutor.cpp
     Ecs/Systems/MovePlayerSystem.cpp
@@ -48,6 +50,7 @@ set(ENGINE_SOURCES
     Ecs/Systems/ApplyAccelerationSystem.cpp
     Ecs/Systems/CheckCollisionsSystem.cpp
     Ecs/Systems/BulletCollisionSystem.cpp
+    Ecs/Systems/AsteroidCollisionSystem.cpp
 
     Game/Map.cpp
     Game/Camera.cpp
@@ -102,6 +105,8 @@ set(ENGINE_HEADERS
     Ecs/Components/Cannon.h
     Ecs/Components/DespawnOutsideScreen.h
     Ecs/Components/Acceleration.h
+    Ecs/Components/ProjectileCollidable.h
+    Ecs/Components/Projectile.h
     
     Ecs/EcsExecutor.h
     Ecs/Systems/MovePlayerSystem.h
@@ -112,7 +117,8 @@ set(ENGINE_HEADERS
     Ecs/Systems/AsteroidSpawnSystem.h
     Ecs/Systems/ApplyAccelerationSystem.h
     Ecs/Systems/CheckCollisionsSystem.h
-    Ecs/Systems/BulletCollisionSystem.cpp
+    Ecs/Systems/BulletCollisionSystem.h
+    Ecs/Systems/AsteroidCollisionSystem.h
 
     Game/Map.h
     Game/Camera.h

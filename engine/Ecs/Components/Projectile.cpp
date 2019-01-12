@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 LedoCool.
+ * Copyright 2019 LedoCool.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,34 +15,27 @@
  */
 
 /* 
- * File:   ComponentTypes.h
+ * File:   Projectile.cpp
  * Author: LedoCool
- *
- * Created on December 5, 2018, 2:59 PM
+ * 
+ * Created on January 10, 2019, 8:48 PM
  */
 
-#ifndef COMPONENTTYPES_H
-#define COMPONENTTYPES_H
+#include "Projectile.h"
 
-namespace ComponentTypes
+Projectile::Projectile()
 {
-
-    enum en
-    {
-        UNDEFINED =0,
-        POSITION,
-        PLAYER,
-        SIZE,
-        VELOCITY,
-        ACCELERATION,
-        DESPAWN_OUTSIDE_SCREEN,
-        CANNON,
-        SHOOTABLE,
-        BULLET_COLLIDABLE,
-        PROJECTILE,
-        PROJECTILE_COLLIDABLE
-    };
 }
 
-#endif /* COMPONENTTYPES_H */
+Projectile::Projectile(const Projectile& orig)
+{
+}
 
+Projectile::~ Projectile()
+{
+}
+
+unsigned int Projectile::GetComponentId()
+{
+    return ComponentTypes::PROJECTILE;
+}
