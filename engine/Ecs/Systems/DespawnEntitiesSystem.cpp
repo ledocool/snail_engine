@@ -38,13 +38,7 @@ DespawnEntitiesSystem::~ DespawnEntitiesSystem()
 void DespawnEntitiesSystem::Execute(Uint32 dt, std::shared_ptr<GameState>& gameState)
 {
     for(auto entity : gameState->map->GetEntities())
-    {
-//        std::shared_ptr<Entity> entity = weakEntity.lock();
-//        if(!entity)
-//        {
-//            continue;
-//        }
-        
+    {   
         if(TryDespawnOutsideSquare(entity, gameState->camera->GetScreenRect()))
         {
             gameState->map->RemoveEntity(entity);

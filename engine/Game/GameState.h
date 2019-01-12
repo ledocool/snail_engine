@@ -34,7 +34,6 @@ struct GameState
 {   
     GameState()
     {
-        asteroidCounter = 0;
         asteroidCooldown = 0;
         map = std::make_shared<Map>();
         camera = std::make_shared<Camera>();
@@ -44,7 +43,6 @@ struct GameState
     std::shared_ptr <Map> map;
     std::shared_ptr <Camera> camera;
 
-    unsigned int asteroidCounter;
     Uint32 asteroidCooldown;
    
     std::shared_ptr <TreeRoot> collisionTree;
