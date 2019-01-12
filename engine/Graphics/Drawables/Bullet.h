@@ -32,7 +32,7 @@
 class Bullet : public IDrawable, public Entity
 {
 public:
-    Bullet(const float size, const Vector2<float> coordinates, const float angle, const float velocity);
+    Bullet(const float size, const Vector2<float> coordinates, const Vector2<float> parentVelocity, const float angle, const float velocity);
     virtual ~Bullet();
     
     void Draw(glm::mat4 projection) override;

@@ -50,7 +50,6 @@ struct GameState
     std::shared_ptr <TreeRoot> collisionTree;
     std::vector <InputEvent> inputActions;
     std::list <std::pair<std::weak_ptr<Entity>, std::weak_ptr<Entity> > > collidingEntitites;
-    
 };
 
 #endif /* GAMESTATE_H */

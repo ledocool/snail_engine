@@ -32,6 +32,7 @@ Entity::Entity()
 
 Entity::~ Entity()
 {
+    _components.clear();
 }
 
 void Entity::addComponent(std::shared_ptr<Component> component)

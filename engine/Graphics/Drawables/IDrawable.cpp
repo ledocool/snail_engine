@@ -18,7 +18,8 @@
 
 IDrawable::~ IDrawable()
 {
-
+    glDeleteVertexArrays(1, &_glVAO_Id);
+    glDeleteBuffers(1, &_glVBO_Id);
 }
 
 IDrawable::IDrawable()
@@ -32,7 +33,6 @@ void IDrawable::CreateShaderProgram()
 {
     _shaderProgram = std::make_shared<ShaderProgram> ("resources/Shaders/BasicVertexShader.glsl", "resources/Shaders/BasicFragmentShader.glsl");
 }
-
 
 void IDrawable::CreateOpenGlBinding(const void * shape, size_t sizeOfShape)
 {

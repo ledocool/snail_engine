@@ -25,11 +25,11 @@
 #include "engine/Ecs/Components/IncludeComponents.h"
 #include "engine/Etc/Singleton.h"
 
-Bullet::Bullet(const float size, const Vector2<float> coordinates, const float angle, const float velocity)
+Bullet::Bullet(const float size, const Vector2<float> coordinates, const Vector2<float> parentVelocity, const float angle, const float velocity)
 {
     addComponent(std::make_shared<Position> (coordinates, angle));
     addComponent(std::make_shared<Size> (size));
-    addComponent(std::make_shared<Velocity> (Vector2<float>(std::cos(angle) * velocity, std::sin(angle) * velocity), 0));
+    addComponent(std::make_shared<Velocity> (Vector2<float>(std::cos(angle) * velocity + parentVelocity.x(), std::sin(angle) * velocity + parentVelocity.y()), 0));
     addComponent(std::make_shared<DespawnOutsideScreen>());
     addComponent(std::make_shared<Shootable>());
     

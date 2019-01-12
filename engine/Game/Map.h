@@ -38,18 +38,13 @@ public:
     void RemoveEntities(std::vector< std::shared_ptr<Entity> > removables);  
     
     std::list< std::shared_ptr<Entity> > GetEntities();
-    void Render(glm::mat4 projection);   
+    void Render(glm::mat4 projection);
+    void ValidateEntityDespawn();
 
-    
 private:
-    void PrepareMapBuffer();
     std::list< std::shared_ptr<Entity> >::iterator FindEntity(std::shared_ptr<Entity> entity); 
     
-    std::list< std::shared_ptr<Entity> > _entities;
-    std::vector< std::weak_ptr<Entity> > _buffer;
-    
-    unsigned int _bufferSize;
-    bool _forceRebuildBuffer;
+    std::list< std::shared_ptr<Entity> > _entities; 
 };
 
 #endif /* MAP_H */

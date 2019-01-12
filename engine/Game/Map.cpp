@@ -35,7 +35,6 @@
 
 Map::Map()
 {
-    _forceRebuildBuffer = false;
     std::shared_ptr<Spaceship> playerSpaceship = std::shared_ptr<Spaceship> (new Spaceship(Vector2<float>(0.f, 0.f)));
     AddEntity(playerSpaceship);
 }
@@ -59,7 +58,6 @@ void Map::Render(glm::mat4 projection)
 void Map::AddEntity(std::shared_ptr<Entity> entity)
 {
     _entities.push_back(entity);
-    _forceRebuildBuffer = true;
 }
 
 void Map::RemoveEntity(std::shared_ptr<Entity> removable)
@@ -69,7 +67,6 @@ void Map::RemoveEntity(std::shared_ptr<Entity> removable)
     {
         _entities.erase(iterator);
     }
-    _forceRebuildBuffer = true;
 }
 
 std::list<std::shared_ptr<Entity> >::iterator Map::FindEntity(std::shared_ptr<Entity> entity)
@@ -91,21 +88,6 @@ void Map::RemoveEntities(std::vector<std::shared_ptr<Entity> > removables)
     for(auto removable : removables)
     {
         RemoveEntity(removable);
-    }
-}
-
-void Map::PrepareMapBuffer()
-{
-    _buffer.resize(_entities.size());
-    for(auto mapEntity : _entities)
-    {
-        if(mapEntity)
-        {
-            std::weak_ptr<Entity> weakEntity(mapEntity);
-            _buffer.push_back(mapEntity);
-        }else{
-            //todo deal with dead entities.
-        }
     }
 }
 

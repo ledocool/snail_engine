@@ -131,7 +131,7 @@ public:
         return _data[index];
     }
 
-    T x()
+    T x() const
     {
         return _data[0];
     }
@@ -141,7 +141,7 @@ public:
         _data[0] = val;
     }
 
-    T y()
+    T y() const
     {
         return _data[1];
     }
@@ -157,7 +157,7 @@ public:
         _data[1] = y;
     }
     
-    void get(T& x, T& y)
+    void get(T& x, T& y) const
     {
         x = _data[0];
         y = _data[1];
