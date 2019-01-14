@@ -1,55 +1,106 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/* 
- * File:   Engine.cpp
- * Author: LedoCool
- * 
- * Created on July 10, 2018, 9:25 PM
+ * Copyright 2018 LedoCool.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 #include "Engine.h"
 #include <iostream>
 
+#include "engine/Graphics/WindowManager.h"
+#include "engine/Events/EventPipeline.h"
+#include "engine/Input/InputEventConfig.h"
+
 Engine::Engine()
-{
-    //Todo: move me to dedicated class;
-    SDL_Init(SDL_INIT_VIDEO);
-
-    SDL_Window *window = SDL_CreateWindow(
-        "SDL2Test",
-        SDL_WINDOWPOS_UNDEFINED,
-        SDL_WINDOWPOS_UNDEFINED,
-        640,
-        480,
-        0
-    );
-
-    SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE);
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
-    SDL_RenderClear(renderer);
-    SDL_RenderPresent(renderer);
-
-    SDL_Delay(3000);
-
-    SDL_DestroyWindow(window);
-    SDL_Quit();
-    
-}
-
-Engine::Engine(const Engine& orig)
-{
+{   
+    Init();
+    Loop();
 }
 
 Engine::~Engine()
 {
+    Destroy();
 }
 
-void Engine::simpleFunction()
+/* Wrapper method for all engine initialization */
+void Engine::Init()
 {
-    std::cout << "Hello world!" << std::endl;
+    _inputManager = Singleton<InputManager>::get();
+    
+    InitSDL();
+    CreateWindows();
 }
+
+/* Wrapper method for all engine destruction */
+void Engine::Destroy()
+{
+    DestroySDL();
+}
+
+void Engine::InitSDL()
+{
+    if (SDL_Init(0)) {
+        std::cout << "SDL_Init Error: " << SDL_GetError() << std::endl;
+        return;
+    }
+    //SDL_GL_LoadLibrary(NULL);
+}
+
+void Engine::CreateWindows()
+{
+    _wm.Create("Base window", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 640, 480);
+}
+
+/* Base loop */
+int Engine::Loop()
+{
+    bool shouldWork = true;
+    Uint32  dt = 16;
+    Uint32  lastUpdateTime, 
+            frameTime, 
+            currentUpdateTime,
+            processingElapsed,
+            lastProcessingTime,
+            timeleft;
+    
+    lastProcessingTime = lastUpdateTime = currentUpdateTime = SDL_GetTicks();
+    
+    while (shouldWork) 
+    {
+        currentUpdateTime = SDL_GetTicks();
+        frameTime = currentUpdateTime - lastUpdateTime;
+        lastUpdateTime = currentUpdateTime;
+        
+        timeleft = dt - frameTime;
+        do
+        {
+            currentUpdateTime = SDL_GetTicks();
+            processingElapsed = currentUpdateTime - lastProcessingTime;
+            lastProcessingTime = currentUpdateTime;
+            
+            shouldWork = _inputManager->Update();
+            _wm.Update(processingElapsed);
+        }
+        while(currentUpdateTime < lastUpdateTime + timeleft && shouldWork);
+        _wm.Render(frameTime);
+    }
+
+    return 0;
+}
+
+void Engine::DestroySDL()
+{
+    SDL_Quit();
+}
+
 

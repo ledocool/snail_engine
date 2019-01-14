@@ -1,0 +1,10 @@
+set(prefix "${CMAKE_CURRENT_LIST_DIR}") 
+if(${CMAKE_SIZEOF_VOID_P} MATCHES 8)
+    set(SOIL_PATH "${prefix}")
+else()
+    set(SOIL_PATH "${prefix}")
+endif()
+set(SOIL_INCLUDE_DIRS "${SOIL_PATH}/include")
+set(SOIL_LIBRARIES "-L${SOIL_PATH}/lib  -lsoil")
+
+string(STRIP "${SOIL_LIBRARIES}" SOIL_LIBRARIES)

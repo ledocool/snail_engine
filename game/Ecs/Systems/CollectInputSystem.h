@@ -15,20 +15,31 @@
  */
 
 /* 
- * File:   IKeystroke.h
+ * File:   CollectInputSystem.h
  * Author: LedoCool
  *
- * Created on July 15, 2018, 6:36 PM
+ * Created on December 19, 2018, 10:53 PM
  */
 
-#ifndef IKEYSTROKE_H
-#define IKEYSTROKE_H
+#ifndef COLLECTINPUTSYSTEM_H
+#define COLLECTINPUTSYSTEM_H
 
-class IKeystroke
+#include "engine/includes.h"
+#include "engine/Ecs/System.h"
+#include "Input/InputEventConfig.h"
+#include "Input/InputManager.h"
+
+class CollectInputSystem : public System
 {
+public:
+    CollectInputSystem();
+    virtual ~CollectInputSystem();
+    void Execute(Uint32 dt, std::shared_ptr<GameState>& gameState) override;
     
-    virtual void IsActive()=0;
+private:
+    InputManager * _inputManager;
+    InputEventConfig * _eventConfig;
 };
 
-#endif /* IKEYSTROKE_H */
+#endif /* COLLECTINPUTSYSTEM_H */
 

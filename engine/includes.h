@@ -24,11 +24,29 @@
 #ifndef INCLUDES_H
 #define INCLUDES_H
 
+//OpenGL
+#include <glad/glad.h>
+//#include <GL/gl.h>
+//#include <GL/glu.h>
+//#include <GL/glext.h>
+#include <glm/glm.hpp>
+#include <glm/vec4.hpp>
+#include <glm/mat4x4.hpp>
+#include <glm/gtc/matrix_transform.hpp> // glm::translate, glm::rotate, glm::scale, glm::perspective
+#include <glm/gtc/type_ptr.hpp>
+
 //SDL
-//#include "SDL.h"
+#include <SDL.h>
 
 //general
 #include <string>
+#include <map>
+#include <list>
+#include <vector>
+#include <memory>
+#include <stack>
+#include <iostream>
+#include <math.h>
 
 #endif /* INCLUDES_H */
 

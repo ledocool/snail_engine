@@ -15,16 +15,39 @@
  */
 
 /* 
- * File:   filetypes.h
+ * File:   Position.h
  * Author: LedoCool
  *
- * Created on July 15, 2018, 6:41 PM
+ * Created on December 5, 2018, 2:54 PM
  */
 
-#ifndef FILETYPES_H
-#define FILETYPES_H
+#ifndef POSITION_H
+#define POSITION_H
 
+#include "engine/Ecs/Component.h"
+#include "ComponentTypes.h"
+#include "engine/Etc/Vector2.h"
 
+class Position : public Component
+{
+public:
+    Position();
+    Position(const Vector2<float> & coords, const float & angle);
+    virtual ~Position();
+    
+    Vector2<float> coords();
+    void coords(Vector2<float> vec);
+    
+    float angle();
+    void angle(float angle);
+    
+    virtual unsigned int GetComponentId() override;
+    
+private:
+    Vector2<float> _pos;
+    float _angle;
+    
+};
 
-#endif /* FILETYPES_H */
+#endif /* POSITION_H */
 

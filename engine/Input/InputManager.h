@@ -15,23 +15,41 @@
  */
 
 /* 
- * File:   IInputManager.h
+ * File:   InpuManager.h
  * Author: LedoCool
  *
- * Created on July 15, 2018, 6:36 PM
+ * Created on August 14, 2018, 10:57 PM
  */
 
-#ifndef INPUTMANAGER_H
-#define INPUTMANAGER_H
+#ifndef INPUMANAGER_H
+#define INPUMANAGER_H
 
-class InputManager 
+#include "KeyEnums.h"
+#include "engine/includes.h"
+#include "engine/Etc/Singleton.h"
+
+class InputManager
 {
-    /**
-     * update states of pressed buttons and collect them all into neat key events;
-     * also send events into event pipeline;
-     */
-    void Update();
+public:
+    friend class Singleton<InputManager>;    
+    virtual ~InputManager();
+    
+    bool Update(); //Don't forget to update this; 
+    KeyState::en KeyState(Key::en key);
+    
+protected:
+    InputManager();
+    
+private:
+    std::map <Key::en, KeyState::en> _keyStates;
+    std::map <short, short> _windowEvents;
+    
+    bool _quit;
+//    int _m_MouseX, _m_MouseY;
+//    std::vector < short > _mouseStates;
+//    std::map < int, short > _videoStates;
+
 };
 
-#endif /* IINPUTMANAGER_H */
+#endif /* INPUMANAGER_H */
 
