@@ -133,20 +133,22 @@ set(ENGINE_HEADERS
 )
 
 #todo: linux config
-
 set(GLAD_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/Glad")
 set(SDL2_DIR "D:/projects/libraries/sdl2")
 set(GLM_DIR "D:/projects/libraries/glm-0.9.9.3")
+set(SOIL_DIR "D:/projects/libraries/soil")
 
 find_package(SDL2 REQUIRED)
 find_package(OpenGL REQUIRED)
 find_package(GLM REQUIRED)
+find_package(SOIL REQUIRED)
 
 file(COPY ${SDL2_BINARIES} DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 add_library(snail_core ${ENGINE_HEADERS} ${ENGINE_SOURCES})
 target_link_libraries(snail_core 
                         ${SDL2_LIBRARIES} 
                         ${OPENGL_gl_LIBRARY}
+                        ${SOIL}
 )
 
 target_include_directories( 
@@ -155,4 +157,5 @@ target_include_directories(
                             PUBLIC ${SDL2_INCLUDE_DIRS} 
                             PUBLIC ${GLAD_DIRECTORIES} 
                             PUBLIC ${GLM_INCLUDE_DIRS} 
+                            PUBLIC ${SOIL_INCLUDE_DIRS}
 )

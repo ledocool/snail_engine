@@ -36,13 +36,7 @@ ApplyVelocitySystem::~ ApplyVelocitySystem()
 void ApplyVelocitySystem::Execute(Uint32 dt, std::shared_ptr<GameState>& gameState)
 {
     for (auto entity : gameState->map->GetEntities())
-    {
-//        std::shared_ptr<Entity> entity = weakEntity.lock();
-//        if(!entity)
-//        {
-//            continue;
-//        }
-        
+    {        
         auto position = std::dynamic_pointer_cast<Position>(entity->GetComponent(ComponentTypes::POSITION).lock());
         auto velocity = std::dynamic_pointer_cast<Velocity> (entity->GetComponent(ComponentTypes::VELOCITY).lock());
         

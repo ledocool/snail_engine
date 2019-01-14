@@ -71,7 +71,7 @@ void CheckCollisionsSystem::Execute(Uint32 dt, std::shared_ptr<GameState>& gameS
         for(auto weakPossiblyCollidingEntity : gameState->collisionTree->GetObjects(boundingRect))
         {
             auto collider = weakPossiblyCollidingEntity.lock();
-            if(!collider || collider->GetId() == entity->GetId())
+            if(!collider || collider == entity)
             {
                 continue;
             }

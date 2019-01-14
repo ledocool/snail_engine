@@ -69,7 +69,6 @@ void AsteroidSpawnSystem::Execute(Uint32 dt, std::shared_ptr<GameState>& gameSta
             Vector2<float> velocity (normDelta * ASTEROID_SPEED);
             gameState->map->AddEntity(std::make_shared<Asteroid>(asteroidSize, coords, velocity));
 
-            gameState->asteroidCounter += 1;
             gameState->asteroidCooldown = ASTEROID_COOLDOWN;
         } 
     }
